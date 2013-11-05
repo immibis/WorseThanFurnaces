@@ -539,10 +539,10 @@ diff -r -U 3 minecraft-old\mc\Minecraft.java minecraft\mc\Minecraft.java
 +++ minecraft\mc\Minecraft.java	Mon Nov 04 22:50:14 2013
 @@ -696,1 +696,1 @@
 -                     this.func_7_Minecraft_V();
-+                     while(true) this.func_7_Minecraft_V(); // decompiler fix
++                     while(field_0_Minecraft_Z) this.func_7_Minecraft_V(); // decompiler fix
 @@ -700,1 +700,1 @@
 -                     this.func_7_Minecraft_V();
-+                     while(true) this.func_7_Minecraft_V(); // decompiler fix
++                     while(field_0_Minecraft_Z) this.func_7_Minecraft_V(); // decompiler fix
 diff -r -U 3 minecraft-old\mc\NetHandlerImplHandshakeC2S.java minecraft\mc\NetHandlerImplHandshakeC2S.java
 --- minecraft-old\mc\NetHandlerImplHandshakeC2S.java	Mon Nov 04 22:42:31 2013
 +++ minecraft\mc\NetHandlerImplHandshakeC2S.java	Mon Nov 04 22:50:14 2013
