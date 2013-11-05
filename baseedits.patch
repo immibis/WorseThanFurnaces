@@ -1,0 +1,12 @@
+diff -r -U 3 src-base/minecraft/mc/Minecraft.java src/minecraft/mc/Minecraft.java
+--- src-base/minecraft/mc/Minecraft.java	Tue Nov  5 17:02:59 2013
++++ src/minecraft/mc/Minecraft.java	Tue Nov  5 17:04:08 2013
+@@ -260,7 +260,7 @@
+         }
+ 
+         Display.setResizable(true);
+-        Display.setTitle("Minecraft 1.7.2");
++        Display.setTitle("Minecraft YOUR MOM");
+         field_1_Minecraft_L.info("LWJGL Version: " + Sys.getVersion());
+         EnumOperatingSystem var1 = UUIDUtils.func_0_UUIDUtils_EnumOperatingSystem();
+ 

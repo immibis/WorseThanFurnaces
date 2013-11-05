@@ -1,0 +1,557 @@
+diff -r -U 3 minecraft-old\mc\EnumChatFormatting.java minecraft\mc\EnumChatFormatting.java
+--- minecraft-old\mc\EnumChatFormatting.java	Mon Nov 04 22:42:23 2013
++++ minecraft\mc\EnumChatFormatting.java	Mon Nov 04 22:47:34 2013
+@@ -38,7 +38,7 @@
+    private final String field_0_EnumChatFormatting_String;
+ 
+    private EnumChatFormatting(char par3Char) {
+-      this(par1String, par2Int, par3Char, false);
++      this(par3Char, false);
+    }
+ 
+    private EnumChatFormatting(char par3Char, boolean par4Boolean) {
+diff -r -U 3 minecraft-old\mc\EnumConnectionState.java minecraft\mc\EnumConnectionState.java
+--- minecraft-old\mc\EnumConnectionState.java	Mon Nov 04 22:42:23 2013
++++ minecraft\mc\EnumConnectionState.java	Mon Nov 04 22:49:16 2013
+@@ -8,16 +8,118 @@
+ import gnu.trove.map.hash.TIntObjectHashMap;
+ import java.util.Iterator;
+ import java.util.Map;
+-import mc.EnumConnectionState_HANDSHAKING;
+ import mc.Packet;
+ import org.apache.logging.log4j.LogManager;
+ 
+ public enum EnumConnectionState {
+ 
+-   HANDSHAKING(-1),
+-   PLAY(0),
+-   STATUS(1),
+-   LOGIN(2);
++   HANDSHAKING(-1) {{
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Handshake_C2S_0.class);
++	   }},
++   PLAY(0) {{
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Play_S2C_0.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Play_S2C_1.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(2, Packet_Play_S2C_2.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(3, Packet_Play_S2C_3.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(4, Packet_Play_S2C_4.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(5, Packet_Play_S2C_5.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(6, Packet_Play_S2C_6.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(7, Packet_Play_S2C_7.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(8, Packet_Play_S2C_8.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(9, Packet_Play_S2C_9.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(10, Packet_Play_S2C_10.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(11, Packet_Play_S2C_11.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(12, Packet_Play_S2C_12.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(13, Packet_Play_S2C_13.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(14, Packet_Play_S2C_14.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(15, Packet_Play_S2C_15.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(16, Packet_Play_S2C_16.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(17, Packet_Play_S2C_17.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(18, Packet_Play_S2C_18.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(19, Packet_Play_S2C_19.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(20, Packet_Play_S2C_20.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(21, Packet_Play_S2C_21.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(22, Packet_Play_S2C_22.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(23, Packet_Play_S2C_23.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(24, Packet_Play_S2C_24.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(25, Packet_Play_S2C_25.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(26, Packet_Play_S2C_26.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(27, Packet_Play_S2C_27.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(28, Packet_Play_S2C_28.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(29, Packet_Play_S2C_29.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(30, Packet_Play_S2C_30.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(31, Packet_Play_S2C_31.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(32, Packet_Play_S2C_32.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(33, Packet_Play_S2C_33.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(34, Packet_Play_S2C_34.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(35, Packet_Play_S2C_35.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(36, Packet_Play_S2C_36.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(37, Packet_Play_S2C_37.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(38, Packet_Play_S2C_38.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(39, Packet_Play_S2C_39.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(40, Packet_Play_S2C_40.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(41, Packet_Play_S2C_41.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(42, Packet_Play_S2C_42.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(43, Packet_Play_S2C_43.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(44, Packet_Play_S2C_44.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(45, Packet_Play_S2C_45.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(46, Packet_Play_S2C_46.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(47, Packet_Play_S2C_47.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(48, Packet_Play_S2C_48.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(49, Packet_Play_S2C_49.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(50, Packet_Play_S2C_50.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(51, Packet_Play_S2C_51.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(52, Packet_Play_S2C_52.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(53, Packet_Play_S2C_53.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(54, Packet_Play_S2C_54.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(55, Packet_Play_S2C_55.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(56, Packet_Play_S2C_56.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(57, Packet_Play_S2C_57.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(58, Packet_Play_S2C_58.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(59, Packet_Play_S2C_59.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(60, Packet_Play_S2C_60.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(61, Packet_Play_S2C_61.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(62, Packet_Play_S2C_62.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(63, Packet_Play_S2C_63.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(64, Packet_Play_S2C_64.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Play_C2S_0.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Play_C2S_1.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(2, Packet_Play_C2S_2.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(3, Packet_Play_C2S_3.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(4, Packet_Play_C2S_4.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(5, Packet_Play_C2S_5.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(6, Packet_Play_C2S_6.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(7, Packet_Play_C2S_7.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(8, Packet_Play_C2S_8.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(9, Packet_Play_C2S_9.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(10, Packet_Play_C2S_10.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(11, Packet_Play_C2S_11.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(12, Packet_Play_C2S_12.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(13, Packet_Play_C2S_13.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(14, Packet_Play_C2S_14.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(15, Packet_Play_C2S_15.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(16, Packet_Play_C2S_16.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(17, Packet_Play_C2S_17.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(18, Packet_Play_C2S_18.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(19, Packet_Play_C2S_19.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(20, Packet_Play_C2S_20.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(21, Packet_Play_C2S_21.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(22, Packet_Play_C2S_22.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(23, Packet_Play_C2S_23.class);
++	   }},
++   STATUS(1) {{
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Status_C2S_0.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Status_S2C_0.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Status_C2S_1.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Status_S2C_1.class);
++	   }},
++   LOGIN(2) {{
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Login_S2C_0.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Login_S2C_1.class);
++	      this.func_1_EnumConnectionState_EnumConnectionStateIClass(2, Packet_Login_S2C_2.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Login_C2S_0.class);
++	      this.func_0_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Login_C2S_1.class);
++	   }};
+    private static final TIntObjectMap field_0_EnumConnectionState_L = new TIntObjectHashMap();
+    private static final Map field_0_EnumConnectionState_Map = Maps.newHashMap();
+    private final int field_0_EnumConnectionState_I;
+@@ -88,11 +190,6 @@
+ 
+    public static EnumConnectionState func_0_EnumConnectionState_EnumConnectionStatePacket(Packet par1fk) {
+       return (EnumConnectionState)field_0_EnumConnectionState_Map.get(par1fk.getClass());
+-   }
+-
+-   // $FF: synthetic method
+-   EnumConnectionState(int par3Int, EnumConnectionState_HANDSHAKING par4el) {
+-      this(par1String, par2Int, par3Int);
+    }
+ 
+    static {
+diff -r -U 3 minecraft-old\mc\EnumConnectionState_HANDSHAKING.java minecraft\mc\EnumConnectionState_HANDSHAKING.java
+--- minecraft-old\mc\EnumConnectionState_HANDSHAKING.java	Mon Nov 04 22:42:23 2013
++++ minecraft\mc\EnumConnectionState_HANDSHAKING.java	Mon Nov 04 22:48:32 2013
+@@ -1,10 +0,0 @@
+-package mc;
+-
+-import mc.Packet_Handshake_C2S_0;
+-
+-enum EnumConnectionState_HANDSHAKING {
+-
+-   EnumConnectionState_HANDSHAKING(int par3Int) {
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Handshake_C2S_0.class);
+-   }
+-}
+diff -r -U 3 minecraft-old\mc\EnumConnectionState_LOGIN.java minecraft\mc\EnumConnectionState_LOGIN.java
+--- minecraft-old\mc\EnumConnectionState_LOGIN.java	Mon Nov 04 22:42:23 2013
++++ minecraft\mc\EnumConnectionState_LOGIN.java	Mon Nov 04 22:48:38 2013
+@@ -1,18 +0,0 @@
+-package mc;
+-
+-import mc.Packet_Login_C2S_0;
+-import mc.Packet_Login_C2S_1;
+-import mc.Packet_Login_S2C_0;
+-import mc.Packet_Login_S2C_1;
+-import mc.Packet_Login_S2C_2;
+-
+-enum EnumConnectionState_LOGIN {
+-
+-   EnumConnectionState_LOGIN(int par3Int) {
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Login_S2C_0.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Login_S2C_1.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(2, Packet_Login_S2C_2.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Login_C2S_0.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Login_C2S_1.class);
+-   }
+-}
+diff -r -U 3 minecraft-old\mc\EnumConnectionState_PLAY.java minecraft\mc\EnumConnectionState_PLAY.java
+--- minecraft-old\mc\EnumConnectionState_PLAY.java	Mon Nov 04 22:42:23 2013
++++ minecraft\mc\EnumConnectionState_PLAY.java	Mon Nov 04 22:49:03 2013
+@@ -1,186 +0,0 @@
+-package mc;
+-
+-import mc.Packet_Play_C2S_0;
+-import mc.Packet_Play_C2S_1;
+-import mc.Packet_Play_C2S_10;
+-import mc.Packet_Play_C2S_11;
+-import mc.Packet_Play_C2S_12;
+-import mc.Packet_Play_C2S_13;
+-import mc.Packet_Play_C2S_14;
+-import mc.Packet_Play_C2S_15;
+-import mc.Packet_Play_C2S_16;
+-import mc.Packet_Play_C2S_17;
+-import mc.Packet_Play_C2S_18;
+-import mc.Packet_Play_C2S_19;
+-import mc.Packet_Play_C2S_2;
+-import mc.Packet_Play_C2S_20;
+-import mc.Packet_Play_C2S_21;
+-import mc.Packet_Play_C2S_22;
+-import mc.Packet_Play_C2S_23;
+-import mc.Packet_Play_C2S_3;
+-import mc.Packet_Play_C2S_4;
+-import mc.Packet_Play_C2S_5;
+-import mc.Packet_Play_C2S_6;
+-import mc.Packet_Play_C2S_7;
+-import mc.Packet_Play_C2S_8;
+-import mc.Packet_Play_C2S_9;
+-import mc.Packet_Play_S2C_0;
+-import mc.Packet_Play_S2C_1;
+-import mc.Packet_Play_S2C_10;
+-import mc.Packet_Play_S2C_11;
+-import mc.Packet_Play_S2C_12;
+-import mc.Packet_Play_S2C_13;
+-import mc.Packet_Play_S2C_14;
+-import mc.Packet_Play_S2C_15;
+-import mc.Packet_Play_S2C_16;
+-import mc.Packet_Play_S2C_17;
+-import mc.Packet_Play_S2C_18;
+-import mc.Packet_Play_S2C_19;
+-import mc.Packet_Play_S2C_2;
+-import mc.Packet_Play_S2C_20;
+-import mc.Packet_Play_S2C_21;
+-import mc.Packet_Play_S2C_22;
+-import mc.Packet_Play_S2C_23;
+-import mc.Packet_Play_S2C_24;
+-import mc.Packet_Play_S2C_25;
+-import mc.Packet_Play_S2C_26;
+-import mc.Packet_Play_S2C_27;
+-import mc.Packet_Play_S2C_28;
+-import mc.Packet_Play_S2C_29;
+-import mc.Packet_Play_S2C_3;
+-import mc.Packet_Play_S2C_30;
+-import mc.Packet_Play_S2C_31;
+-import mc.Packet_Play_S2C_32;
+-import mc.Packet_Play_S2C_33;
+-import mc.Packet_Play_S2C_34;
+-import mc.Packet_Play_S2C_35;
+-import mc.Packet_Play_S2C_36;
+-import mc.Packet_Play_S2C_37;
+-import mc.Packet_Play_S2C_38;
+-import mc.Packet_Play_S2C_39;
+-import mc.Packet_Play_S2C_4;
+-import mc.Packet_Play_S2C_40;
+-import mc.Packet_Play_S2C_41;
+-import mc.Packet_Play_S2C_42;
+-import mc.Packet_Play_S2C_43;
+-import mc.Packet_Play_S2C_44;
+-import mc.Packet_Play_S2C_45;
+-import mc.Packet_Play_S2C_46;
+-import mc.Packet_Play_S2C_47;
+-import mc.Packet_Play_S2C_48;
+-import mc.Packet_Play_S2C_49;
+-import mc.Packet_Play_S2C_5;
+-import mc.Packet_Play_S2C_50;
+-import mc.Packet_Play_S2C_51;
+-import mc.Packet_Play_S2C_52;
+-import mc.Packet_Play_S2C_53;
+-import mc.Packet_Play_S2C_54;
+-import mc.Packet_Play_S2C_55;
+-import mc.Packet_Play_S2C_56;
+-import mc.Packet_Play_S2C_57;
+-import mc.Packet_Play_S2C_58;
+-import mc.Packet_Play_S2C_59;
+-import mc.Packet_Play_S2C_6;
+-import mc.Packet_Play_S2C_60;
+-import mc.Packet_Play_S2C_61;
+-import mc.Packet_Play_S2C_62;
+-import mc.Packet_Play_S2C_63;
+-import mc.Packet_Play_S2C_64;
+-import mc.Packet_Play_S2C_7;
+-import mc.Packet_Play_S2C_8;
+-import mc.Packet_Play_S2C_9;
+-
+-enum EnumConnectionState_PLAY {
+-
+-   EnumConnectionState_PLAY(int par3Int) {
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Play_S2C_0.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Play_S2C_1.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(2, Packet_Play_S2C_2.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(3, Packet_Play_S2C_3.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(4, Packet_Play_S2C_4.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(5, Packet_Play_S2C_5.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(6, Packet_Play_S2C_6.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(7, Packet_Play_S2C_7.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(8, Packet_Play_S2C_8.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(9, Packet_Play_S2C_9.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(10, Packet_Play_S2C_10.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(11, Packet_Play_S2C_11.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(12, Packet_Play_S2C_12.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(13, Packet_Play_S2C_13.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(14, Packet_Play_S2C_14.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(15, Packet_Play_S2C_15.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(16, Packet_Play_S2C_16.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(17, Packet_Play_S2C_17.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(18, Packet_Play_S2C_18.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(19, Packet_Play_S2C_19.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(20, Packet_Play_S2C_20.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(21, Packet_Play_S2C_21.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(22, Packet_Play_S2C_22.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(23, Packet_Play_S2C_23.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(24, Packet_Play_S2C_24.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(25, Packet_Play_S2C_25.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(26, Packet_Play_S2C_26.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(27, Packet_Play_S2C_27.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(28, Packet_Play_S2C_28.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(29, Packet_Play_S2C_29.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(30, Packet_Play_S2C_30.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(31, Packet_Play_S2C_31.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(32, Packet_Play_S2C_32.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(33, Packet_Play_S2C_33.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(34, Packet_Play_S2C_34.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(35, Packet_Play_S2C_35.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(36, Packet_Play_S2C_36.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(37, Packet_Play_S2C_37.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(38, Packet_Play_S2C_38.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(39, Packet_Play_S2C_39.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(40, Packet_Play_S2C_40.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(41, Packet_Play_S2C_41.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(42, Packet_Play_S2C_42.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(43, Packet_Play_S2C_43.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(44, Packet_Play_S2C_44.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(45, Packet_Play_S2C_45.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(46, Packet_Play_S2C_46.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(47, Packet_Play_S2C_47.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(48, Packet_Play_S2C_48.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(49, Packet_Play_S2C_49.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(50, Packet_Play_S2C_50.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(51, Packet_Play_S2C_51.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(52, Packet_Play_S2C_52.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(53, Packet_Play_S2C_53.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(54, Packet_Play_S2C_54.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(55, Packet_Play_S2C_55.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(56, Packet_Play_S2C_56.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(57, Packet_Play_S2C_57.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(58, Packet_Play_S2C_58.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(59, Packet_Play_S2C_59.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(60, Packet_Play_S2C_60.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(61, Packet_Play_S2C_61.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(62, Packet_Play_S2C_62.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(63, Packet_Play_S2C_63.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(64, Packet_Play_S2C_64.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Play_C2S_0.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Play_C2S_1.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(2, Packet_Play_C2S_2.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(3, Packet_Play_C2S_3.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(4, Packet_Play_C2S_4.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(5, Packet_Play_C2S_5.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(6, Packet_Play_C2S_6.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(7, Packet_Play_C2S_7.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(8, Packet_Play_C2S_8.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(9, Packet_Play_C2S_9.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(10, Packet_Play_C2S_10.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(11, Packet_Play_C2S_11.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(12, Packet_Play_C2S_12.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(13, Packet_Play_C2S_13.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(14, Packet_Play_C2S_14.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(15, Packet_Play_C2S_15.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(16, Packet_Play_C2S_16.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(17, Packet_Play_C2S_17.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(18, Packet_Play_C2S_18.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(19, Packet_Play_C2S_19.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(20, Packet_Play_C2S_20.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(21, Packet_Play_C2S_21.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(22, Packet_Play_C2S_22.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(23, Packet_Play_C2S_23.class);
+-   }
+-}
+diff -r -U 3 minecraft-old\mc\EnumConnectionState_STATUS.java minecraft\mc\EnumConnectionState_STATUS.java
+--- minecraft-old\mc\EnumConnectionState_STATUS.java	Mon Nov 04 22:42:23 2013
++++ minecraft\mc\EnumConnectionState_STATUS.java	Mon Nov 04 22:49:05 2013
+@@ -1,16 +0,0 @@
+-package mc;
+-
+-import mc.Packet_Status_C2S_0;
+-import mc.Packet_Status_C2S_1;
+-import mc.Packet_Status_S2C_0;
+-import mc.Packet_Status_S2C_1;
+-
+-enum EnumConnectionState_STATUS {
+-
+-   EnumConnectionState_STATUS(int par3Int) {
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Status_C2S_0.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(0, Packet_Status_S2C_0.class);
+-      this.func_0_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Status_C2S_1.class);
+-      this.func_1_EnumConnectionState_EnumConnectionStateIClass(1, Packet_Status_S2C_1.class);
+-   }
+-}
+diff -r -U 3 minecraft-old\mc\EnumOption.java minecraft\mc\EnumOption.java
+--- minecraft-old\mc\EnumOption.java	Mon Nov 04 22:42:23 2013
++++ minecraft\mc\EnumOption.java	Mon Nov 04 22:47:25 2013
+@@ -62,7 +62,7 @@
+    }
+ 
+    private EnumOption(String par3String, boolean par4Boolean, boolean par5Boolean) {
+-      this(par1String, par2Int, par3String, par4Boolean, par5Boolean, 0.0F, 1.0F, 0.0F);
++      this(par3String, par4Boolean, par5Boolean, 0.0F, 1.0F, 0.0F);
+    }
+ 
+    private EnumOption(String par3String, boolean par4Boolean, boolean par5Boolean, float par6Float, float par7Float, float par8Float) {
+@@ -117,12 +117,7 @@
+       }
+ 
+       return par1Float;
+-   }
+-
+-   // $FF: synthetic method
+-   EnumOption(String par3String, boolean par4Boolean, boolean par5Boolean, float par6Float, float par7Float, float par8Float, JsonListOfStringType par9azx) {
+-      this(par1String, par2Int, par3String, par4Boolean, par5Boolean, par6Float, par7Float, par8Float);
+    }
+ 
+    // $FF: synthetic method
+    static float func_0_EnumOption_FEnumOption(EnumOption par1azz) {
+diff -r -U 3 minecraft-old\mc\EnumUseless.java minecraft\mc\EnumUseless.java
+--- minecraft-old\mc\EnumUseless.java	Mon Nov 04 22:42:23 2013
++++ minecraft\mc\EnumUseless.java	Mon Nov 04 22:47:47 2013
+@@ -4,7 +4,7 @@
+ 
+ enum EnumUseless {
+ 
+-   EnumUseless(String par3String, boolean par4Boolean, boolean par5Boolean, float par6Float, float par7Float, float par8Float) {}
++   ;EnumUseless(String par3String, boolean par4Boolean, boolean par5Boolean, float par6Float, float par7Float, float par8Float) {}
+ 
+    protected float func_0_FF(float par1Float) {
+       return (float)FastMath.func_1_FastMath_II((int)par1Float);
+diff -r -U 3 minecraft-old\mc\FXFactory.java minecraft\mc\FXFactory.java
+--- minecraft-old\mc\FXFactory.java	Mon Nov 04 22:42:24 2013
++++ minecraft\mc\FXFactory.java	Mon Nov 04 22:49:23 2013
+@@ -1559,7 +1559,7 @@
+          double var15 = this.field_0_FXFactory_L.field_26_Minecraft_L.field_9_Entity_D - par2Double;
+          double var17 = this.field_0_FXFactory_L.field_26_Minecraft_L.field_10_Entity_D - par3Double;
+          double var19 = this.field_0_FXFactory_L.field_26_Minecraft_L.field_11_Entity_D - par4Double;
+-         Object var21 = null;
++         FX var21 = null;
+          if(par1String.equals("hugeexplosion")) {
+             this.field_0_FXFactory_L.field_28_Minecraft_L.func_0_FXParticle_VFX(var21 = new FXExplodeHuge(this.field_7_FXFactory_L, par2Double, par3Double, par4Double, par5Double, par6Double, par7Double));
+          } else if(par1String.equals("largeexplode")) {
+diff -r -U 3 minecraft-old\mc\IntegratedServer.java minecraft\mc\IntegratedServer.java
+--- minecraft-old\mc\IntegratedServer.java	Mon Nov 04 22:42:26 2013
++++ minecraft\mc\IntegratedServer.java	Mon Nov 04 22:49:28 2013
+@@ -96,7 +96,7 @@
+       return true;
+    }
+ 
+-   protected void func_66_V() {
++   public void func_66_V() {
+       boolean var1 = this.field_0_IntegratedServer_Z;
+       this.field_0_IntegratedServer_Z = Minecraft.getMinecraft().func_0_Minecraft_NetHandlerImplPlayS2C() != null && Minecraft.getMinecraft().func_4_Minecraft_Z();
+       if(!var1 && this.field_0_IntegratedServer_Z) {
+diff -r -U 3 minecraft-old\mc\JsonSerializableSet.java minecraft\mc\JsonSerializableSet.java
+--- minecraft-old\mc\JsonSerializableSet.java	Mon Nov 04 22:42:27 2013
++++ minecraft\mc\JsonSerializableSet.java	Mon Nov 04 22:46:56 2013
+@@ -29,16 +29,4 @@
+    protected Set delegate() {
+       return this.field_0_JsonSerializableSet_Set;
+    }
+-
+-   // $FF: synthetic method
+-   // $FF: bridge method
+-   protected Collection delegate() {
+-      return this.delegate();
+-   }
+-
+-   // $FF: synthetic method
+-   // $FF: bridge method
+-   protected Object delegate() {
+-      return this.delegate();
+-   }
+ }
+diff -r -U 3 minecraft-old\mc\PacketBuffer.java minecraft\mc\PacketBuffer.java
+--- minecraft-old\mc\PacketBuffer.java	Mon Nov 04 22:42:29 2013
++++ minecraft\mc\PacketBuffer.java	Mon Nov 04 22:47:01 2013
+@@ -712,22 +712,4 @@
+    public boolean release(int par1Int) {
+       return this.field_0_PacketBuffer_L.release(par1Int);
+    }
+-
+-   // $FF: synthetic method
+-   // $FF: bridge method
+-   public ReferenceCounted retain(int par1Int) {
+-      return this.retain(par1Int);
+-   }
+-
+-   // $FF: synthetic method
+-   // $FF: bridge method
+-   public ReferenceCounted retain() {
+-      return this.retain();
+-   }
+-
+-   // $FF: synthetic method
+-   // $FF: bridge method
+-   public int compareTo(Object par1Object) {
+-      return this.compareTo((ByteBuf)par1Object);
+-   }
+ }
+diff -r -U 3 minecraft-old\mc\ResourcePackFolder.java minecraft\mc\ResourcePackFolder.java
+--- minecraft-old\mc\ResourcePackFolder.java	Mon Nov 04 22:42:31 2013
++++ minecraft\mc\ResourcePackFolder.java	Mon Nov 04 22:49:41 2013
+@@ -3,6 +3,7 @@
+ import com.google.common.collect.Sets;
+ import java.io.BufferedInputStream;
+ import java.io.File;
++import java.io.FileFilter;
+ import java.io.FileInputStream;
+ import java.io.FileNotFoundException;
+ import java.io.InputStream;
+@@ -29,7 +30,7 @@
+       HashSet var1 = Sets.newHashSet();
+       File var2 = new File(this.field_0_ResourcePackFilesystem_File, "assets/");
+       if(var2.isDirectory()) {
+-         File[] var3 = var2.listFiles(DirectoryFileFilter.DIRECTORY);
++         File[] var3 = var2.listFiles((FileFilter)DirectoryFileFilter.DIRECTORY);
+          int var4 = var3.length;
+ 
+          for(int var5 = 0; var5 < var4; ++var5) {
+diff -r -U 3 minecraft-old\mc\ResourcePackZipFile.java minecraft\mc\ResourcePackZipFile.java
+--- minecraft-old\mc\ResourcePackZipFile.java	Mon Nov 04 22:42:31 2013
++++ minecraft\mc\ResourcePackZipFile.java	Mon Nov 04 22:50:14 2013
+@@ -83,7 +83,7 @@
+       return var3;
+    }
+ 
+-   protected void finalize() throws IOException {
++   protected void finalize() throws Throwable {
+       this.close();
+       super.finalize();
+    }
+diff -r -U 3 minecraft-old\mc\Minecraft.java minecraft\mc\Minecraft.java
+--- minecraft-old\mc\Minecraft.java	Mon Nov 04 22:42:31 2013
++++ minecraft\mc\Minecraft.java	Mon Nov 04 22:50:14 2013
+@@ -696,1 +696,1 @@
+-                     this.func_7_Minecraft_V();
++                     while(true) this.func_7_Minecraft_V(); // decompiler fix
+@@ -700,1 +700,1 @@
+-                     this.func_7_Minecraft_V();
++                     while(true) this.func_7_Minecraft_V(); // decompiler fix
+diff -r -U 3 minecraft-old\mc\NetHandlerImplHandshakeC2S.java minecraft\mc\NetHandlerImplHandshakeC2S.java
+--- minecraft-old\mc\NetHandlerImplHandshakeC2S.java	Mon Nov 04 22:42:31 2013
++++ minecraft\mc\NetHandlerImplHandshakeC2S.java	Mon Nov 04 22:50:14 2013
+@@ -34,1 +34,2 @@
++         break; // decompiler fixs
+      case 2:
+diff -r -U 3 minecraft-old\mc\ThreadRunnableFileIO.java minecraft\mc\ThreadRunnableFileIO.java
+--- minecraft-old\mc\ThreadRunnableFileIO.java	Mon Nov 04 22:42:31 2013
++++ minecraft\mc\ThreadRunnableFileIO.java	Mon Nov 04 22:50:14 2013
+@@ -24,1 +24,1 @@
+-      this.func_2_ThreadRunnableFileIO_V();
++      while(true) this.func_2_ThreadRunnableFileIO_V(); // decompiler fix

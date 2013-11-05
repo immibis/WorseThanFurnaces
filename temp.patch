@@ -1,0 +1,4423 @@
+--- ../minecraft.java	Tue Nov  5 17:08:55 2013
++++ ../../minecraft.java	Tue Nov  5 00:14:55 2013
+@@ -1,2400 +1,2020 @@
+-package mc;
+-
+-import com.google.common.collect.Lists;
+-import io.netty.util.concurrent.GenericFutureListener;
+-import java.awt.Toolkit;
+-import java.awt.image.BufferedImage;
+-import java.io.File;
+-import java.io.IOException;
+-import java.lang.reflect.Field;
+-import java.net.Proxy;
+-import java.net.SocketAddress;
+-import java.nio.ByteBuffer;
+-import java.text.DecimalFormat;
+-import java.text.SimpleDateFormat;
+-import java.util.ArrayList;
+-import java.util.Collections;
+-import java.util.Date;
+-import java.util.HashSet;
+-import java.util.Iterator;
+-import java.util.List;
+-import javax.imageio.ImageIO;
+-import mco.GuiScreenMainMenu2;
+-import net.minecraft.client.ClientBrandRetriever;
+-import net.minecraft.server.MinecraftServer;
+-import org.apache.logging.log4j.LogManager;
+-import org.apache.logging.log4j.Logger;
+-import org.lwjgl.LWJGLException;
+-import org.lwjgl.Sys;
+-import org.lwjgl.input.Keyboard;
+-import org.lwjgl.input.Mouse;
+-import org.lwjgl.opengl.ContextCapabilities;
+-import org.lwjgl.opengl.Display;
+-import org.lwjgl.opengl.DisplayMode;
+-import org.lwjgl.opengl.GL11;
+-import org.lwjgl.opengl.GL20;
+-import org.lwjgl.opengl.GLContext;
+-import org.lwjgl.opengl.PixelFormat;
+-import org.lwjgl.util.glu.GLU;
+-
+-public class Minecraft implements Snoopable
+-{
+-    private static final Logger field_1_Minecraft_L = LogManager.getLogger();
+-    private static final ResourceLocation field_2_Minecraft_L = new ResourceLocation("textures/gui/title/mojang.png");
+-    public static final boolean field_4_Minecraft_Z = UUIDUtils.func_0_UUIDUtils_EnumOperatingSystem() == EnumOperatingSystem.MACOS;
+-    public static byte[] field_0_Minecraft_1B = new byte[10485760];
+-    private static final List field_0_Minecraft_List = Lists.newArrayList(new DisplayMode[] {new DisplayMode(2560, 1600), new DisplayMode(2880, 1800)});
+-    private final File field_0_Minecraft_File;
+-    private ServerListFileEntry field_3_Minecraft_L;
+-    private TextureWrapper field_4_Minecraft_L;
+-    private static Minecraft field_5_Minecraft_L;
+-    public PlayerPacketSenderS2C field_22_Minecraft_L;
+-    private boolean field_1_Minecraft_Z;
+-    private boolean field_2_Minecraft_Z;
+-    private CrashReport field_6_Minecraft_L;
+-    public int field_8_Minecraft_I;
+-    public int field_9_Minecraft_I;
+-    private Timer field_7_Minecraft_L = new Timer(20.0F);
+-    private Snooper field_8_Minecraft_L = new Snooper("client", this, MinecraftServer.func_6_J());
+-    public WorldClient field_23_Minecraft_L;
+-    public FXFactory field_24_Minecraft_L;
+-    public EntityPlayerClient field_25_Minecraft_L;
+-    public EntityLiving field_26_Minecraft_L;
+-    public Entity field_27_Minecraft_L;
+-    public FXParticle field_28_Minecraft_L;
+-    private final SessionInfo field_9_Minecraft_L;
+-    private boolean field_3_Minecraft_Z;
+-    public FontRenderer field_29_Minecraft_L;
+-    public FontRenderer field_30_Minecraft_L;
+-    public GuiScreen field_31_Minecraft_L;
+-    public TexturePackDownloader field_32_Minecraft_L;
+-    public Renderer field_33_Minecraft_L;
+-    private int field_1_Minecraft_I;
+-    private int field_2_Minecraft_I;
+-    private int field_3_Minecraft_I;
+-    private IntegratedServer field_10_Minecraft_L;
+-    public GuiAchievementPopup field_34_Minecraft_L;
+-    public GuiIngame field_35_Minecraft_L;
+-    public boolean field_9_Minecraft_Z;
+-    public RayTraceResult field_36_Minecraft_L;
+-    public GameOptions field_37_Minecraft_L;
+-    public MouseGrabHelper field_38_Minecraft_L;
+-    public final File field_2_Minecraft_File;
+-    private final File field_1_Minecraft_File;
+-    private final String field_1_Minecraft_String;
+-    private final Proxy field_0_Minecraft_Proxy;
+-    private IWorldListLoader field_11_Minecraft_L;
+-    private static int field_4_Minecraft_I;
+-    private int field_5_Minecraft_I;
+-    private boolean field_5_Minecraft_Z;
+-    private String field_2_Minecraft_String;
+-    private int field_6_Minecraft_I;
+-    boolean field_10_Minecraft_Z;
+-    public boolean field_11_Minecraft_Z;
+-    long field_3_Minecraft_J = func_0_Minecraft_J();
+-    private int field_7_Minecraft_I;
+-    private final boolean field_6_Minecraft_Z;
+-    private final boolean field_7_Minecraft_Z;
+-    private MCChannelInboundHandler field_12_Minecraft_L;
+-    private boolean field_8_Minecraft_Z;
+-    public final Profiler field_0_Minecraft_L = new Profiler();
+-    private long field_2_Minecraft_J = -1L;
+-    private IResourceManagerExtended field_13_Minecraft_L;
+-    private final ResourceMetadataSectionTypeRegistry field_14_Minecraft_L = new ResourceMetadataSectionTypeRegistry();
+-    private List field_1_Minecraft_List = Lists.newArrayList();
+-    private ResourcePackDefault field_15_Minecraft_L;
+-    private ResourcePackDownloader field_16_Minecraft_L;
+-    private LanguageList field_17_Minecraft_L;
+-    private Framebuffer field_18_Minecraft_L;
+-    private TextureMap field_19_Minecraft_L;
+-    private SoundEventAccessorCompositeSerializer field_20_Minecraft_L;
+-    private MusicTicker field_21_Minecraft_L;
+-    volatile boolean field_0_Minecraft_Z = true;
+-    public String field_0_Minecraft_String = "";
+-    long field_0_Minecraft_J = func_0_Minecraft_J();
+-    int field_0_Minecraft_I;
+-    long field_1_Minecraft_J = -1L;
+-    private String field_3_Minecraft_String = "root";
+-
+-    public Minecraft(SessionInfo par1baf, int par2Int, int par3Int, boolean par4Boolean, boolean par5Boolean, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10String)
+-    {
+-        field_5_Minecraft_L = this;
+-        this.field_2_Minecraft_File = par6File;
+-        this.field_1_Minecraft_File = par7File;
+-        this.field_0_Minecraft_File = par8File;
+-        this.field_1_Minecraft_String = par10String;
+-        this.field_15_Minecraft_L = new ResourcePackDefault(this.field_1_Minecraft_File);
+-        this.func_4_Minecraft_V();
+-        this.field_0_Minecraft_Proxy = par9Proxy == null ? Proxy.NO_PROXY : par9Proxy;
+-        this.func_2_Minecraft_V();
+-        this.field_9_Minecraft_L = par1baf;
+-        field_1_Minecraft_L.info("Setting user: " + par1baf.func_2_SessionInfo_String());
+-        field_1_Minecraft_L.info("(Session ID is " + par1baf.func_0_SessionInfo_String() + ")");
+-        this.field_7_Minecraft_Z = par5Boolean;
+-        this.field_8_Minecraft_I = par2Int;
+-        this.field_9_Minecraft_I = par3Int;
+-        this.field_2_Minecraft_I = par2Int;
+-        this.field_3_Minecraft_I = par3Int;
+-        this.field_1_Minecraft_Z = par4Boolean;
+-        this.field_6_Minecraft_Z = func_5_Minecraft_Z();
+-        ImageIO.setUseCache(false);
+-        DispenseActionInitializer.func_1_DispenseActionInitializer_V();
+-    }
+-
+-    private static boolean func_5_Minecraft_Z()
+-    {
+-        String[] var0 = new String[] {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
+-        String[] var1 = var0;
+-        int var2 = var0.length;
+-
+-        for (int var3 = 0; var3 < var2; ++var3)
+-        {
+-            String var4 = var1[var3];
+-            String var5 = System.getProperty(var4);
+-
+-            if (var5 != null && var5.contains("64"))
+-            {
+-                return true;
+-            }
+-        }
+-
+-        return false;
+-    }
+-
+-    public static void func_0_Minecraft_VString(String par1String)
+-    {
+-        try
+-        {
+-            Toolkit var1 = Toolkit.getDefaultToolkit();
+-            Class var2 = var1.getClass();
+-
+-            if (var2.getName().equals("sun.awt.X11.XToolkit"))
+-            {
+-                Field var3 = var2.getDeclaredField("awtAppClassName");
+-                var3.setAccessible(true);
+-                var3.set(var1, par1String);
+-            }
+-        }
+-        catch (Exception var4)
+-        {
+-            ;
+-        }
+-    }
+-
+-    public Framebuffer func_0_Minecraft_Framebuffer()
+-    {
+-        return this.field_18_Minecraft_L;
+-    }
+-
+-    private void func_2_Minecraft_V()
+-    {
+-        ThreadTimerHack var1 = new ThreadTimerHack(this, "Timer hack thread");
+-        var1.setDaemon(true);
+-        var1.start();
+-    }
+-
+-    public void func_0_Minecraft_VCrashReport(CrashReport par1b)
+-    {
+-        this.field_2_Minecraft_Z = true;
+-        this.field_6_Minecraft_L = par1b;
+-    }
+-
+-    public void func_1_Minecraft_VCrashReport(CrashReport par1b)
+-    {
+-        File var2 = new File(getMinecraft().field_2_Minecraft_File, "crash-reports");
+-        File var3 = new File(var2, "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-client.txt");
+-        System.out.println(par1b.func_2_CrashReport_String());
+-
+-        if (par1b.func_0_CrashReport_File() != null)
+-        {
+-            System.out.println("#@!@# Game crashed! Crash report saved to: #@!@# " + par1b.func_0_CrashReport_File());
+-            System.exit(-1);
+-        }
+-        else if (par1b.func_0_CrashReport_ZFile(var3))
+-        {
+-            System.out.println("#@!@# Game crashed! Crash report saved to: #@!@# " + var3.getAbsolutePath());
+-            System.exit(-1);
+-        }
+-        else
+-        {
+-            System.out.println("#@?@# Game crashed! Crash report could not be saved. #@?@#");
+-            System.exit(-2);
+-        }
+-    }
+-
+-    public void func_0_Minecraft_VStringI(String par1String, int par2Int)
+-    {
+-        this.field_2_Minecraft_String = par1String;
+-        this.field_6_Minecraft_I = par2Int;
+-    }
+-
+-    private void func_3_Minecraft_V() throws LWJGLException
+-    {
+-        this.field_37_Minecraft_L = new GameOptions(this, this.field_2_Minecraft_File);
+-
+-        if (this.field_37_Minecraft_L.field_1_GameOptions_I > 0 && this.field_37_Minecraft_L.field_0_GameOptions_I > 0)
+-        {
+-            this.field_8_Minecraft_I = this.field_37_Minecraft_L.field_0_GameOptions_I;
+-            this.field_9_Minecraft_I = this.field_37_Minecraft_L.field_1_GameOptions_I;
+-        }
+-
+-        if (this.field_1_Minecraft_Z)
+-        {
+-            Display.setFullscreen(true);
+-            this.field_8_Minecraft_I = Display.getDisplayMode().getWidth();
+-            this.field_9_Minecraft_I = Display.getDisplayMode().getHeight();
+-
+-            if (this.field_8_Minecraft_I <= 0)
+-            {
+-                this.field_8_Minecraft_I = 1;
+-            }
+-
+-            if (this.field_9_Minecraft_I <= 0)
+-            {
+-                this.field_9_Minecraft_I = 1;
+-            }
+-        }
+-        else
+-        {
+-            Display.setDisplayMode(new DisplayMode(this.field_8_Minecraft_I, this.field_9_Minecraft_I));
+-        }
+-
+-        Display.setResizable(true);
+-        Display.setTitle("Minecraft YOUR MOM");
+-        field_1_Minecraft_L.info("LWJGL Version: " + Sys.getVersion());
+-        EnumOperatingSystem var1 = UUIDUtils.func_0_UUIDUtils_EnumOperatingSystem();
+-
+-        if (var1 != EnumOperatingSystem.MACOS)
+-        {
+-            try
+-            {
+-                Display.setIcon(new ByteBuffer[] {this.func_0_Minecraft_ByteBufferFile(new File(this.field_1_Minecraft_File, "/icons/icon_16x16.png")), this.func_0_Minecraft_ByteBufferFile(new File(this.field_1_Minecraft_File, "/icons/icon_32x32.png"))});
+-            }
+-            catch (IOException var6)
+-            {
+-                field_1_Minecraft_L.error("Couldn\'t set icon", var6);
+-            }
+-
+-            if (var1 != EnumOperatingSystem.WINDOWS)
+-            {
+-                func_0_Minecraft_VString("Minecraft");
+-            }
+-        }
+-
+-        try
+-        {
+-            Display.create((new PixelFormat()).withDepthBits(24));
+-        }
+-        catch (LWJGLException var5)
+-        {
+-            field_1_Minecraft_L.error("Couldn\'t set pixel format", var5);
+-
+-            try
+-            {
+-                Thread.sleep(1000L);
+-            }
+-            catch (InterruptedException var4)
+-            {
+-                ;
+-            }
+-
+-            if (this.field_1_Minecraft_Z)
+-            {
+-                this.func_5_Minecraft_V();
+-            }
+-
+-            Display.create();
+-        }
+-
+-        GLMultiTextureUtils.func_0_GLMultiTextureUtils_V();
+-        this.field_18_Minecraft_L = new Framebuffer(this.field_8_Minecraft_I, this.field_9_Minecraft_I, true);
+-        this.field_18_Minecraft_L.func_0_Framebuffer_VFFFF(0.0F, 0.0F, 0.0F, 0.0F);
+-        this.field_34_Minecraft_L = new GuiAchievementPopup(this);
+-        this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionTextureSerializer(), ResourceMetadataSectionTexture.class);
+-        this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionFontSerializer(), ResourceMetadataSectionFont.class);
+-        this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionAnimationSerializer(), ResourceMetadataSectionAnimation.class);
+-        this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionPackSerializer(), ResourceMetadataSectionPack.class);
+-        this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionLanguageSerializer(), ResourceMetadataSectionLanguage.class);
+-        this.field_11_Minecraft_L = new WorldListLoader(new File(this.field_2_Minecraft_File, "saves"));
+-        this.field_16_Minecraft_L = new ResourcePackDownloader(this.field_0_Minecraft_File, new File(this.field_2_Minecraft_File, "server-resource-packs"), this.field_15_Minecraft_L, this.field_14_Minecraft_L, this.field_37_Minecraft_L);
+-        this.field_13_Minecraft_L = new ResourceManagerExtendedImpl(this.field_14_Minecraft_L);
+-        this.field_17_Minecraft_L = new LanguageList(this.field_14_Minecraft_L, this.field_37_Minecraft_L.field_1_GameOptions_String);
+-        this.field_13_Minecraft_L.func_0_VIReloadable(this.field_17_Minecraft_L);
+-        this.func_13_Minecraft_V();
+-        this.field_4_Minecraft_L = new TextureWrapper(this.field_13_Minecraft_L);
+-        this.field_13_Minecraft_L.func_0_VIReloadable(this.field_4_Minecraft_L);
+-        this.field_20_Minecraft_L = new SoundEventAccessorCompositeSerializer(this.field_13_Minecraft_L, this.field_37_Minecraft_L);
+-        this.field_21_Minecraft_L = new MusicTicker(this);
+-        this.field_13_Minecraft_L.func_0_VIReloadable(this.field_20_Minecraft_L);
+-        this.func_6_Minecraft_V();
+-        this.field_29_Minecraft_L = new FontRenderer(this.field_37_Minecraft_L, new ResourceLocation("textures/font/ascii.png"), this.field_4_Minecraft_L, false);
+-
+-        if (this.field_37_Minecraft_L.field_1_GameOptions_String != null)
+-        {
+-            this.field_29_Minecraft_L.func_0_FontRenderer_VZ(this.field_17_Minecraft_L.func_0_LanguageList_Z() || this.field_37_Minecraft_L.field_8_GameOptions_Z);
+-            this.field_29_Minecraft_L.func_1_FontRenderer_VZ(this.field_17_Minecraft_L.func_1_LanguageList_Z());
+-        }
+-
+-        this.field_30_Minecraft_L = new FontRenderer(this.field_37_Minecraft_L, new ResourceLocation("textures/font/ascii_sga.png"), this.field_4_Minecraft_L, false);
+-        this.field_13_Minecraft_L.func_0_VIReloadable(this.field_29_Minecraft_L);
+-        this.field_13_Minecraft_L.func_0_VIReloadable(this.field_30_Minecraft_L);
+-        this.field_13_Minecraft_L.func_0_VIReloadable(new ReloaderGrassColour());
+-        this.field_13_Minecraft_L.func_0_VIReloadable(new ReloaderFoliageColour());
+-        RenderEntityRegistry.field_0_RenderEntityRegistry_L.field_2_RenderEntityRegistry_L = new HeldItemRenderer(this);
+-        this.field_33_Minecraft_L = new Renderer(this, this.field_13_Minecraft_L);
+-        this.field_13_Minecraft_L.func_0_VIReloadable(this.field_33_Minecraft_L);
+-        AchievementInitializer.field_12_AchievementInitializer_L.func_0_StatAchievement_StatAchievementAchievementTextFormatter(new AchievementTextFormatterInventoryKey(this));
+-        this.field_38_Minecraft_L = new MouseGrabHelper();
+-        this.func_1_Minecraft_VString("Pre startup");
+-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+-        GL11.glShadeModel(GL11.GL_SMOOTH);
+-        GL11.glClearDepth(1.0D);
+-        GL11.glEnable(GL11.GL_DEPTH_TEST);
+-        GL11.glDepthFunc(GL11.GL_LEQUAL);
+-        GL11.glEnable(GL11.GL_ALPHA_TEST);
+-        GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
+-        GL11.glCullFace(GL11.GL_BACK);
+-        GL11.glMatrixMode(GL11.GL_PROJECTION);
+-        GL11.glLoadIdentity();
+-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+-        this.func_1_Minecraft_VString("Startup");
+-        this.field_24_Minecraft_L = new FXFactory(this);
+-        this.field_19_Minecraft_L = new TextureMap(0, "textures/blocks");
+-        this.field_19_Minecraft_L.func_1_TextureMap_VI(this.field_37_Minecraft_L.field_3_GameOptions_I);
+-        this.field_19_Minecraft_L.func_0_TextureMap_VI(this.field_37_Minecraft_L.field_2_GameOptions_I);
+-        this.field_4_Minecraft_L.func_0_TextureWrapper_ZResourceLocationTextureMap(TextureMap.locationBlocksTexture, this.field_19_Minecraft_L);
+-        this.field_4_Minecraft_L.func_0_TextureWrapper_ZResourceLocationTextureMap(TextureMap.locationItemsTexture, new TextureMap(1, "textures/items"));
+-        GL11.glViewport(0, 0, this.field_8_Minecraft_I, this.field_9_Minecraft_I);
+-        this.field_28_Minecraft_L = new FXParticle(this.field_23_Minecraft_L, this.field_4_Minecraft_L);
+-        this.func_1_Minecraft_VString("Post startup");
+-        this.field_35_Minecraft_L = new GuiIngame(this);
+-
+-        if (this.field_2_Minecraft_String != null)
+-        {
+-            this.func_0_Minecraft_VGuiScreen(new GuiScreenConnecting(new GuiScreenMainMenu2(), this, this.field_2_Minecraft_String, this.field_6_Minecraft_I));
+-        }
+-        else
+-        {
+-            this.func_0_Minecraft_VGuiScreen(new GuiScreenMainMenu2());
+-        }
+-
+-        this.field_32_Minecraft_L = new TexturePackDownloader(this);
+-
+-        if (this.field_37_Minecraft_L.field_21_GameOptions_Z && !this.field_1_Minecraft_Z)
+-        {
+-            this.func_22_Minecraft_V();
+-        }
+-
+-        Display.setVSyncEnabled(this.field_37_Minecraft_L.field_22_GameOptions_Z);
+-    }
+-
+-    public void func_13_Minecraft_V()
+-    {
+-        ArrayList var1 = Lists.newArrayList(this.field_1_Minecraft_List);
+-        Iterator var2 = this.field_16_Minecraft_L.func_1_ResourcePackDownloader_List().iterator();
+-
+-        while (var2.hasNext())
+-        {
+-            ResourcePackDownloader_UnknownInner var3 = (ResourcePackDownloader_UnknownInner)var2.next();
+-            var1.add(var3.func_0_ResourcePackDownloader_UnknownInner_IResourcePack());
+-        }
+-
+-        if (this.field_16_Minecraft_L.func_0_ResourcePackDownloader_IResourcePack() != null)
+-        {
+-            var1.add(this.field_16_Minecraft_L.func_0_ResourcePackDownloader_IResourcePack());
+-        }
+-
+-        this.field_17_Minecraft_L.func_0_LanguageList_VList(var1);
+-        this.field_13_Minecraft_L.func_0_VList(var1);
+-
+-        if (this.field_24_Minecraft_L != null)
+-        {
+-            this.field_24_Minecraft_L.func_0_FXFactory_V();
+-        }
+-    }
+-
+-    private void func_4_Minecraft_V()
+-    {
+-        this.field_1_Minecraft_List.add(this.field_15_Minecraft_L);
+-    }
+-
+-    private ByteBuffer func_0_Minecraft_ByteBufferFile(File par1File) throws IOException
+-    {
+-        BufferedImage var2 = ImageIO.read(par1File);
+-        int[] var3 = var2.getRGB(0, 0, var2.getWidth(), var2.getHeight(), (int[])null, 0, var2.getWidth());
+-        ByteBuffer var4 = ByteBuffer.allocate(4 * var3.length);
+-        int[] var5 = var3;
+-        int var6 = var3.length;
+-
+-        for (int var7 = 0; var7 < var6; ++var7)
+-        {
+-            int var8 = var5[var7];
+-            var4.putInt(var8 << 8 | var8 >> 24 & 255);
+-        }
+-
+-        var4.flip();
+-        return var4;
+-    }
+-
+-    private void func_5_Minecraft_V() throws LWJGLException
+-    {
+-        HashSet var1 = new HashSet();
+-        Collections.addAll(var1, Display.getAvailableDisplayModes());
+-        DisplayMode var2 = Display.getDesktopDisplayMode();
+-
+-        if (!var1.contains(var2) && UUIDUtils.func_0_UUIDUtils_EnumOperatingSystem() == EnumOperatingSystem.MACOS)
+-        {
+-            Iterator var3 = field_0_Minecraft_List.iterator();
+-
+-            while (var3.hasNext())
+-            {
+-                DisplayMode var4 = (DisplayMode)var3.next();
+-                boolean var5 = true;
+-                Iterator var6 = var1.iterator();
+-                DisplayMode var7;
+-
+-                while (var6.hasNext())
+-                {
+-                    var7 = (DisplayMode)var6.next();
+-
+-                    if (var7.getBitsPerPixel() == 32 && var7.getWidth() == var4.getWidth() && var7.getHeight() == var4.getHeight())
+-                    {
+-                        var5 = false;
+-                        break;
+-                    }
+-                }
+-
+-                if (!var5)
+-                {
+-                    var6 = var1.iterator();
+-
+-                    while (var6.hasNext())
+-                    {
+-                        var7 = (DisplayMode)var6.next();
+-
+-                        if (var7.getBitsPerPixel() == 32 && var7.getWidth() == var4.getWidth() / 2 && var7.getHeight() == var4.getHeight() / 2)
+-                        {
+-                            var2 = var7;
+-                            break;
+-                        }
+-                    }
+-                }
+-            }
+-        }
+-
+-        Display.setDisplayMode(var2);
+-        this.field_8_Minecraft_I = var2.getWidth();
+-        this.field_9_Minecraft_I = var2.getHeight();
+-    }
+-
+-    private void func_6_Minecraft_V()
+-    {
+-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+-        this.field_4_Minecraft_L.bindTexture(field_2_Minecraft_L);
+-        ScaledResolution var1 = new ScaledResolution(this.field_37_Minecraft_L, this.field_8_Minecraft_I, this.field_9_Minecraft_I);
+-        int var2 = var1.func_2_ScaledResolution_I();
+-        Framebuffer var3 = new Framebuffer(var1.func_0_ScaledResolution_I() * var2, var1.func_1_ScaledResolution_I() * var2, true);
+-        var3.func_0_Framebuffer_VZ(false);
+-        GL11.glMatrixMode(GL11.GL_PROJECTION);
+-        GL11.glLoadIdentity();
+-        GL11.glOrtho(0.0D, (double)var1.func_0_ScaledResolution_I(), (double)var1.func_1_ScaledResolution_I(), 0.0D, 1000.0D, 3000.0D);
+-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+-        GL11.glLoadIdentity();
+-        GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
+-        GL11.glDisable(GL11.GL_LIGHTING);
+-        GL11.glDisable(GL11.GL_FOG);
+-        GL11.glDisable(GL11.GL_DEPTH_TEST);
+-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+-        this.field_4_Minecraft_L.bindTexture(field_2_Minecraft_L);
+-        Tessellator var4 = Tessellator.instance;
+-        var4.func_0_Tessellator_V();
+-        var4.func_3_Tessellator_VI(16777215);
+-        var4.addVertexWithUV(0.0D, (double)this.field_9_Minecraft_I, 0.0D, 0.0D, 0.0D);
+-        var4.addVertexWithUV((double)this.field_8_Minecraft_I, (double)this.field_9_Minecraft_I, 0.0D, 0.0D, 0.0D);
+-        var4.addVertexWithUV((double)this.field_8_Minecraft_I, 0.0D, 0.0D, 0.0D, 0.0D);
+-        var4.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+-        var4.draw();
+-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+-        var4.func_3_Tessellator_VI(16777215);
+-        short var5 = 256;
+-        short var6 = 256;
+-        this.func_0_Minecraft_VIIIIII((var1.func_0_ScaledResolution_I() - var5) / 2, (var1.func_1_ScaledResolution_I() - var6) / 2, 0, 0, var5, var6);
+-        GL11.glDisable(GL11.GL_LIGHTING);
+-        GL11.glDisable(GL11.GL_FOG);
+-        var3.func_4_Framebuffer_V();
+-        var3.func_2_Framebuffer_VII(var1.func_0_ScaledResolution_I() * var2, var1.func_1_ScaledResolution_I() * var2);
+-        GL11.glEnable(GL11.GL_ALPHA_TEST);
+-        GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
+-        GL11.glFlush();
+-        this.func_16_Minecraft_V();
+-    }
+-
+-    public void func_0_Minecraft_VIIIIII(int par1Int, int par2Int, int par3Int, int par4Int, int par5Int, int par6Int)
+-    {
+-        float var7 = 0.00390625F;
+-        float var8 = 0.00390625F;
+-        Tessellator var9 = Tessellator.instance;
+-        var9.func_0_Tessellator_V();
+-        var9.addVertexWithUV((double)(par1Int + 0), (double)(par2Int + par6Int), 0.0D, (double)((float)(par3Int + 0) * var7), (double)((float)(par4Int + par6Int) * var8));
+-        var9.addVertexWithUV((double)(par1Int + par5Int), (double)(par2Int + par6Int), 0.0D, (double)((float)(par3Int + par5Int) * var7), (double)((float)(par4Int + par6Int) * var8));
+-        var9.addVertexWithUV((double)(par1Int + par5Int), (double)(par2Int + 0), 0.0D, (double)((float)(par3Int + par5Int) * var7), (double)((float)(par4Int + 0) * var8));
+-        var9.addVertexWithUV((double)(par1Int + 0), (double)(par2Int + 0), 0.0D, (double)((float)(par3Int + 0) * var7), (double)((float)(par4Int + 0) * var8));
+-        var9.draw();
+-    }
+-
+-    public IWorldListLoader func_0_Minecraft_IWorldListLoader()
+-    {
+-        return this.field_11_Minecraft_L;
+-    }
+-
+-    public void func_0_Minecraft_VGuiScreen(GuiScreen par1bcd)
+-    {
+-        if (this.field_31_Minecraft_L != null)
+-        {
+-            this.field_31_Minecraft_L.func_36_V();
+-        }
+-
+-        if (par1bcd == null && this.field_23_Minecraft_L == null)
+-        {
+-            par1bcd = new GuiScreenMainMenu2();
+-        }
+-        else if (par1bcd == null && this.field_25_Minecraft_L.func_18_F() <= 0.0F)
+-        {
+-            par1bcd = new GuiScreenDeath();
+-        }
+-
+-        if (par1bcd instanceof GuiScreenMainMenu2)
+-        {
+-            this.field_37_Minecraft_L.field_3_GameOptions_Z = false;
+-            this.field_35_Minecraft_L.func_0_GuiIngame_GuiChat().func_0_GuiChat_V();
+-        }
+-
+-        this.field_31_Minecraft_L = (GuiScreen)par1bcd;
+-
+-        if (par1bcd != null)
+-        {
+-            this.func_20_Minecraft_V();
+-            ScaledResolution var2 = new ScaledResolution(this.field_37_Minecraft_L, this.field_8_Minecraft_I, this.field_9_Minecraft_I);
+-            int var3 = var2.func_0_ScaledResolution_I();
+-            int var4 = var2.func_1_ScaledResolution_I();
+-            ((GuiScreen)par1bcd).func_0_GuiScreen_VMinecraftII(this, var3, var4);
+-            this.field_9_Minecraft_Z = false;
+-        }
+-        else
+-        {
+-            this.field_20_Minecraft_L.func_3_SoundEventAccessorCompositeSerializer_V();
+-            this.func_19_Minecraft_V();
+-        }
+-    }
+-
+-    private void func_1_Minecraft_VString(String par1String)
+-    {
+-        int var2 = GL11.glGetError();
+-
+-        if (var2 != 0)
+-        {
+-            String var3 = GLU.gluErrorString(var2);
+-            field_1_Minecraft_L.error("########## GL ERROR ##########");
+-            field_1_Minecraft_L.error("@ " + par1String);
+-            field_1_Minecraft_L.error(var2 + ": " + var3);
+-        }
+-    }
+-
+-    public void func_14_Minecraft_V()
+-    {
+-        try
+-        {
+-            field_1_Minecraft_L.info("Stopping!");
+-
+-            try
+-            {
+-                this.func_0_Minecraft_VWorldClient((WorldClient)null);
+-            }
+-            catch (Throwable var7)
+-            {
+-                ;
+-            }
+-
+-            try
+-            {
+-                GLUtils2.func_0_GLUtils2_V();
+-            }
+-            catch (Throwable var6)
+-            {
+-                ;
+-            }
+-
+-            this.field_20_Minecraft_L.func_2_SoundEventAccessorCompositeSerializer_V();
+-        }
+-        finally
+-        {
+-            Display.destroy();
+-
+-            if (!this.field_2_Minecraft_Z)
+-            {
+-                System.exit(0);
+-            }
+-        }
+-
+-        System.gc();
+-    }
+-
+-    public void func_15_Minecraft_V()
+-    {
+-        this.field_0_Minecraft_Z = true;
+-        CrashReport var2;
+-
+-        try
+-        {
+-            this.func_3_Minecraft_V();
+-        }
+-        catch (Throwable var11)
+-        {
+-            var2 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var11, "Initializing game");
+-            var2.func_0_CrashReport_CrashCategoryWorldLocString("Initialization");
+-            this.func_1_Minecraft_VCrashReport(this.func_0_Minecraft_CrashReportCrashReport(var2));
+-            return;
+-        }
+-
+-        while (true)
+-        {
+-            try
+-            {
+-                if (!this.field_0_Minecraft_Z)
+-                {
+-                    break;
+-                }
+-
+-                if (!this.field_2_Minecraft_Z || this.field_6_Minecraft_L == null)
+-                {
+-                    try
+-                    {
+-                        this.func_7_Minecraft_V();
+-                    }
+-                    catch (OutOfMemoryError var10)
+-                    {
+-                        this.func_17_Minecraft_V();
+-                        this.func_0_Minecraft_VGuiScreen(new GuiScreenOutOfMemory());
+-                        System.gc();
+-                    }
+-
+-                    continue;
+-                }
+-
+-                this.func_1_Minecraft_VCrashReport(this.field_6_Minecraft_L);
+-            }
+-            catch (TexturePackDownloadError var12)
+-            {
+-                break;
+-            }
+-            catch (CrashReportException var13)
+-            {
+-                this.func_0_Minecraft_CrashReportCrashReport(var13.func_0_CrashReportException_CrashReport());
+-                this.func_17_Minecraft_V();
+-                field_1_Minecraft_L.fatal("Reported exception thrown!", var13);
+-                this.func_1_Minecraft_VCrashReport(var13.func_0_CrashReportException_CrashReport());
+-                break;
+-            }
+-            catch (Throwable var14)
+-            {
+-                var2 = this.func_0_Minecraft_CrashReportCrashReport(new CrashReport("Unexpected error", var14));
+-                this.func_17_Minecraft_V();
+-                field_1_Minecraft_L.fatal("Unreported exception thrown!", var14);
+-                this.func_1_Minecraft_VCrashReport(var2);
+-                break;
+-            }
+-            finally
+-            {
+-                this.func_14_Minecraft_V();
+-            }
+-
+-            return;
+-        }
+-    }
+-
+-    private void func_7_Minecraft_V() throws WorldInUseException
+-    {
+-        AxisAlignedBB.func_0_AxisAlignedBB_AABBPool().func_0_AABBPool_V();
+-
+-        if (this.field_23_Minecraft_L != null)
+-        {
+-            this.field_23_Minecraft_L.func_0_Vec3Pool().func_0_Vec3Pool_V();
+-        }
+-
+-        this.field_0_Minecraft_L.func_0_Profiler_VString("root");
+-
+-        if (Display.isCreated() && Display.isCloseRequested())
+-        {
+-            this.func_18_Minecraft_V();
+-        }
+-
+-        if (this.field_3_Minecraft_Z && this.field_23_Minecraft_L != null)
+-        {
+-            float var1 = this.field_7_Minecraft_L.field_1_Timer_F;
+-            this.field_7_Minecraft_L.func_0_Timer_V();
+-            this.field_7_Minecraft_L.field_1_Timer_F = var1;
+-        }
+-        else
+-        {
+-            this.field_7_Minecraft_L.func_0_Timer_V();
+-        }
+-
+-        if ((this.field_23_Minecraft_L == null || this.field_31_Minecraft_L == null) && this.field_5_Minecraft_Z)
+-        {
+-            this.field_5_Minecraft_Z = false;
+-            this.func_13_Minecraft_V();
+-        }
+-
+-        long var5 = System.nanoTime();
+-        this.field_0_Minecraft_L.func_0_Profiler_VString("tick");
+-
+-        for (int var3 = 0; var3 < this.field_7_Minecraft_L.field_0_Timer_I; ++var3)
+-        {
+-            this.func_23_Minecraft_V();
+-        }
+-
+-        this.field_0_Minecraft_L.func_1_Profiler_VString("preRenderErrors");
+-        long var6 = System.nanoTime() - var5;
+-        this.func_1_Minecraft_VString("Pre render");
+-        RenderBlocks.field_0_RenderBlocks_Z = this.field_37_Minecraft_L.field_14_GameOptions_Z;
+-        this.field_0_Minecraft_L.func_1_Profiler_VString("sound");
+-        this.field_20_Minecraft_L.func_0_SoundEventAccessorCompositeSerializer_VEntityPlayerF(this.field_25_Minecraft_L, this.field_7_Minecraft_L.field_1_Timer_F);
+-        this.field_0_Minecraft_L.func_2_Profiler_V();
+-        this.field_0_Minecraft_L.func_0_Profiler_VString("render");
+-        GL11.glPushMatrix();
+-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+-        this.field_18_Minecraft_L.func_0_Framebuffer_VZ(true);
+-        this.field_0_Minecraft_L.func_0_Profiler_VString("display");
+-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+-
+-        if (this.field_25_Minecraft_L != null && this.field_25_Minecraft_L.func_89_Z())
+-        {
+-            this.field_37_Minecraft_L.field_4_GameOptions_I = 0;
+-        }
+-
+-        this.field_0_Minecraft_L.func_2_Profiler_V();
+-
+-        if (!this.field_9_Minecraft_Z)
+-        {
+-            this.field_0_Minecraft_L.func_1_Profiler_VString("gameRenderer");
+-            this.field_33_Minecraft_L.func_1_Renderer_VF(this.field_7_Minecraft_L.field_1_Timer_F);
+-            this.field_0_Minecraft_L.func_2_Profiler_V();
+-        }
+-
+-        GL11.glFlush();
+-        this.field_0_Minecraft_L.func_2_Profiler_V();
+-
+-        if (!Display.isActive() && this.field_1_Minecraft_Z)
+-        {
+-            this.func_22_Minecraft_V();
+-        }
+-
+-        if (this.field_37_Minecraft_L.field_3_GameOptions_Z && this.field_37_Minecraft_L.field_4_GameOptions_Z)
+-        {
+-            if (!this.field_0_Minecraft_L.field_0_Profiler_Z)
+-            {
+-                this.field_0_Minecraft_L.func_1_Profiler_V();
+-            }
+-
+-            this.field_0_Minecraft_L.field_0_Profiler_Z = true;
+-            this.func_0_Minecraft_VJ(var6);
+-        }
+-        else
+-        {
+-            this.field_0_Minecraft_L.field_0_Profiler_Z = false;
+-            this.field_1_Minecraft_J = System.nanoTime();
+-        }
+-
+-        this.field_34_Minecraft_L.func_0_GuiAchievementPopup_V();
+-        this.field_18_Minecraft_L.func_4_Framebuffer_V();
+-        GL11.glPopMatrix();
+-        GL11.glPushMatrix();
+-        this.field_18_Minecraft_L.func_2_Framebuffer_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
+-        GL11.glPopMatrix();
+-        this.field_0_Minecraft_L.func_0_Profiler_VString("root");
+-        this.func_16_Minecraft_V();
+-        Thread.yield();
+-        this.func_8_Minecraft_V();
+-        this.func_1_Minecraft_VString("Post render");
+-        ++this.field_0_Minecraft_I;
+-        this.field_3_Minecraft_Z = this.func_1_Minecraft_Z() && this.field_31_Minecraft_L != null && this.field_31_Minecraft_L.func_37_Z() && !this.field_10_Minecraft_L.func_0_IntegratedServer_Z();
+-
+-        while (func_0_Minecraft_J() >= this.field_0_Minecraft_J + 1000L)
+-        {
+-            field_4_Minecraft_I = this.field_0_Minecraft_I;
+-            this.field_0_Minecraft_String = field_4_Minecraft_I + " fps, " + RenderedChunkCache.field_1_RenderedChunkCache_I + " chunk updates";
+-            RenderedChunkCache.field_1_RenderedChunkCache_I = 0;
+-            this.field_0_Minecraft_J += 1000L;
+-            this.field_0_Minecraft_I = 0;
+-            this.field_8_Minecraft_L.func_1_Snooper_V();
+-
+-            if (!this.field_8_Minecraft_L.func_0_Snooper_Z())
+-            {
+-                this.field_8_Minecraft_L.func_0_Snooper_V();
+-            }
+-        }
+-
+-        this.field_0_Minecraft_L.func_2_Profiler_V();
+-
+-        if (this.func_6_Minecraft_Z())
+-        {
+-            Display.sync(this.func_1_Minecraft_I());
+-        }
+-    }
+-
+-    public void func_16_Minecraft_V()
+-    {
+-        Display.update();
+-
+-        if (!this.field_1_Minecraft_Z && Display.wasResized())
+-        {
+-            int var1 = this.field_8_Minecraft_I;
+-            int var2 = this.field_9_Minecraft_I;
+-            this.field_8_Minecraft_I = Display.getWidth();
+-            this.field_9_Minecraft_I = Display.getHeight();
+-
+-            if (this.field_8_Minecraft_I != var1 || this.field_9_Minecraft_I != var2)
+-            {
+-                if (this.field_8_Minecraft_I <= 0)
+-                {
+-                    this.field_8_Minecraft_I = 1;
+-                }
+-
+-                if (this.field_9_Minecraft_I <= 0)
+-                {
+-                    this.field_9_Minecraft_I = 1;
+-                }
+-
+-                this.func_0_Minecraft_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
+-            }
+-        }
+-    }
+-
+-    public int func_1_Minecraft_I()
+-    {
+-        return this.field_23_Minecraft_L == null && this.field_31_Minecraft_L != null ? 30 : this.field_37_Minecraft_L.field_8_GameOptions_I;
+-    }
+-
+-    public boolean func_6_Minecraft_Z()
+-    {
+-        return (float)this.func_1_Minecraft_I() < EnumOption.FRAMERATE_LIMIT.func_0_EnumOption_F();
+-    }
+-
+-    public void func_17_Minecraft_V()
+-    {
+-        try
+-        {
+-            field_0_Minecraft_1B = new byte[0];
+-            this.field_24_Minecraft_L.func_3_FXFactory_V();
+-        }
+-        catch (Throwable var4)
+-        {
+-            ;
+-        }
+-
+-        try
+-        {
+-            System.gc();
+-            AxisAlignedBB.func_0_AxisAlignedBB_AABBPool().func_1_AABBPool_V();
+-            this.field_23_Minecraft_L.func_0_Vec3Pool().func_1_Vec3Pool_V();
+-        }
+-        catch (Throwable var3)
+-        {
+-            ;
+-        }
+-
+-        try
+-        {
+-            System.gc();
+-            this.func_0_Minecraft_VWorldClient((WorldClient)null);
+-        }
+-        catch (Throwable var2)
+-        {
+-            ;
+-        }
+-
+-        System.gc();
+-    }
+-
+-    private void func_8_Minecraft_V()
+-    {
+-        if (this.field_37_Minecraft_L.field_15_GameOptions_L.func_1_KeyBinding_Z())
+-        {
+-            if (!this.field_10_Minecraft_Z)
+-            {
+-                this.field_10_Minecraft_Z = true;
+-                this.field_35_Minecraft_L.func_0_GuiIngame_GuiChat().func_0_GuiChat_VIChatComponent(Screenshotter.func_0_Screenshotter_IChatComponentFileIIFramebuffer(this.field_2_Minecraft_File, this.field_8_Minecraft_I, this.field_9_Minecraft_I, this.field_18_Minecraft_L));
+-            }
+-        }
+-        else
+-        {
+-            this.field_10_Minecraft_Z = false;
+-        }
+-    }
+-
+-    private void func_1_Minecraft_VI(int par1Int)
+-    {
+-        List var2 = this.field_0_Minecraft_L.func_0_Profiler_ListString(this.field_3_Minecraft_String);
+-
+-        if (var2 != null && !var2.isEmpty())
+-        {
+-            TupleDoubleDoubleString var3 = (TupleDoubleDoubleString)var2.remove(0);
+-
+-            if (par1Int == 0)
+-            {
+-                if (var3.field_0_TupleDoubleDoubleString_String.length() > 0)
+-                {
+-                    int var4 = this.field_3_Minecraft_String.lastIndexOf(".");
+-
+-                    if (var4 >= 0)
+-                    {
+-                        this.field_3_Minecraft_String = this.field_3_Minecraft_String.substring(0, var4);
+-                    }
+-                }
+-            }
+-            else
+-            {
+-                --par1Int;
+-
+-                if (par1Int < var2.size() && !((TupleDoubleDoubleString)var2.get(par1Int)).field_0_TupleDoubleDoubleString_String.equals("unspecified"))
+-                {
+-                    if (this.field_3_Minecraft_String.length() > 0)
+-                    {
+-                        this.field_3_Minecraft_String = this.field_3_Minecraft_String + ".";
+-                    }
+-
+-                    this.field_3_Minecraft_String = this.field_3_Minecraft_String + ((TupleDoubleDoubleString)var2.get(par1Int)).field_0_TupleDoubleDoubleString_String;
+-                }
+-            }
+-        }
+-    }
+-
+-    private void func_0_Minecraft_VJ(long par1Long)
+-    {
+-        if (this.field_0_Minecraft_L.field_0_Profiler_Z)
+-        {
+-            List var3 = this.field_0_Minecraft_L.func_0_Profiler_ListString(this.field_3_Minecraft_String);
+-            TupleDoubleDoubleString var4 = (TupleDoubleDoubleString)var3.remove(0);
+-            GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+-            GL11.glMatrixMode(GL11.GL_PROJECTION);
+-            GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+-            GL11.glLoadIdentity();
+-            GL11.glOrtho(0.0D, (double)this.field_8_Minecraft_I, (double)this.field_9_Minecraft_I, 0.0D, 1000.0D, 3000.0D);
+-            GL11.glMatrixMode(GL11.GL_MODELVIEW);
+-            GL11.glLoadIdentity();
+-            GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
+-            GL11.glLineWidth(1.0F);
+-            GL11.glDisable(GL11.GL_TEXTURE_2D);
+-            Tessellator var5 = Tessellator.instance;
+-            short var6 = 160;
+-            int var7 = this.field_8_Minecraft_I - var6 - 10;
+-            int var8 = this.field_9_Minecraft_I - var6 * 2;
+-            GL11.glEnable(GL11.GL_BLEND);
+-            var5.func_0_Tessellator_V();
+-            var5.func_0_Tessellator_VII(0, 200);
+-            var5.func_0_Tessellator_VDDD((double)((float)var7 - (float)var6 * 1.1F), (double)((float)var8 - (float)var6 * 0.6F - 16.0F), 0.0D);
+-            var5.func_0_Tessellator_VDDD((double)((float)var7 - (float)var6 * 1.1F), (double)(var8 + var6 * 2), 0.0D);
+-            var5.func_0_Tessellator_VDDD((double)((float)var7 + (float)var6 * 1.1F), (double)(var8 + var6 * 2), 0.0D);
+-            var5.func_0_Tessellator_VDDD((double)((float)var7 + (float)var6 * 1.1F), (double)((float)var8 - (float)var6 * 0.6F - 16.0F), 0.0D);
+-            var5.draw();
+-            GL11.glDisable(GL11.GL_BLEND);
+-            double var9 = 0.0D;
+-            int var13;
+-
+-            for (int var11 = 0; var11 < var3.size(); ++var11)
+-            {
+-                TupleDoubleDoubleString var12 = (TupleDoubleDoubleString)var3.get(var11);
+-                var13 = FastMath.func_1_FastMath_ID(var12.field_0_TupleDoubleDoubleString_D / 4.0D) + 1;
+-                var5.func_1_Tessellator_VI(6);
+-                var5.func_3_Tessellator_VI(var12.func_0_TupleDoubleDoubleString_I());
+-                var5.func_0_Tessellator_VDDD((double)var7, (double)var8, 0.0D);
+-                int var14;
+-                float var15;
+-                float var17;
+-                float var16;
+-
+-                for (var14 = var13; var14 >= 0; --var14)
+-                {
+-                    var15 = (float)((var9 + var12.field_0_TupleDoubleDoubleString_D * (double)var14 / (double)var13) * Math.PI * 2.0D / 100.0D);
+-                    var16 = FastMath.func_0_FastMath_FF(var15) * (float)var6;
+-                    var17 = FastMath.func_1_FastMath_FF(var15) * (float)var6 * 0.5F;
+-                    var5.func_0_Tessellator_VDDD((double)((float)var7 + var16), (double)((float)var8 - var17), 0.0D);
+-                }
+-
+-                var5.draw();
+-                var5.func_1_Tessellator_VI(5);
+-                var5.func_3_Tessellator_VI((var12.func_0_TupleDoubleDoubleString_I() & 16711422) >> 1);
+-
+-                for (var14 = var13; var14 >= 0; --var14)
+-                {
+-                    var15 = (float)((var9 + var12.field_0_TupleDoubleDoubleString_D * (double)var14 / (double)var13) * Math.PI * 2.0D / 100.0D);
+-                    var16 = FastMath.func_0_FastMath_FF(var15) * (float)var6;
+-                    var17 = FastMath.func_1_FastMath_FF(var15) * (float)var6 * 0.5F;
+-                    var5.func_0_Tessellator_VDDD((double)((float)var7 + var16), (double)((float)var8 - var17), 0.0D);
+-                    var5.func_0_Tessellator_VDDD((double)((float)var7 + var16), (double)((float)var8 - var17 + 10.0F), 0.0D);
+-                }
+-
+-                var5.draw();
+-                var9 += var12.field_0_TupleDoubleDoubleString_D;
+-            }
+-
+-            DecimalFormat var19 = new DecimalFormat("##0.00");
+-            GL11.glEnable(GL11.GL_TEXTURE_2D);
+-            String var18 = "";
+-
+-            if (!var4.field_0_TupleDoubleDoubleString_String.equals("unspecified"))
+-            {
+-                var18 = var18 + "[0] ";
+-            }
+-
+-            if (var4.field_0_TupleDoubleDoubleString_String.length() == 0)
+-            {
+-                var18 = var18 + "ROOT ";
+-            }
+-            else
+-            {
+-                var18 = var18 + var4.field_0_TupleDoubleDoubleString_String + " ";
+-            }
+-
+-            var13 = 16777215;
+-            this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var18, var7 - var6, var8 - var6 / 2 - 16, var13);
+-            this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var18 = var19.format(var4.field_1_TupleDoubleDoubleString_D) + "%", var7 + var6 - this.field_29_Minecraft_L.func_0_FontRenderer_IString(var18), var8 - var6 / 2 - 16, var13);
+-
+-            for (int var21 = 0; var21 < var3.size(); ++var21)
+-            {
+-                TupleDoubleDoubleString var20 = (TupleDoubleDoubleString)var3.get(var21);
+-                String var22 = "";
+-
+-                if (var20.field_0_TupleDoubleDoubleString_String.equals("unspecified"))
+-                {
+-                    var22 = var22 + "[?] ";
+-                }
+-                else
+-                {
+-                    var22 = var22 + "[" + (var21 + 1) + "] ";
+-                }
+-
+-                var22 = var22 + var20.field_0_TupleDoubleDoubleString_String;
+-                this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var22, var7 - var6, var8 + var6 / 2 + var21 * 8 + 20, var20.func_0_TupleDoubleDoubleString_I());
+-                this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var22 = var19.format(var20.field_0_TupleDoubleDoubleString_D) + "%", var7 + var6 - 50 - this.field_29_Minecraft_L.func_0_FontRenderer_IString(var22), var8 + var6 / 2 + var21 * 8 + 20, var20.func_0_TupleDoubleDoubleString_I());
+-                this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var22 = var19.format(var20.field_1_TupleDoubleDoubleString_D) + "%", var7 + var6 - this.field_29_Minecraft_L.func_0_FontRenderer_IString(var22), var8 + var6 / 2 + var21 * 8 + 20, var20.func_0_TupleDoubleDoubleString_I());
+-            }
+-        }
+-    }
+-
+-    public void func_18_Minecraft_V()
+-    {
+-        this.field_0_Minecraft_Z = false;
+-    }
+-
+-    public void func_19_Minecraft_V()
+-    {
+-        if (Display.isActive())
+-        {
+-            if (!this.field_11_Minecraft_Z)
+-            {
+-                this.field_11_Minecraft_Z = true;
+-                this.field_38_Minecraft_L.func_1_MouseGrabHelper_V();
+-                this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
+-                this.field_1_Minecraft_I = 10000;
+-            }
+-        }
+-    }
+-
+-    public void func_20_Minecraft_V()
+-    {
+-        if (this.field_11_Minecraft_Z)
+-        {
+-            KeyBinding.func_0_KeyBinding_V();
+-            this.field_11_Minecraft_Z = false;
+-            this.field_38_Minecraft_L.func_2_MouseGrabHelper_V();
+-        }
+-    }
+-
+-    public void func_21_Minecraft_V()
+-    {
+-        if (this.field_31_Minecraft_L == null)
+-        {
+-            this.func_0_Minecraft_VGuiScreen(new GuiScreenPauseMenu());
+-
+-            if (this.func_1_Minecraft_Z() && !this.field_10_Minecraft_L.func_0_IntegratedServer_Z())
+-            {
+-                this.field_20_Minecraft_L.func_0_SoundEventAccessorCompositeSerializer_V();
+-            }
+-        }
+-    }
+-
+-    private void func_0_Minecraft_VZ(boolean par1Boolean)
+-    {
+-        if (!par1Boolean)
+-        {
+-            this.field_1_Minecraft_I = 0;
+-        }
+-
+-        if (this.field_1_Minecraft_I <= 0)
+-        {
+-            if (par1Boolean && this.field_36_Minecraft_L != null && this.field_36_Minecraft_L.field_0_RayTraceResult_L == RayTraceResultType.BLOCK)
+-            {
+-                int var2 = this.field_36_Minecraft_L.blockX;
+-                int var3 = this.field_36_Minecraft_L.blockY;
+-                int var4 = this.field_36_Minecraft_L.blockZ;
+-
+-                if (this.field_23_Minecraft_L.getBlockId(var2, var3, var4).func_0_Block_Material() != Material.air)
+-                {
+-                    this.field_22_Minecraft_L.func_1_PlayerPacketSenderS2C_VIIII(var2, var3, var4, this.field_36_Minecraft_L.field_3_RayTraceResult_I);
+-
+-                    if (this.field_25_Minecraft_L.func_0_EntityPlayer_ZIII(var2, var3, var4))
+-                    {
+-                        this.field_28_Minecraft_L.func_0_FXParticle_VIIII(var2, var3, var4, this.field_36_Minecraft_L.field_3_RayTraceResult_I);
+-                        this.field_25_Minecraft_L.func_49_V();
+-                    }
+-                }
+-            }
+-            else
+-            {
+-                this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_V();
+-            }
+-        }
+-    }
+-
+-    private void func_9_Minecraft_V()
+-    {
+-        if (this.field_1_Minecraft_I <= 0)
+-        {
+-            this.field_25_Minecraft_L.func_49_V();
+-
+-            if (this.field_36_Minecraft_L == null)
+-            {
+-                field_1_Minecraft_L.error("Null returned as \'hitResult\', this shouldn\'t happen!");
+-
+-                if (this.field_22_Minecraft_L.func_3_PlayerPacketSenderS2C_Z())
+-                {
+-                    this.field_1_Minecraft_I = 10;
+-                }
+-            }
+-            else
+-            {
+-                switch (Minecraft_SwitchMapRaytraceResultType.field_0_MinecraftSwitchMapRaytraceResultType_1I[this.field_36_Minecraft_L.field_0_RayTraceResult_L.ordinal()])
+-                {
+-                    case 1:
+-                        this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VEntityPlayerEntity(this.field_25_Minecraft_L, this.field_36_Minecraft_L.field_2_RayTraceResult_L);
+-                        break;
+-
+-                    case 2:
+-                        int var1 = this.field_36_Minecraft_L.blockX;
+-                        int var2 = this.field_36_Minecraft_L.blockY;
+-                        int var3 = this.field_36_Minecraft_L.blockZ;
+-
+-                        if (this.field_23_Minecraft_L.getBlockId(var1, var2, var3).func_0_Block_Material() == Material.air)
+-                        {
+-                            if (this.field_22_Minecraft_L.func_3_PlayerPacketSenderS2C_Z())
+-                            {
+-                                this.field_1_Minecraft_I = 10;
+-                            }
+-                        }
+-                        else
+-                        {
+-                            this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VIIII(var1, var2, var3, this.field_36_Minecraft_L.field_3_RayTraceResult_I);
+-                        }
+-                }
+-            }
+-        }
+-    }
+-
+-    private void func_10_Minecraft_V()
+-    {
+-        this.field_5_Minecraft_I = 4;
+-        boolean var1 = true;
+-        ItemStack var2 = this.field_25_Minecraft_L.inventory.func_0_PlayerInventory_ItemStack();
+-
+-        if (this.field_36_Minecraft_L == null)
+-        {
+-            field_1_Minecraft_L.warn("Null returned as \'hitResult\', this shouldn\'t happen!");
+-        }
+-        else
+-        {
+-            switch (Minecraft_SwitchMapRaytraceResultType.field_0_MinecraftSwitchMapRaytraceResultType_1I[this.field_36_Minecraft_L.field_0_RayTraceResult_L.ordinal()])
+-            {
+-                case 1:
+-                    if (this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_ZEntityPlayerEntity(this.field_25_Minecraft_L, this.field_36_Minecraft_L.field_2_RayTraceResult_L))
+-                    {
+-                        var1 = false;
+-                    }
+-
+-                    break;
+-
+-                case 2:
+-                    int var3 = this.field_36_Minecraft_L.blockX;
+-                    int var4 = this.field_36_Minecraft_L.blockY;
+-                    int var5 = this.field_36_Minecraft_L.blockZ;
+-
+-                    if (this.field_23_Minecraft_L.getBlockId(var3, var4, var5).func_0_Block_Material() != Material.air)
+-                    {
+-                        int var6 = var2 != null ? var2.stackSize : 0;
+-
+-                        if (this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_ZEntityPlayerWorldItemStackIIIIVec3(this.field_25_Minecraft_L, this.field_23_Minecraft_L, var2, var3, var4, var5, this.field_36_Minecraft_L.field_3_RayTraceResult_I, this.field_36_Minecraft_L.field_1_RayTraceResult_L))
+-                        {
+-                            var1 = false;
+-                            this.field_25_Minecraft_L.func_49_V();
+-                        }
+-
+-                        if (var2 == null)
+-                        {
+-                            return;
+-                        }
+-
+-                        if (var2.stackSize == 0)
+-                        {
+-                            this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_1L[this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_I] = null;
+-                        }
+-                        else if (var2.stackSize != var6 || this.field_22_Minecraft_L.func_4_PlayerPacketSenderS2C_Z())
+-                        {
+-                            this.field_33_Minecraft_L.field_7_Renderer_L.func_1_HeldItemRenderer_V();
+-                        }
+-                    }
+-            }
+-        }
+-
+-        if (var1)
+-        {
+-            ItemStack var7 = this.field_25_Minecraft_L.inventory.func_0_PlayerInventory_ItemStack();
+-
+-            if (var7 != null && this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_ZEntityPlayerWorldItemStack(this.field_25_Minecraft_L, this.field_23_Minecraft_L, var7))
+-            {
+-                this.field_33_Minecraft_L.field_7_Renderer_L.func_2_HeldItemRenderer_V();
+-            }
+-        }
+-    }
+-
+-    public void func_22_Minecraft_V()
+-    {
+-        try
+-        {
+-            this.field_1_Minecraft_Z = !this.field_1_Minecraft_Z;
+-
+-            if (this.field_1_Minecraft_Z)
+-            {
+-                this.func_5_Minecraft_V();
+-                this.field_8_Minecraft_I = Display.getDisplayMode().getWidth();
+-                this.field_9_Minecraft_I = Display.getDisplayMode().getHeight();
+-
+-                if (this.field_8_Minecraft_I <= 0)
+-                {
+-                    this.field_8_Minecraft_I = 1;
+-                }
+-
+-                if (this.field_9_Minecraft_I <= 0)
+-                {
+-                    this.field_9_Minecraft_I = 1;
+-                }
+-            }
+-            else
+-            {
+-                Display.setDisplayMode(new DisplayMode(this.field_2_Minecraft_I, this.field_3_Minecraft_I));
+-                this.field_8_Minecraft_I = this.field_2_Minecraft_I;
+-                this.field_9_Minecraft_I = this.field_3_Minecraft_I;
+-
+-                if (this.field_8_Minecraft_I <= 0)
+-                {
+-                    this.field_8_Minecraft_I = 1;
+-                }
+-
+-                if (this.field_9_Minecraft_I <= 0)
+-                {
+-                    this.field_9_Minecraft_I = 1;
+-                }
+-            }
+-
+-            if (this.field_31_Minecraft_L != null)
+-            {
+-                this.func_0_Minecraft_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
+-            }
+-            else
+-            {
+-                this.func_11_Minecraft_V();
+-            }
+-
+-            Display.setFullscreen(this.field_1_Minecraft_Z);
+-            Display.setVSyncEnabled(this.field_37_Minecraft_L.field_22_GameOptions_Z);
+-            this.func_16_Minecraft_V();
+-        }
+-        catch (Exception var2)
+-        {
+-            field_1_Minecraft_L.error("Couldn\'t toggle fullscreen", var2);
+-        }
+-    }
+-
+-    private void func_0_Minecraft_VII(int par1Int, int par2Int)
+-    {
+-        this.field_8_Minecraft_I = par1Int <= 0 ? 1 : par1Int;
+-        this.field_9_Minecraft_I = par2Int <= 0 ? 1 : par2Int;
+-
+-        if (this.field_31_Minecraft_L != null)
+-        {
+-            ScaledResolution var3 = new ScaledResolution(this.field_37_Minecraft_L, par1Int, par2Int);
+-            int var4 = var3.func_0_ScaledResolution_I();
+-            int var5 = var3.func_1_ScaledResolution_I();
+-            this.field_31_Minecraft_L.func_0_GuiScreen_VMinecraftII(this, var4, var5);
+-        }
+-
+-        this.field_32_Minecraft_L = new TexturePackDownloader(this);
+-        this.func_11_Minecraft_V();
+-    }
+-
+-    private void func_11_Minecraft_V()
+-    {
+-        this.field_18_Minecraft_L.func_0_Framebuffer_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
+-
+-        if (this.field_33_Minecraft_L != null)
+-        {
+-            this.field_33_Minecraft_L.func_0_Renderer_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
+-        }
+-    }
+-
+-    public void func_23_Minecraft_V() throws WorldInUseException
+-    {
+-        if (this.field_5_Minecraft_I > 0)
+-        {
+-            --this.field_5_Minecraft_I;
+-        }
+-
+-        this.field_0_Minecraft_L.func_0_Profiler_VString("gui");
+-
+-        if (!this.field_3_Minecraft_Z)
+-        {
+-            this.field_35_Minecraft_L.func_0_GuiIngame_V();
+-        }
+-
+-        this.field_0_Minecraft_L.func_1_Profiler_VString("pick");
+-        this.field_33_Minecraft_L.func_0_Renderer_VF(1.0F);
+-        this.field_0_Minecraft_L.func_1_Profiler_VString("gameMode");
+-
+-        if (!this.field_3_Minecraft_Z && this.field_23_Minecraft_L != null)
+-        {
+-            this.field_22_Minecraft_L.func_1_PlayerPacketSenderS2C_V();
+-        }
+-
+-        this.field_0_Minecraft_L.func_1_Profiler_VString("textures");
+-
+-        if (!this.field_3_Minecraft_Z)
+-        {
+-            this.field_4_Minecraft_L.func_61_V();
+-        }
+-
+-        if (this.field_31_Minecraft_L == null && this.field_25_Minecraft_L != null)
+-        {
+-            if (this.field_25_Minecraft_L.func_18_F() <= 0.0F)
+-            {
+-                this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
+-            }
+-            else if (this.field_25_Minecraft_L.func_100_Z() && this.field_23_Minecraft_L != null)
+-            {
+-                this.func_0_Minecraft_VGuiScreen(new GuiScreenSleeping());
+-            }
+-        }
+-        else if (this.field_31_Minecraft_L != null && this.field_31_Minecraft_L instanceof GuiScreenSleeping && !this.field_25_Minecraft_L.func_100_Z())
+-        {
+-            this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
+-        }
+-
+-        if (this.field_31_Minecraft_L != null)
+-        {
+-            this.field_1_Minecraft_I = 10000;
+-        }
+-
+-        CrashReport var2;
+-        CrashCategoryWorldLoc var3;
+-
+-        if (this.field_31_Minecraft_L != null)
+-        {
+-            try
+-            {
+-                this.field_31_Minecraft_L.func_1_GuiScreen_V();
+-            }
+-            catch (Throwable var6)
+-            {
+-                var2 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var6, "Updating screen events");
+-                var3 = var2.func_0_CrashReport_CrashCategoryWorldLocString("Affected screen");
+-                var3.func_0_CrashCategoryWorldLoc_VStringCallable("Screen name", new Minecraft_CrashCallableScreenName1(this));
+-                throw new CrashReportException(var2);
+-            }
+-
+-            if (this.field_31_Minecraft_L != null)
+-            {
+-                try
+-                {
+-                    this.field_31_Minecraft_L.func_37_V();
+-                }
+-                catch (Throwable var5)
+-                {
+-                    var2 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var5, "Ticking screen");
+-                    var3 = var2.func_0_CrashReport_CrashCategoryWorldLocString("Affected screen");
+-                    var3.func_0_CrashCategoryWorldLoc_VStringCallable("Screen name", new Minecraft_CrashCallableScreenName2(this));
+-                    throw new CrashReportException(var2);
+-                }
+-            }
+-        }
+-
+-        if (this.field_31_Minecraft_L == null || this.field_31_Minecraft_L.field_0_GuiScreen_Z)
+-        {
+-            this.field_0_Minecraft_L.func_1_Profiler_VString("mouse");
+-            int var1;
+-
+-            while (Mouse.next())
+-            {
+-                var1 = Mouse.getEventButton();
+-
+-                if (field_4_Minecraft_Z && var1 == 0 && (Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157)))
+-                {
+-                    var1 = 1;
+-                }
+-
+-                KeyBinding.func_0_KeyBinding_VIZ(var1 - 100, Mouse.getEventButtonState());
+-
+-                if (Mouse.getEventButtonState())
+-                {
+-                    KeyBinding.func_0_KeyBinding_VI(var1 - 100);
+-                }
+-
+-                long var9 = func_0_Minecraft_J() - this.field_3_Minecraft_J;
+-
+-                if (var9 <= 200L)
+-                {
+-                    int var4 = Mouse.getEventDWheel();
+-
+-                    if (var4 != 0)
+-                    {
+-                        this.field_25_Minecraft_L.inventory.func_0_PlayerInventory_VI(var4);
+-
+-                        if (this.field_37_Minecraft_L.field_5_GameOptions_Z)
+-                        {
+-                            if (var4 > 0)
+-                            {
+-                                var4 = 1;
+-                            }
+-
+-                            if (var4 < 0)
+-                            {
+-                                var4 = -1;
+-                            }
+-
+-                            this.field_37_Minecraft_L.field_5_GameOptions_F += (float)var4 * 0.25F;
+-                        }
+-                    }
+-
+-                    if (this.field_31_Minecraft_L == null)
+-                    {
+-                        if (!this.field_11_Minecraft_Z && Mouse.getEventButtonState())
+-                        {
+-                            this.func_19_Minecraft_V();
+-                        }
+-                    }
+-                    else if (this.field_31_Minecraft_L != null)
+-                    {
+-                        this.field_31_Minecraft_L.func_38_V();
+-                    }
+-                }
+-            }
+-
+-            if (this.field_1_Minecraft_I > 0)
+-            {
+-                --this.field_1_Minecraft_I;
+-            }
+-
+-            this.field_0_Minecraft_L.func_1_Profiler_VString("keyboard");
+-            boolean var8;
+-
+-            while (Keyboard.next())
+-            {
+-                KeyBinding.func_0_KeyBinding_VIZ(Keyboard.getEventKey(), Keyboard.getEventKeyState());
+-
+-                if (Keyboard.getEventKeyState())
+-                {
+-                    KeyBinding.func_0_KeyBinding_VI(Keyboard.getEventKey());
+-                }
+-
+-                if (this.field_2_Minecraft_J > 0L)
+-                {
+-                    if (func_0_Minecraft_J() - this.field_2_Minecraft_J >= 6000L)
+-                    {
+-                        throw new CrashReportException(new CrashReport("Manually triggered debug crash", new Throwable()));
+-                    }
+-
+-                    if (!Keyboard.isKeyDown(46) || !Keyboard.isKeyDown(61))
+-                    {
+-                        this.field_2_Minecraft_J = -1L;
+-                    }
+-                }
+-                else if (Keyboard.isKeyDown(46) && Keyboard.isKeyDown(61))
+-                {
+-                    this.field_2_Minecraft_J = func_0_Minecraft_J();
+-                }
+-
+-                if (Keyboard.getEventKeyState())
+-                {
+-                    if (Keyboard.getEventKey() == 62 && this.field_33_Minecraft_L != null)
+-                    {
+-                        this.field_33_Minecraft_L.func_0_Renderer_V();
+-                    }
+-
+-                    if (Keyboard.getEventKey() == 87)
+-                    {
+-                        this.func_22_Minecraft_V();
+-                    }
+-                    else
+-                    {
+-                        if (this.field_31_Minecraft_L != null)
+-                        {
+-                            this.field_31_Minecraft_L.func_2_GuiScreen_V();
+-                        }
+-                        else
+-                        {
+-                            if (Keyboard.getEventKey() == 1)
+-                            {
+-                                this.func_21_Minecraft_V();
+-                            }
+-
+-                            if (Keyboard.getEventKey() == 31 && Keyboard.isKeyDown(61))
+-                            {
+-                                this.func_13_Minecraft_V();
+-                            }
+-
+-                            if (Keyboard.getEventKey() == 20 && Keyboard.isKeyDown(61))
+-                            {
+-                                this.func_13_Minecraft_V();
+-                            }
+-
+-                            if (Keyboard.getEventKey() == 33 && Keyboard.isKeyDown(61))
+-                            {
+-                                var8 = Keyboard.isKeyDown(42) | Keyboard.isKeyDown(54);
+-                                this.field_37_Minecraft_L.func_0_GameOptions_VEnumOptionI(EnumOption.RENDER_DISTANCE, var8 ? -1 : 1);
+-                            }
+-
+-                            if (Keyboard.getEventKey() == 30 && Keyboard.isKeyDown(61))
+-                            {
+-                                this.field_24_Minecraft_L.func_0_FXFactory_V();
+-                            }
+-
+-                            if (Keyboard.getEventKey() == 35 && Keyboard.isKeyDown(61))
+-                            {
+-                                this.field_37_Minecraft_L.field_24_GameOptions_Z = !this.field_37_Minecraft_L.field_24_GameOptions_Z;
+-                                this.field_37_Minecraft_L.func_2_GameOptions_V();
+-                            }
+-
+-                            if (Keyboard.getEventKey() == 48 && Keyboard.isKeyDown(61))
+-                            {
+-                                RenderEntityRegistry.field_0_RenderEntityRegistry_Z = !RenderEntityRegistry.field_0_RenderEntityRegistry_Z;
+-                            }
+-
+-                            if (Keyboard.getEventKey() == 25 && Keyboard.isKeyDown(61))
+-                            {
+-                                this.field_37_Minecraft_L.field_25_GameOptions_Z = !this.field_37_Minecraft_L.field_25_GameOptions_Z;
+-                                this.field_37_Minecraft_L.func_2_GameOptions_V();
+-                            }
+-
+-                            if (Keyboard.getEventKey() == 59)
+-                            {
+-                                this.field_37_Minecraft_L.field_2_GameOptions_Z = !this.field_37_Minecraft_L.field_2_GameOptions_Z;
+-                            }
+-
+-                            if (Keyboard.getEventKey() == 61)
+-                            {
+-                                this.field_37_Minecraft_L.field_3_GameOptions_Z = !this.field_37_Minecraft_L.field_3_GameOptions_Z;
+-                                this.field_37_Minecraft_L.field_4_GameOptions_Z = GuiScreen.func_1_GuiScreen_Z();
+-                            }
+-
+-                            if (this.field_37_Minecraft_L.field_16_GameOptions_L.func_1_KeyBinding_Z())
+-                            {
+-                                ++this.field_37_Minecraft_L.field_4_GameOptions_I;
+-
+-                                if (this.field_37_Minecraft_L.field_4_GameOptions_I > 2)
+-                                {
+-                                    this.field_37_Minecraft_L.field_4_GameOptions_I = 0;
+-                                }
+-                            }
+-
+-                            if (this.field_37_Minecraft_L.field_17_GameOptions_L.func_1_KeyBinding_Z())
+-                            {
+-                                this.field_37_Minecraft_L.field_6_GameOptions_Z = !this.field_37_Minecraft_L.field_6_GameOptions_Z;
+-                            }
+-                        }
+-
+-                        if (this.field_37_Minecraft_L.field_3_GameOptions_Z && this.field_37_Minecraft_L.field_4_GameOptions_Z)
+-                        {
+-                            if (Keyboard.getEventKey() == 11)
+-                            {
+-                                this.func_1_Minecraft_VI(0);
+-                            }
+-
+-                            for (var1 = 0; var1 < 9; ++var1)
+-                            {
+-                                if (Keyboard.getEventKey() == 2 + var1)
+-                                {
+-                                    this.func_1_Minecraft_VI(var1 + 1);
+-                                }
+-                            }
+-                        }
+-                    }
+-                }
+-            }
+-
+-            for (var1 = 0; var1 < 9; ++var1)
+-            {
+-                if (this.field_37_Minecraft_L.field_0_GameOptions_1L[var1].func_1_KeyBinding_Z())
+-                {
+-                    this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_I = var1;
+-                }
+-            }
+-
+-            var8 = this.field_37_Minecraft_L.field_22_GameOptions_L != EnumChatVisibility.HIDDEN;
+-
+-            while (this.field_37_Minecraft_L.field_6_GameOptions_L.func_1_KeyBinding_Z())
+-            {
+-                if (this.field_22_Minecraft_L.func_6_PlayerPacketSenderS2C_Z())
+-                {
+-                    this.field_25_Minecraft_L.func_52_V();
+-                }
+-                else
+-                {
+-                    this.func_0_Minecraft_NetHandlerImplPlayS2C().func_0_NetHandlerImplPlayS2C_VPacket(new Packet_Play_C2S_22(Packet_Play_C2S_22_ActionType.OPEN_INVENTORY_ACHIEVEMENT));
+-                    this.func_0_Minecraft_VGuiScreen(new GuiContainerSurvival(this.field_25_Minecraft_L));
+-                }
+-            }
+-
+-            while (this.field_37_Minecraft_L.field_8_GameOptions_L.func_1_KeyBinding_Z())
+-            {
+-                this.field_25_Minecraft_L.func_0_EntityItemZ(GuiScreen.func_0_GuiScreen_Z());
+-            }
+-
+-            while (this.field_37_Minecraft_L.field_12_GameOptions_L.func_1_KeyBinding_Z() && var8)
+-            {
+-                this.func_0_Minecraft_VGuiScreen(new GuiScreenChat());
+-            }
+-
+-            if (this.field_31_Minecraft_L == null && this.field_37_Minecraft_L.field_14_GameOptions_L.func_1_KeyBinding_Z() && var8)
+-            {
+-                this.func_0_Minecraft_VGuiScreen(new GuiScreenChat("/"));
+-            }
+-
+-            if (this.field_25_Minecraft_L.func_5_EntityPlayer_Z())
+-            {
+-                if (!this.field_37_Minecraft_L.field_7_GameOptions_L.func_0_KeyBinding_Z())
+-                {
+-                    this.field_22_Minecraft_L.func_2_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
+-                }
+-
+-                label391:
+-
+-                while (true)
+-                {
+-                    if (!this.field_37_Minecraft_L.field_9_GameOptions_L.func_1_KeyBinding_Z())
+-                    {
+-                        while (this.field_37_Minecraft_L.field_7_GameOptions_L.func_1_KeyBinding_Z())
+-                        {
+-                            ;
+-                        }
+-
+-                        while (true)
+-                        {
+-                            if (this.field_37_Minecraft_L.field_10_GameOptions_L.func_1_KeyBinding_Z())
+-                            {
+-                                continue;
+-                            }
+-
+-                            break label391;
+-                        }
+-                    }
+-                }
+-            }
+-            else
+-            {
+-                while (this.field_37_Minecraft_L.field_9_GameOptions_L.func_1_KeyBinding_Z())
+-                {
+-                    this.func_9_Minecraft_V();
+-                }
+-
+-                while (this.field_37_Minecraft_L.field_7_GameOptions_L.func_1_KeyBinding_Z())
+-                {
+-                    this.func_10_Minecraft_V();
+-                }
+-
+-                while (this.field_37_Minecraft_L.field_10_GameOptions_L.func_1_KeyBinding_Z())
+-                {
+-                    this.func_12_Minecraft_V();
+-                }
+-            }
+-
+-            if (this.field_37_Minecraft_L.field_7_GameOptions_L.func_0_KeyBinding_Z() && this.field_5_Minecraft_I == 0 && !this.field_25_Minecraft_L.func_5_EntityPlayer_Z())
+-            {
+-                this.func_10_Minecraft_V();
+-            }
+-
+-            this.func_0_Minecraft_VZ(this.field_31_Minecraft_L == null && this.field_37_Minecraft_L.field_9_GameOptions_L.func_0_KeyBinding_Z() && this.field_11_Minecraft_Z);
+-        }
+-
+-        if (this.field_23_Minecraft_L != null)
+-        {
+-            if (this.field_25_Minecraft_L != null)
+-            {
+-                ++this.field_7_Minecraft_I;
+-
+-                if (this.field_7_Minecraft_I == 30)
+-                {
+-                    this.field_7_Minecraft_I = 0;
+-                    this.field_23_Minecraft_L.func_2_World_VEntity(this.field_25_Minecraft_L);
+-                }
+-            }
+-
+-            this.field_0_Minecraft_L.func_1_Profiler_VString("gameRenderer");
+-
+-            if (!this.field_3_Minecraft_Z)
+-            {
+-                this.field_33_Minecraft_L.func_2_Renderer_V();
+-            }
+-
+-            this.field_0_Minecraft_L.func_1_Profiler_VString("levelRenderer");
+-
+-            if (!this.field_3_Minecraft_Z)
+-            {
+-                this.field_24_Minecraft_L.func_2_FXFactory_V();
+-            }
+-
+-            this.field_0_Minecraft_L.func_1_Profiler_VString("level");
+-
+-            if (!this.field_3_Minecraft_Z)
+-            {
+-                if (this.field_23_Minecraft_L.field_4_World_I > 0)
+-                {
+-                    --this.field_23_Minecraft_L.field_4_World_I;
+-                }
+-
+-                this.field_23_Minecraft_L.func_7_V();
+-            }
+-        }
+-
+-        if (!this.field_3_Minecraft_Z)
+-        {
+-            this.field_21_Minecraft_L.func_63_V();
+-            this.field_20_Minecraft_L.func_63_V();
+-        }
+-
+-        if (this.field_23_Minecraft_L != null)
+-        {
+-            if (!this.field_3_Minecraft_Z)
+-            {
+-                this.field_23_Minecraft_L.func_0_World_VZZ(this.field_23_Minecraft_L.field_5_World_L != EnumDifficulty.PEACEFUL, true);
+-
+-                try
+-                {
+-                    this.field_23_Minecraft_L.func_3_V();
+-                }
+-                catch (Throwable var7)
+-                {
+-                    var2 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var7, "Exception in world tick");
+-
+-                    if (this.field_23_Minecraft_L == null)
+-                    {
+-                        var3 = var2.func_0_CrashReport_CrashCategoryWorldLocString("Affected level");
+-                        var3.func_0_CrashCategoryWorldLoc_VStringObject("Problem", "Level is null!");
+-                    }
+-                    else
+-                    {
+-                        this.field_23_Minecraft_L.func_0_CrashCategoryWorldLocCrashReport(var2);
+-                    }
+-
+-                    throw new CrashReportException(var2);
+-                }
+-            }
+-
+-            this.field_0_Minecraft_L.func_1_Profiler_VString("animateTick");
+-
+-            if (!this.field_3_Minecraft_Z && this.field_23_Minecraft_L != null)
+-            {
+-                this.field_23_Minecraft_L.func_0_WorldClient_VIII(FastMath.func_1_FastMath_ID(this.field_25_Minecraft_L.field_9_Entity_D), FastMath.func_1_FastMath_ID(this.field_25_Minecraft_L.field_10_Entity_D), FastMath.func_1_FastMath_ID(this.field_25_Minecraft_L.field_11_Entity_D));
+-            }
+-
+-            this.field_0_Minecraft_L.func_1_Profiler_VString("particles");
+-
+-            if (!this.field_3_Minecraft_Z)
+-            {
+-                this.field_28_Minecraft_L.func_0_FXParticle_V();
+-            }
+-        }
+-        else if (this.field_12_Minecraft_L != null)
+-        {
+-            this.field_0_Minecraft_L.func_1_Profiler_VString("pendingConnection");
+-            this.field_12_Minecraft_L.func_0_MCChannelInboundHandler_V();
+-        }
+-
+-        this.field_0_Minecraft_L.func_2_Profiler_V();
+-        this.field_3_Minecraft_J = func_0_Minecraft_J();
+-    }
+-
+-    public void func_0_Minecraft_VStringStringWorldSettings(String par1String, String par2String, WorldSettings par3afv)
+-    {
+-        this.func_0_Minecraft_VWorldClient((WorldClient)null);
+-        System.gc();
+-        IWorldLoader var4 = this.field_11_Minecraft_L.func_0_IWorldLoaderStringZ(par1String, false);
+-        WorldInfo var5 = var4.func_0_WorldInfo();
+-
+-        if (var5 == null && par3afv != null)
+-        {
+-            var5 = new WorldInfo(par3afv, par1String);
+-            var4.func_0_VWorldInfo(var5);
+-        }
+-
+-        if (par3afv == null)
+-        {
+-            par3afv = new WorldSettings(var5);
+-        }
+-
+-        try
+-        {
+-            this.field_10_Minecraft_L = new IntegratedServer(this, par1String, par2String, par3afv);
+-            this.field_10_Minecraft_L.func_79_V();
+-            this.field_8_Minecraft_Z = true;
+-        }
+-        catch (Throwable var10)
+-        {
+-            CrashReport var7 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var10, "Starting integrated server");
+-            CrashCategoryWorldLoc var8 = var7.func_0_CrashReport_CrashCategoryWorldLocString("Starting integrated server");
+-            var8.func_0_CrashCategoryWorldLoc_VStringObject("Level ID", par1String);
+-            var8.func_0_CrashCategoryWorldLoc_VStringObject("Level Name", par2String);
+-            throw new CrashReportException(var7);
+-        }
+-
+-        this.field_32_Minecraft_L.func_3_VString(I18n.getString("menu.loadingLevel", new Object[0]));
+-
+-        while (!this.field_10_Minecraft_L.func_71_Z())
+-        {
+-            String var6 = this.field_10_Minecraft_L.func_35_String();
+-
+-            if (var6 != null)
+-            {
+-                this.field_32_Minecraft_L.func_5_VString(I18n.getString(var6, new Object[0]));
+-            }
+-            else
+-            {
+-                this.field_32_Minecraft_L.func_5_VString("");
+-            }
+-
+-            try
+-            {
+-                Thread.sleep(200L);
+-            }
+-            catch (InterruptedException var9)
+-            {
+-                ;
+-            }
+-        }
+-
+-        this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
+-        SocketAddress var11 = this.field_10_Minecraft_L.func_0_NetworkSystem().func_0_NetworkSystem_SocketAddress();
+-        MCChannelInboundHandler var12 = MCChannelInboundHandler.func_0_MCChannelInboundHandler_MCChannelInboundHandlerSocketAddress(var11);
+-        var12.func_0_MCChannelInboundHandler_VNetHandler(new NetHandlerImplLoginS2C(var12, this, (GuiScreen)null));
+-        var12.func_0_MCChannelInboundHandler_VPacket1L(new Packet_Handshake_C2S_0(4, var11.toString(), 0, EnumConnectionState.LOGIN), new GenericFutureListener[0]);
+-        var12.func_0_MCChannelInboundHandler_VPacket1L(new Packet_Login_C2S_0(this.func_0_Minecraft_SessionInfo().func_0_SessionInfo_L()), new GenericFutureListener[0]);
+-        this.field_12_Minecraft_L = var12;
+-    }
+-
+-    public void func_0_Minecraft_VWorldClient(WorldClient par1biz)
+-    {
+-        this.func_0_Minecraft_VWorldClientString(par1biz, "");
+-    }
+-
+-    public void func_0_Minecraft_VWorldClientString(WorldClient par1biz, String par2String)
+-    {
+-        if (par1biz == null)
+-        {
+-            NetHandlerImplPlayS2C var3 = this.func_0_Minecraft_NetHandlerImplPlayS2C();
+-
+-            if (var3 != null)
+-            {
+-                var3.func_0_NetHandlerImplPlayS2C_V();
+-            }
+-
+-            if (this.field_10_Minecraft_L != null)
+-            {
+-                this.field_10_Minecraft_L.func_65_V();
+-            }
+-
+-            this.field_10_Minecraft_L = null;
+-            this.field_34_Minecraft_L.func_1_GuiAchievementPopup_V();
+-            this.field_33_Minecraft_L.func_0_Renderer_GuiMap().func_0_GuiMap_V();
+-        }
+-
+-        this.field_26_Minecraft_L = null;
+-        this.field_12_Minecraft_L = null;
+-
+-        if (this.field_32_Minecraft_L != null)
+-        {
+-            this.field_32_Minecraft_L.func_4_VString(par2String);
+-            this.field_32_Minecraft_L.func_5_VString("");
+-        }
+-
+-        if (par1biz == null && this.field_23_Minecraft_L != null)
+-        {
+-            if (this.field_16_Minecraft_L.func_0_ResourcePackDownloader_IResourcePack() != null)
+-            {
+-                this.func_0_Minecraft_V();
+-            }
+-
+-            this.field_16_Minecraft_L.func_1_ResourcePackDownloader_V();
+-            this.func_0_Minecraft_VServerListFileEntry((ServerListFileEntry)null);
+-            this.field_8_Minecraft_Z = false;
+-        }
+-
+-        this.field_20_Minecraft_L.func_1_SoundEventAccessorCompositeSerializer_V();
+-        this.field_23_Minecraft_L = par1biz;
+-
+-        if (par1biz != null)
+-        {
+-            if (this.field_24_Minecraft_L != null)
+-            {
+-                this.field_24_Minecraft_L.func_0_FXFactory_VWorldClient(par1biz);
+-            }
+-
+-            if (this.field_28_Minecraft_L != null)
+-            {
+-                this.field_28_Minecraft_L.func_0_FXParticle_VWorld(par1biz);
+-            }
+-
+-            if (this.field_25_Minecraft_L == null)
+-            {
+-                this.field_25_Minecraft_L = this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_EntityPlayerClientWorldStatsMap(par1biz, new StatsMap());
+-                this.field_22_Minecraft_L.func_1_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
+-            }
+-
+-            this.field_25_Minecraft_L.func_80_V();
+-            par1biz.func_1_ZEntity(this.field_25_Minecraft_L);
+-            this.field_25_Minecraft_L.field_3_EntityBaseYourPlayerClient_L = new PlayerMoveHelper(this.field_37_Minecraft_L);
+-            this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
+-            this.field_26_Minecraft_L = this.field_25_Minecraft_L;
+-        }
+-        else
+-        {
+-            this.field_11_Minecraft_L.func_29_V();
+-            this.field_25_Minecraft_L = null;
+-        }
+-
+-        System.gc();
+-        this.field_3_Minecraft_J = 0L;
+-    }
+-
+-    public String func_0_Minecraft_String()
+-    {
+-        return this.field_24_Minecraft_L.func_0_FXFactory_String();
+-    }
+-
+-    public String func_1_Minecraft_String()
+-    {
+-        return this.field_24_Minecraft_L.func_1_FXFactory_String();
+-    }
+-
+-    public String func_2_Minecraft_String()
+-    {
+-        return this.field_23_Minecraft_L.func_1_World_String();
+-    }
+-
+-    public String func_3_Minecraft_String()
+-    {
+-        return "P: " + this.field_28_Minecraft_L.func_0_FXParticle_String() + ". T: " + this.field_23_Minecraft_L.func_0_World_String();
+-    }
+-
+-    public void func_0_Minecraft_VI(int par1Int)
+-    {
+-        this.field_23_Minecraft_L.func_5_V();
+-        this.field_23_Minecraft_L.func_2_V();
+-        int var2 = 0;
+-        String var3 = null;
+-
+-        if (this.field_25_Minecraft_L != null)
+-        {
+-            var2 = this.field_25_Minecraft_L.func_2_Entity_I();
+-            this.field_23_Minecraft_L.func_2_VEntity(this.field_25_Minecraft_L);
+-            var3 = this.field_25_Minecraft_L.func_0_EntityPlayerClient_String();
+-        }
+-
+-        this.field_26_Minecraft_L = null;
+-        this.field_25_Minecraft_L = this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_EntityPlayerClientWorldStatsMap(this.field_23_Minecraft_L, this.field_25_Minecraft_L == null ? new StatsMap() : this.field_25_Minecraft_L.func_0_EntityPlayerClient_StatsMap());
+-        this.field_25_Minecraft_L.field_8_Entity_I = par1Int;
+-        this.field_26_Minecraft_L = this.field_25_Minecraft_L;
+-        this.field_25_Minecraft_L.func_80_V();
+-        this.field_25_Minecraft_L.func_1_EntityPlayerClient_VString(var3);
+-        this.field_23_Minecraft_L.func_1_ZEntity(this.field_25_Minecraft_L);
+-        this.field_22_Minecraft_L.func_1_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
+-        this.field_25_Minecraft_L.field_3_EntityBaseYourPlayerClient_L = new PlayerMoveHelper(this.field_37_Minecraft_L);
+-        this.field_25_Minecraft_L.func_0_Entity_VI(var2);
+-        this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
+-
+-        if (this.field_31_Minecraft_L instanceof GuiScreenDeath)
+-        {
+-            this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
+-        }
+-    }
+-
+-    public final boolean func_7_Minecraft_Z()
+-    {
+-        return this.field_7_Minecraft_Z;
+-    }
+-
+-    public NetHandlerImplPlayS2C func_0_Minecraft_NetHandlerImplPlayS2C()
+-    {
+-        return this.field_25_Minecraft_L != null ? this.field_25_Minecraft_L.field_0_EntityPlayerClient_L : null;
+-    }
+-
+-    public static boolean func_8_Minecraft_Z()
+-    {
+-        return field_5_Minecraft_L == null || !field_5_Minecraft_L.field_37_Minecraft_L.field_2_GameOptions_Z;
+-    }
+-
+-    public static boolean func_9_Minecraft_Z()
+-    {
+-        return field_5_Minecraft_L != null && field_5_Minecraft_L.field_37_Minecraft_L.field_14_GameOptions_Z;
+-    }
+-
+-    public static boolean func_10_Minecraft_Z()
+-    {
+-        return field_5_Minecraft_L != null && field_5_Minecraft_L.field_37_Minecraft_L.field_9_GameOptions_I != 0;
+-    }
+-
+-    private void func_12_Minecraft_V()
+-    {
+-        if (this.field_36_Minecraft_L != null)
+-        {
+-            boolean var1 = this.field_25_Minecraft_L.field_2_EntityPlayer_L.field_3_PlayerCapabilities_Z;
+-            int var3 = 0;
+-            boolean var4 = false;
+-            Item var2;
+-            int var5;
+-
+-            if (this.field_36_Minecraft_L.field_0_RayTraceResult_L == RayTraceResultType.BLOCK)
+-            {
+-                var5 = this.field_36_Minecraft_L.blockX;
+-                int var6 = this.field_36_Minecraft_L.blockY;
+-                int var7 = this.field_36_Minecraft_L.blockZ;
+-                Block var8 = this.field_23_Minecraft_L.getBlockId(var5, var6, var7);
+-
+-                if (var8.func_0_Block_Material() == Material.air)
+-                {
+-                    return;
+-                }
+-
+-                var2 = var8.func_0_ItemWorldIII(this.field_23_Minecraft_L, var5, var6, var7);
+-
+-                if (var2 == null)
+-                {
+-                    return;
+-                }
+-
+-                var4 = var2.func_0_Item_Z();
+-                Block var9 = var2 instanceof ItemBlock && !var8.func_10_Z() ? Block.func_0_Block_BlockItem(var2) : var8;
+-                var3 = var9.func_1_IWorldIII(this.field_23_Minecraft_L, var5, var6, var7);
+-            }
+-            else
+-            {
+-                if (this.field_36_Minecraft_L.field_0_RayTraceResult_L != RayTraceResultType.ENTITY || this.field_36_Minecraft_L.field_2_RayTraceResult_L == null || !var1)
+-                {
+-                    return;
+-                }
+-
+-                if (this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityPainting)
+-                {
+-                    var2 = Items.painting;
+-                }
+-                else if (this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityLeashKnot)
+-                {
+-                    var2 = Items.lead;
+-                }
+-                else if (this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityItemFrame)
+-                {
+-                    EntityItemFrame var10 = (EntityItemFrame)this.field_36_Minecraft_L.field_2_RayTraceResult_L;
+-                    ItemStack var12 = var10.func_0_EntityItemFrame_ItemStack();
+-
+-                    if (var12 == null)
+-                    {
+-                        var2 = Items.item_frame;
+-                    }
+-                    else
+-                    {
+-                        var2 = var12.getItem();
+-                        var3 = var12.func_4_ItemStack_I();
+-                        var4 = true;
+-                    }
+-                }
+-                else if (this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityMinecartBase)
+-                {
+-                    EntityMinecartBase var11 = (EntityMinecartBase)this.field_36_Minecraft_L.field_2_RayTraceResult_L;
+-
+-                    if (var11.func_64_I() == 2)
+-                    {
+-                        var2 = Items.furnace_minecart;
+-                    }
+-                    else if (var11.func_64_I() == 1)
+-                    {
+-                        var2 = Items.chest_minecart;
+-                    }
+-                    else if (var11.func_64_I() == 3)
+-                    {
+-                        var2 = Items.tnt_minecart;
+-                    }
+-                    else if (var11.func_64_I() == 5)
+-                    {
+-                        var2 = Items.hopper_minecart;
+-                    }
+-                    else if (var11.func_64_I() == 6)
+-                    {
+-                        var2 = Items.command_block_minecart;
+-                    }
+-                    else
+-                    {
+-                        var2 = Items.minecart;
+-                    }
+-                }
+-                else if (this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityBoat)
+-                {
+-                    var2 = Items.boat;
+-                }
+-                else
+-                {
+-                    var2 = Items.spawn_egg;
+-                    var3 = EntitySerialization.func_0_EntitySerialization_IEntity(this.field_36_Minecraft_L.field_2_RayTraceResult_L);
+-                    var4 = true;
+-
+-                    if (var3 <= 0 || !EntitySerialization.field_0_EntitySerialization_HashMap.containsKey(Integer.valueOf(var3)))
+-                    {
+-                        return;
+-                    }
+-                }
+-            }
+-
+-            this.field_25_Minecraft_L.inventory.func_0_PlayerInventory_VItemIZZ(var2, var3, var4, var1);
+-
+-            if (var1)
+-            {
+-                var5 = this.field_25_Minecraft_L.field_5_EntityPlayer_L.inventorySlots.size() - 9 + this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_I;
+-                this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VItemStackI(this.field_25_Minecraft_L.inventory.getStackInSlot(this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_I), var5);
+-            }
+-        }
+-    }
+-
+-    public CrashReport func_0_Minecraft_CrashReportCrashReport(CrashReport par1b)
+-    {
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Launched Version", new Minecraft_CrashCallableLaunchedVersion(this));
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("LWJGL", new Minecraft_CrashCallableLWJGL(this));
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("OpenGL", new Minecraft_CrashCallableOpenGL(this));
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Is Modded", new Minecraft_CrashCallableIsModded(this));
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Type", new Minecraft_CrashCallableType(this));
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Resource Packs", new Minecraft_CrashCallableResourcePacks(this));
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Current Language", new Minecraft_CrashCallableLanguage(this));
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Profiler Position", new Minecraft_CrashCallableProfilerPosition(this));
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Vec3 Pool Size", new Minecraft_CrashCallableVec3PoolSize(this));
+-        par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Anisotropic Filtering", new Minecraft_CrashCallableAnisotropicFiltering(this));
+-
+-        if (this.field_23_Minecraft_L != null)
+-        {
+-            this.field_23_Minecraft_L.func_0_CrashCategoryWorldLocCrashReport(par1b);
+-        }
+-
+-        return par1b;
+-    }
+-
+-    public static Minecraft getMinecraft()
+-    {
+-        return field_5_Minecraft_L;
+-    }
+-
+-    public void func_0_Minecraft_V()
+-    {
+-        this.field_5_Minecraft_Z = true;
+-    }
+-
+-    public void func_0_VSnooper(Snooper par1pv)
+-    {
+-        par1pv.func_0_Snooper_VStringObject("fps", Integer.valueOf(field_4_Minecraft_I));
+-        par1pv.func_0_Snooper_VStringObject("vsync_enabled", Boolean.valueOf(this.field_37_Minecraft_L.field_22_GameOptions_Z));
+-        par1pv.func_0_Snooper_VStringObject("display_frequency", Integer.valueOf(Display.getDisplayMode().getFrequency()));
+-        par1pv.func_0_Snooper_VStringObject("display_type", this.field_1_Minecraft_Z ? "fullscreen" : "windowed");
+-        par1pv.func_0_Snooper_VStringObject("run_time", Long.valueOf((MinecraftServer.func_6_J() - par1pv.func_0_Snooper_J()) / 60L * 1000L));
+-        par1pv.func_0_Snooper_VStringObject("resource_packs", Integer.valueOf(this.field_16_Minecraft_L.func_1_ResourcePackDownloader_List().size()));
+-        int var2 = 0;
+-        Iterator var3 = this.field_16_Minecraft_L.func_1_ResourcePackDownloader_List().iterator();
+-
+-        while (var3.hasNext())
+-        {
+-            ResourcePackDownloader_UnknownInner var4 = (ResourcePackDownloader_UnknownInner)var3.next();
+-            par1pv.func_0_Snooper_VStringObject("resource_pack[" + var2++ + "]", var4.func_0_ResourcePackDownloader_UnknownInner_String());
+-        }
+-
+-        if (this.field_10_Minecraft_L != null && this.field_10_Minecraft_L.func_0_Snooper() != null)
+-        {
+-            par1pv.func_0_Snooper_VStringObject("snooper_partner", this.field_10_Minecraft_L.func_0_Snooper().func_0_Snooper_String());
+-        }
+-    }
+-
+-    public void func_1_VSnooper(Snooper par1pv)
+-    {
+-        par1pv.func_0_Snooper_VStringObject("opengl_version", GL11.glGetString(GL11.GL_VERSION));
+-        par1pv.func_0_Snooper_VStringObject("opengl_vendor", GL11.glGetString(GL11.GL_VENDOR));
+-        par1pv.func_0_Snooper_VStringObject("client_brand", ClientBrandRetriever.getClientModName());
+-        par1pv.func_0_Snooper_VStringObject("launched_version", this.field_1_Minecraft_String);
+-        ContextCapabilities var2 = GLContext.getCapabilities();
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_multitexture]", Boolean.valueOf(var2.GL_ARB_multitexture));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_multisample]", Boolean.valueOf(var2.GL_ARB_multisample));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_texture_cube_map]", Boolean.valueOf(var2.GL_ARB_texture_cube_map));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_vertex_blend]", Boolean.valueOf(var2.GL_ARB_vertex_blend));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_matrix_palette]", Boolean.valueOf(var2.GL_ARB_matrix_palette));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_vertex_program]", Boolean.valueOf(var2.GL_ARB_vertex_program));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_vertex_shader]", Boolean.valueOf(var2.GL_ARB_vertex_shader));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_fragment_program]", Boolean.valueOf(var2.GL_ARB_fragment_program));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_fragment_shader]", Boolean.valueOf(var2.GL_ARB_fragment_shader));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_shader_objects]", Boolean.valueOf(var2.GL_ARB_shader_objects));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_vertex_buffer_object]", Boolean.valueOf(var2.GL_ARB_vertex_buffer_object));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_framebuffer_object]", Boolean.valueOf(var2.GL_ARB_framebuffer_object));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_pixel_buffer_object]", Boolean.valueOf(var2.GL_ARB_pixel_buffer_object));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_uniform_buffer_object]", Boolean.valueOf(var2.GL_ARB_uniform_buffer_object));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_texture_non_power_of_two]", Boolean.valueOf(var2.GL_ARB_texture_non_power_of_two));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[gl_max_vertex_uniforms]", Integer.valueOf(GL11.glGetInteger(GL20.GL_MAX_VERTEX_UNIFORM_COMPONENTS)));
+-        par1pv.func_0_Snooper_VStringObject("gl_caps[gl_max_fragment_uniforms]", Integer.valueOf(GL11.glGetInteger(GL20.GL_MAX_FRAGMENT_UNIFORM_COMPONENTS)));
+-        par1pv.func_0_Snooper_VStringObject("gl_max_texture_size", Integer.valueOf(func_0_Minecraft_I()));
+-    }
+-
+-    public static int func_0_Minecraft_I()
+-    {
+-        for (int var0 = 16384; var0 > 0; var0 >>= 1)
+-        {
+-            GL11.glTexImage2D(GL11.GL_PROXY_TEXTURE_2D, 0, GL11.GL_RGBA, var0, var0, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (ByteBuffer)null);
+-            int var1 = GL11.glGetTexLevelParameteri(GL11.GL_PROXY_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
+-
+-            if (var1 != 0)
+-            {
+-                return var0;
+-            }
+-        }
+-
+-        return -1;
+-    }
+-
+-    public boolean func_36_Z()
+-    {
+-        return this.field_37_Minecraft_L.field_20_GameOptions_Z;
+-    }
+-
+-    public void func_0_Minecraft_VServerListFileEntry(ServerListFileEntry par1bjh)
+-    {
+-        this.field_3_Minecraft_L = par1bjh;
+-    }
+-
+-    public ServerListFileEntry func_0_Minecraft_ServerListFileEntry()
+-    {
+-        return this.field_3_Minecraft_L;
+-    }
+-
+-    public boolean func_0_Minecraft_Z()
+-    {
+-        return this.field_8_Minecraft_Z;
+-    }
+-
+-    public boolean func_1_Minecraft_Z()
+-    {
+-        return this.field_8_Minecraft_Z && this.field_10_Minecraft_L != null;
+-    }
+-
+-    public IntegratedServer func_0_Minecraft_IntegratedServer()
+-    {
+-        return this.field_10_Minecraft_L;
+-    }
+-
+-    public static void func_1_Minecraft_V()
+-    {
+-        if (field_5_Minecraft_L != null)
+-        {
+-            IntegratedServer var0 = field_5_Minecraft_L.func_0_Minecraft_IntegratedServer();
+-
+-            if (var0 != null)
+-            {
+-                var0.func_64_V();
+-            }
+-        }
+-    }
+-
+-    public Snooper func_0_Minecraft_Snooper()
+-    {
+-        return this.field_8_Minecraft_L;
+-    }
+-
+-    public static long func_0_Minecraft_J()
+-    {
+-        return Sys.getTime() * 1000L / Sys.getTimerResolution();
+-    }
+-
+-    public boolean func_2_Minecraft_Z()
+-    {
+-        return this.field_1_Minecraft_Z;
+-    }
+-
+-    public SessionInfo func_0_Minecraft_SessionInfo()
+-    {
+-        return this.field_9_Minecraft_L;
+-    }
+-
+-    public Proxy func_0_Minecraft_Proxy()
+-    {
+-        return this.field_0_Minecraft_Proxy;
+-    }
+-
+-    public TextureWrapper getTextureManager()
+-    {
+-        return this.field_4_Minecraft_L;
+-    }
+-
+-    public IResourceManager func_0_Minecraft_IResourceManager()
+-    {
+-        return this.field_13_Minecraft_L;
+-    }
+-
+-    public ResourcePackDownloader func_0_Minecraft_ResourcePackDownloader()
+-    {
+-        return this.field_16_Minecraft_L;
+-    }
+-
+-    public LanguageList func_0_Minecraft_LanguageList()
+-    {
+-        return this.field_17_Minecraft_L;
+-    }
+-
+-    public TextureMap func_0_Minecraft_TextureMap()
+-    {
+-        return this.field_19_Minecraft_L;
+-    }
+-
+-    public boolean func_3_Minecraft_Z()
+-    {
+-        return this.field_6_Minecraft_Z;
+-    }
+-
+-    public boolean func_4_Minecraft_Z()
+-    {
+-        return this.field_3_Minecraft_Z;
+-    }
+-
+-    public SoundEventAccessorCompositeSerializer func_0_Minecraft_SoundEventAccessorCompositeSerializer()
+-    {
+-        return this.field_20_Minecraft_L;
+-    }
+-
+-    public EnumMusicType func_0_Minecraft_EnumMusicType()
+-    {
+-        return this.field_31_Minecraft_L instanceof GuiScreenMainMenu ? EnumMusicType.CREDITS : (this.field_25_Minecraft_L != null ? (this.field_25_Minecraft_L.worldObj.field_6_World_L instanceof WorldProviderNether ? EnumMusicType.NETHER : (this.field_25_Minecraft_L.worldObj.field_6_World_L instanceof WorldProviderEnd ? (CurrentBoss.field_0_CurrentBoss_String != null && CurrentBoss.field_0_CurrentBoss_I > 0 ? EnumMusicType.END_BOSS : EnumMusicType.END) : (this.field_25_Minecraft_L.field_2_EntityPlayer_L.field_3_PlayerCapabilities_Z && this.field_25_Minecraft_L.field_2_EntityPlayer_L.field_2_PlayerCapabilities_Z ? EnumMusicType.CREATIVE : EnumMusicType.GAME))) : EnumMusicType.MENU);
+-    }
+-
+-    static String func_0_Minecraft_StringMinecraft(Minecraft par1azd)
+-    {
+-        return par1azd.field_1_Minecraft_String;
+-    }
+-
+-    static LanguageList func_0_Minecraft_LanguageListMinecraft(Minecraft par1azd)
+-    {
+-        return par1azd.field_17_Minecraft_L;
+-    }
+-}
++package mc;
++
++import com.google.common.collect.Lists;
++import io.netty.util.concurrent.GenericFutureListener;
++import java.awt.Toolkit;
++import java.awt.image.BufferedImage;
++import java.io.File;
++import java.io.IOException;
++import java.lang.reflect.Field;
++import java.net.Proxy;
++import java.net.SocketAddress;
++import java.nio.ByteBuffer;
++import java.text.DecimalFormat;
++import java.text.SimpleDateFormat;
++import java.util.ArrayList;
++import java.util.Collections;
++import java.util.Date;
++import java.util.HashSet;
++import java.util.Iterator;
++import java.util.List;
++import javax.imageio.ImageIO;
++import mc.AchievementInitializer;
++import mc.AchievementTextFormatterInventoryKey;
++import mc.AxisAlignedBB;
++import mc.Block;
++import mc.CrashCategoryWorldLoc;
++import mc.CrashReport;
++import mc.CrashReportException;
++import mc.CurrentBoss;
++import mc.DispenseActionInitializer;
++import mc.Entity;
++import mc.EntityBoat;
++import mc.EntityItemFrame;
++import mc.EntityLeashKnot;
++import mc.EntityLiving;
++import mc.EntityMinecartBase;
++import mc.EntityPainting;
++import mc.EntityPlayerClient;
++import mc.EntitySerialization;
++import mc.EnumChatVisibility;
++import mc.EnumConnectionState;
++import mc.EnumDifficulty;
++import mc.EnumMusicType;
++import mc.EnumOperatingSystem;
++import mc.EnumOption;
++import mc.FXFactory;
++import mc.FXParticle;
++import mc.FastMath;
++import mc.FontRenderer;
++import mc.Framebuffer;
++import mc.GLMultiTextureUtils;
++import mc.GLUtils2;
++import mc.GameOptions;
++import mc.GuiAchievementPopup;
++import mc.GuiContainerSurvival;
++import mc.GuiIngame;
++import mc.GuiScreen;
++import mc.GuiScreenChat;
++import mc.GuiScreenConnecting;
++import mc.GuiScreenDeath;
++import mc.GuiScreenMainMenu;
++import mc.GuiScreenOutOfMemory;
++import mc.GuiScreenPauseMenu;
++import mc.GuiScreenSleeping;
++import mc.HeldItemRenderer;
++import mc.I18n;
++import mc.IResourceManager;
++import mc.IResourceManagerExtended;
++import mc.IWorldListLoader;
++import mc.IWorldLoader;
++import mc.IntegratedServer;
++import mc.Item;
++import mc.ItemBlock;
++import mc.ItemStack;
++import mc.Items;
++import mc.KeyBinding;
++import mc.LanguageList;
++import mc.MCChannelInboundHandler;
++import mc.Material;
++import mc.Minecraft_CrashCallableAnisotropicFiltering;
++import mc.Minecraft_CrashCallableIsModded;
++import mc.Minecraft_CrashCallableLWJGL;
++import mc.Minecraft_CrashCallableLanguage;
++import mc.Minecraft_CrashCallableLaunchedVersion;
++import mc.Minecraft_CrashCallableOpenGL;
++import mc.Minecraft_CrashCallableProfilerPosition;
++import mc.Minecraft_CrashCallableResourcePacks;
++import mc.Minecraft_CrashCallableScreenName1;
++import mc.Minecraft_CrashCallableScreenName2;
++import mc.Minecraft_CrashCallableType;
++import mc.Minecraft_CrashCallableVec3PoolSize;
++import mc.Minecraft_SwitchMapRaytraceResultType;
++import mc.MouseGrabHelper;
++import mc.MusicTicker;
++import mc.NetHandlerImplLoginS2C;
++import mc.NetHandlerImplPlayS2C;
++import mc.Packet_Handshake_C2S_0;
++import mc.Packet_Login_C2S_0;
++import mc.Packet_Play_C2S_22;
++import mc.Packet_Play_C2S_22_ActionType;
++import mc.PlayerMoveHelper;
++import mc.PlayerPacketSenderS2C;
++import mc.Profiler;
++import mc.RayTraceResult;
++import mc.RayTraceResultType;
++import mc.ReloaderFoliageColour;
++import mc.ReloaderGrassColour;
++import mc.RenderBlocks;
++import mc.RenderEntityRegistry;
++import mc.RenderedChunkCache;
++import mc.Renderer;
++import mc.ResourceLocation;
++import mc.ResourceManagerExtendedImpl;
++import mc.ResourceMetadataSectionAnimation;
++import mc.ResourceMetadataSectionAnimationSerializer;
++import mc.ResourceMetadataSectionFont;
++import mc.ResourceMetadataSectionFontSerializer;
++import mc.ResourceMetadataSectionLanguage;
++import mc.ResourceMetadataSectionLanguageSerializer;
++import mc.ResourceMetadataSectionPack;
++import mc.ResourceMetadataSectionPackSerializer;
++import mc.ResourceMetadataSectionTexture;
++import mc.ResourceMetadataSectionTextureSerializer;
++import mc.ResourceMetadataSectionTypeRegistry;
++import mc.ResourcePackDefault;
++import mc.ResourcePackDownloader;
++import mc.ResourcePackDownloader_UnknownInner;
++import mc.ScaledResolution;
++import mc.Screenshotter;
++import mc.ServerListFileEntry;
++import mc.SessionInfo;
++import mc.Snoopable;
++import mc.Snooper;
++import mc.SoundEventAccessorCompositeSerializer;
++import mc.StatsMap;
++import mc.Tessellator;
++import mc.TextureMap;
++import mc.TexturePackDownloadError;
++import mc.TexturePackDownloader;
++import mc.TextureWrapper;
++import mc.ThreadTimerHack;
++import mc.Timer;
++import mc.TupleDoubleDoubleString;
++import mc.UUIDUtils;
++import mc.WorldClient;
++import mc.WorldInUseException;
++import mc.WorldInfo;
++import mc.WorldListLoader;
++import mc.WorldProviderEnd;
++import mc.WorldProviderNether;
++import mc.WorldSettings;
++import mco.GuiScreenMainMenu2;
++import net.minecraft.client.ClientBrandRetriever;
++import net.minecraft.server.MinecraftServer;
++import org.apache.logging.log4j.LogManager;
++import org.apache.logging.log4j.Logger;
++import org.lwjgl.LWJGLException;
++import org.lwjgl.Sys;
++import org.lwjgl.input.Keyboard;
++import org.lwjgl.input.Mouse;
++import org.lwjgl.opengl.ContextCapabilities;
++import org.lwjgl.opengl.Display;
++import org.lwjgl.opengl.DisplayMode;
++import org.lwjgl.opengl.GL11;
++import org.lwjgl.opengl.GLContext;
++import org.lwjgl.opengl.PixelFormat;
++import org.lwjgl.util.glu.GLU;
++
++public class Minecraft implements Snoopable {
++
++   private static final Logger field_1_Minecraft_L = LogManager.getLogger();
++   private static final ResourceLocation field_2_Minecraft_L = new ResourceLocation("textures/gui/title/mojang.png");
++   public static final boolean field_4_Minecraft_Z = UUIDUtils.func_0_UUIDUtils_EnumOperatingSystem() == EnumOperatingSystem.MACOS;
++   public static byte[] field_0_Minecraft_1B = new byte[10485760];
++   private static final List field_0_Minecraft_List = Lists.newArrayList(new DisplayMode[]{new DisplayMode(2560, 1600), new DisplayMode(2880, 1800)});
++   private final File field_0_Minecraft_File;
++   private ServerListFileEntry field_3_Minecraft_L;
++   private TextureWrapper field_4_Minecraft_L;
++   private static Minecraft field_5_Minecraft_L;
++   public PlayerPacketSenderS2C field_22_Minecraft_L;
++   private boolean field_1_Minecraft_Z;
++   private boolean field_2_Minecraft_Z;
++   private CrashReport field_6_Minecraft_L;
++   public int field_8_Minecraft_I;
++   public int field_9_Minecraft_I;
++   private Timer field_7_Minecraft_L = new Timer(20.0F);
++   private Snooper field_8_Minecraft_L = new Snooper("client", this, MinecraftServer.func_6_J());
++   public WorldClient field_23_Minecraft_L;
++   public FXFactory field_24_Minecraft_L;
++   public EntityPlayerClient field_25_Minecraft_L;
++   public EntityLiving field_26_Minecraft_L;
++   public Entity field_27_Minecraft_L;
++   public FXParticle field_28_Minecraft_L;
++   private final SessionInfo field_9_Minecraft_L;
++   private boolean field_3_Minecraft_Z;
++   public FontRenderer field_29_Minecraft_L;
++   public FontRenderer field_30_Minecraft_L;
++   public GuiScreen field_31_Minecraft_L;
++   public TexturePackDownloader field_32_Minecraft_L;
++   public Renderer field_33_Minecraft_L;
++   private int field_1_Minecraft_I;
++   private int field_2_Minecraft_I;
++   private int field_3_Minecraft_I;
++   private IntegratedServer field_10_Minecraft_L;
++   public GuiAchievementPopup field_34_Minecraft_L;
++   public GuiIngame field_35_Minecraft_L;
++   public boolean field_9_Minecraft_Z;
++   public RayTraceResult field_36_Minecraft_L;
++   public GameOptions field_37_Minecraft_L;
++   public MouseGrabHelper field_38_Minecraft_L;
++   public final File field_2_Minecraft_File;
++   private final File field_1_Minecraft_File;
++   private final String field_1_Minecraft_String;
++   private final Proxy field_0_Minecraft_Proxy;
++   private IWorldListLoader field_11_Minecraft_L;
++   private static int field_4_Minecraft_I;
++   private int field_5_Minecraft_I;
++   private boolean field_5_Minecraft_Z;
++   private String field_2_Minecraft_String;
++   private int field_6_Minecraft_I;
++   boolean field_10_Minecraft_Z;
++   public boolean field_11_Minecraft_Z;
++   long field_3_Minecraft_J = func_0_Minecraft_J();
++   private int field_7_Minecraft_I;
++   private final boolean field_6_Minecraft_Z;
++   private final boolean field_7_Minecraft_Z;
++   private MCChannelInboundHandler field_12_Minecraft_L;
++   private boolean field_8_Minecraft_Z;
++   public final Profiler field_0_Minecraft_L = new Profiler();
++   private long field_2_Minecraft_J = -1L;
++   private IResourceManagerExtended field_13_Minecraft_L;
++   private final ResourceMetadataSectionTypeRegistry field_14_Minecraft_L = new ResourceMetadataSectionTypeRegistry();
++   private List field_1_Minecraft_List = Lists.newArrayList();
++   private ResourcePackDefault field_15_Minecraft_L;
++   private ResourcePackDownloader field_16_Minecraft_L;
++   private LanguageList field_17_Minecraft_L;
++   private Framebuffer field_18_Minecraft_L;
++   private TextureMap field_19_Minecraft_L;
++   private SoundEventAccessorCompositeSerializer field_20_Minecraft_L;
++   private MusicTicker field_21_Minecraft_L;
++   volatile boolean field_0_Minecraft_Z = true;
++   public String field_0_Minecraft_String = "";
++   long field_0_Minecraft_J = func_0_Minecraft_J();
++   int field_0_Minecraft_I;
++   long field_1_Minecraft_J = -1L;
++   private String field_3_Minecraft_String = "root";
++
++   public Minecraft(SessionInfo par1baf, int par2Int, int par3Int, boolean par4Boolean, boolean par5Boolean, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10String) {
++      field_5_Minecraft_L = this;
++      this.field_2_Minecraft_File = par6File;
++      this.field_1_Minecraft_File = par7File;
++      this.field_0_Minecraft_File = par8File;
++      this.field_1_Minecraft_String = par10String;
++      this.field_15_Minecraft_L = new ResourcePackDefault(this.field_1_Minecraft_File);
++      this.func_4_Minecraft_V();
++      this.field_0_Minecraft_Proxy = par9Proxy == null?Proxy.NO_PROXY:par9Proxy;
++      this.func_2_Minecraft_V();
++      this.field_9_Minecraft_L = par1baf;
++      field_1_Minecraft_L.info("Setting user: " + par1baf.func_2_SessionInfo_String());
++      field_1_Minecraft_L.info("(Session ID is " + par1baf.func_0_SessionInfo_String() + ")");
++      this.field_7_Minecraft_Z = par5Boolean;
++      this.field_8_Minecraft_I = par2Int;
++      this.field_9_Minecraft_I = par3Int;
++      this.field_2_Minecraft_I = par2Int;
++      this.field_3_Minecraft_I = par3Int;
++      this.field_1_Minecraft_Z = par4Boolean;
++      this.field_6_Minecraft_Z = func_5_Minecraft_Z();
++      ImageIO.setUseCache(false);
++      DispenseActionInitializer.func_1_DispenseActionInitializer_V();
++   }
++
++   private static boolean func_5_Minecraft_Z() {
++      String[] var0 = new String[]{"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
++      String[] var1 = var0;
++      int var2 = var0.length;
++
++      for(int var3 = 0; var3 < var2; ++var3) {
++         String var4 = var1[var3];
++         String var5 = System.getProperty(var4);
++         if(var5 != null && var5.contains("64")) {
++            return true;
++         }
++      }
++
++      return false;
++   }
++
++   public static void func_0_Minecraft_VString(String par1String) {
++      try {
++         Toolkit var1 = Toolkit.getDefaultToolkit();
++         Class var2 = var1.getClass();
++         if(var2.getName().equals("sun.awt.X11.XToolkit")) {
++            Field var3 = var2.getDeclaredField("awtAppClassName");
++            var3.setAccessible(true);
++            var3.set(var1, par1String);
++         }
++      } catch (Exception var4) {
++         ;
++      }
++
++   }
++
++   public Framebuffer func_0_Minecraft_Framebuffer() {
++      return this.field_18_Minecraft_L;
++   }
++
++   private void func_2_Minecraft_V() {
++      ThreadTimerHack var1 = new ThreadTimerHack(this, "Timer hack thread");
++      var1.setDaemon(true);
++      var1.start();
++   }
++
++   public void func_0_Minecraft_VCrashReport(CrashReport par1b) {
++      this.field_2_Minecraft_Z = true;
++      this.field_6_Minecraft_L = par1b;
++   }
++
++   public void func_1_Minecraft_VCrashReport(CrashReport par1b) {
++      File var2 = new File(getMinecraft().field_2_Minecraft_File, "crash-reports");
++      File var3 = new File(var2, "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-client.txt");
++      System.out.println(par1b.func_2_CrashReport_String());
++      if(par1b.func_0_CrashReport_File() != null) {
++         System.out.println("#@!@# Game crashed! Crash report saved to: #@!@# " + par1b.func_0_CrashReport_File());
++         System.exit(-1);
++      } else if(par1b.func_0_CrashReport_ZFile(var3)) {
++         System.out.println("#@!@# Game crashed! Crash report saved to: #@!@# " + var3.getAbsolutePath());
++         System.exit(-1);
++      } else {
++         System.out.println("#@?@# Game crashed! Crash report could not be saved. #@?@#");
++         System.exit(-2);
++      }
++
++   }
++
++   public void func_0_Minecraft_VStringI(String par1String, int par2Int) {
++      this.field_2_Minecraft_String = par1String;
++      this.field_6_Minecraft_I = par2Int;
++   }
++
++   private void func_3_Minecraft_V() throws LWJGLException {
++      this.field_37_Minecraft_L = new GameOptions(this, this.field_2_Minecraft_File);
++      if(this.field_37_Minecraft_L.field_1_GameOptions_I > 0 && this.field_37_Minecraft_L.field_0_GameOptions_I > 0) {
++         this.field_8_Minecraft_I = this.field_37_Minecraft_L.field_0_GameOptions_I;
++         this.field_9_Minecraft_I = this.field_37_Minecraft_L.field_1_GameOptions_I;
++      }
++
++      if(this.field_1_Minecraft_Z) {
++         Display.setFullscreen(true);
++         this.field_8_Minecraft_I = Display.getDisplayMode().getWidth();
++         this.field_9_Minecraft_I = Display.getDisplayMode().getHeight();
++         if(this.field_8_Minecraft_I <= 0) {
++            this.field_8_Minecraft_I = 1;
++         }
++
++         if(this.field_9_Minecraft_I <= 0) {
++            this.field_9_Minecraft_I = 1;
++         }
++      } else {
++         Display.setDisplayMode(new DisplayMode(this.field_8_Minecraft_I, this.field_9_Minecraft_I));
++      }
++
++      Display.setResizable(true);
++      Display.setTitle("Minecraft 1.7.2");
++      field_1_Minecraft_L.info("LWJGL Version: " + Sys.getVersion());
++      EnumOperatingSystem var1 = UUIDUtils.func_0_UUIDUtils_EnumOperatingSystem();
++      if(var1 != EnumOperatingSystem.MACOS) {
++         try {
++            Display.setIcon(new ByteBuffer[]{this.func_0_Minecraft_ByteBufferFile(new File(this.field_1_Minecraft_File, "/icons/icon_16x16.png")), this.func_0_Minecraft_ByteBufferFile(new File(this.field_1_Minecraft_File, "/icons/icon_32x32.png"))});
++         } catch (IOException var6) {
++            field_1_Minecraft_L.error("Couldn\'t set icon", var6);
++         }
++
++         if(var1 != EnumOperatingSystem.WINDOWS) {
++            func_0_Minecraft_VString("Minecraft");
++         }
++      }
++
++      try {
++         Display.create((new PixelFormat()).withDepthBits(24));
++      } catch (LWJGLException var5) {
++         field_1_Minecraft_L.error("Couldn\'t set pixel format", var5);
++
++         try {
++            Thread.sleep(1000L);
++         } catch (InterruptedException var4) {
++            ;
++         }
++
++         if(this.field_1_Minecraft_Z) {
++            this.func_5_Minecraft_V();
++         }
++
++         Display.create();
++      }
++
++      GLMultiTextureUtils.func_0_GLMultiTextureUtils_V();
++      this.field_18_Minecraft_L = new Framebuffer(this.field_8_Minecraft_I, this.field_9_Minecraft_I, true);
++      this.field_18_Minecraft_L.func_0_Framebuffer_VFFFF(0.0F, 0.0F, 0.0F, 0.0F);
++      this.field_34_Minecraft_L = new GuiAchievementPopup(this);
++      this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionTextureSerializer(), ResourceMetadataSectionTexture.class);
++      this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionFontSerializer(), ResourceMetadataSectionFont.class);
++      this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionAnimationSerializer(), ResourceMetadataSectionAnimation.class);
++      this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionPackSerializer(), ResourceMetadataSectionPack.class);
++      this.field_14_Minecraft_L.func_0_ResourceMetadataSectionTypeRegistry_VIResourceMetadataSectionSerializerClass(new ResourceMetadataSectionLanguageSerializer(), ResourceMetadataSectionLanguage.class);
++      this.field_11_Minecraft_L = new WorldListLoader(new File(this.field_2_Minecraft_File, "saves"));
++      this.field_16_Minecraft_L = new ResourcePackDownloader(this.field_0_Minecraft_File, new File(this.field_2_Minecraft_File, "server-resource-packs"), this.field_15_Minecraft_L, this.field_14_Minecraft_L, this.field_37_Minecraft_L);
++      this.field_13_Minecraft_L = new ResourceManagerExtendedImpl(this.field_14_Minecraft_L);
++      this.field_17_Minecraft_L = new LanguageList(this.field_14_Minecraft_L, this.field_37_Minecraft_L.field_1_GameOptions_String);
++      this.field_13_Minecraft_L.func_0_VIReloadable(this.field_17_Minecraft_L);
++      this.func_13_Minecraft_V();
++      this.field_4_Minecraft_L = new TextureWrapper(this.field_13_Minecraft_L);
++      this.field_13_Minecraft_L.func_0_VIReloadable(this.field_4_Minecraft_L);
++      this.field_20_Minecraft_L = new SoundEventAccessorCompositeSerializer(this.field_13_Minecraft_L, this.field_37_Minecraft_L);
++      this.field_21_Minecraft_L = new MusicTicker(this);
++      this.field_13_Minecraft_L.func_0_VIReloadable(this.field_20_Minecraft_L);
++      this.func_6_Minecraft_V();
++      this.field_29_Minecraft_L = new FontRenderer(this.field_37_Minecraft_L, new ResourceLocation("textures/font/ascii.png"), this.field_4_Minecraft_L, false);
++      if(this.field_37_Minecraft_L.field_1_GameOptions_String != null) {
++         this.field_29_Minecraft_L.func_0_FontRenderer_VZ(this.field_17_Minecraft_L.func_0_LanguageList_Z() || this.field_37_Minecraft_L.field_8_GameOptions_Z);
++         this.field_29_Minecraft_L.func_1_FontRenderer_VZ(this.field_17_Minecraft_L.func_1_LanguageList_Z());
++      }
++
++      this.field_30_Minecraft_L = new FontRenderer(this.field_37_Minecraft_L, new ResourceLocation("textures/font/ascii_sga.png"), this.field_4_Minecraft_L, false);
++      this.field_13_Minecraft_L.func_0_VIReloadable(this.field_29_Minecraft_L);
++      this.field_13_Minecraft_L.func_0_VIReloadable(this.field_30_Minecraft_L);
++      this.field_13_Minecraft_L.func_0_VIReloadable(new ReloaderGrassColour());
++      this.field_13_Minecraft_L.func_0_VIReloadable(new ReloaderFoliageColour());
++      RenderEntityRegistry.field_0_RenderEntityRegistry_L.field_2_RenderEntityRegistry_L = new HeldItemRenderer(this);
++      this.field_33_Minecraft_L = new Renderer(this, this.field_13_Minecraft_L);
++      this.field_13_Minecraft_L.func_0_VIReloadable(this.field_33_Minecraft_L);
++      AchievementInitializer.field_12_AchievementInitializer_L.func_0_StatAchievement_StatAchievementAchievementTextFormatter(new AchievementTextFormatterInventoryKey(this));
++      this.field_38_Minecraft_L = new MouseGrabHelper();
++      this.func_1_Minecraft_VString("Pre startup");
++      GL11.glEnable(3553);
++      GL11.glShadeModel(7425);
++      GL11.glClearDepth(1.0D);
++      GL11.glEnable(2929);
++      GL11.glDepthFunc(515);
++      GL11.glEnable(3008);
++      GL11.glAlphaFunc(516, 0.1F);
++      GL11.glCullFace(1029);
++      GL11.glMatrixMode(5889);
++      GL11.glLoadIdentity();
++      GL11.glMatrixMode(5888);
++      this.func_1_Minecraft_VString("Startup");
++      this.field_24_Minecraft_L = new FXFactory(this);
++      this.field_19_Minecraft_L = new TextureMap(0, "textures/blocks");
++      this.field_19_Minecraft_L.func_1_TextureMap_VI(this.field_37_Minecraft_L.field_3_GameOptions_I);
++      this.field_19_Minecraft_L.func_0_TextureMap_VI(this.field_37_Minecraft_L.field_2_GameOptions_I);
++      this.field_4_Minecraft_L.func_0_TextureWrapper_ZResourceLocationTextureMap(TextureMap.locationBlocksTexture, this.field_19_Minecraft_L);
++      this.field_4_Minecraft_L.func_0_TextureWrapper_ZResourceLocationTextureMap(TextureMap.locationItemsTexture, new TextureMap(1, "textures/items"));
++      GL11.glViewport(0, 0, this.field_8_Minecraft_I, this.field_9_Minecraft_I);
++      this.field_28_Minecraft_L = new FXParticle(this.field_23_Minecraft_L, this.field_4_Minecraft_L);
++      this.func_1_Minecraft_VString("Post startup");
++      this.field_35_Minecraft_L = new GuiIngame(this);
++      if(this.field_2_Minecraft_String != null) {
++         this.func_0_Minecraft_VGuiScreen(new GuiScreenConnecting(new GuiScreenMainMenu2(), this, this.field_2_Minecraft_String, this.field_6_Minecraft_I));
++      } else {
++         this.func_0_Minecraft_VGuiScreen(new GuiScreenMainMenu2());
++      }
++
++      this.field_32_Minecraft_L = new TexturePackDownloader(this);
++      if(this.field_37_Minecraft_L.field_21_GameOptions_Z && !this.field_1_Minecraft_Z) {
++         this.func_22_Minecraft_V();
++      }
++
++      Display.setVSyncEnabled(this.field_37_Minecraft_L.field_22_GameOptions_Z);
++   }
++
++   public void func_13_Minecraft_V() {
++      ArrayList var1 = Lists.newArrayList(this.field_1_Minecraft_List);
++      Iterator var2 = this.field_16_Minecraft_L.func_1_ResourcePackDownloader_List().iterator();
++
++      while(var2.hasNext()) {
++         ResourcePackDownloader_UnknownInner var3 = (ResourcePackDownloader_UnknownInner)var2.next();
++         var1.add(var3.func_0_ResourcePackDownloader_UnknownInner_IResourcePack());
++      }
++
++      if(this.field_16_Minecraft_L.func_0_ResourcePackDownloader_IResourcePack() != null) {
++         var1.add(this.field_16_Minecraft_L.func_0_ResourcePackDownloader_IResourcePack());
++      }
++
++      this.field_17_Minecraft_L.func_0_LanguageList_VList(var1);
++      this.field_13_Minecraft_L.func_0_VList(var1);
++      if(this.field_24_Minecraft_L != null) {
++         this.field_24_Minecraft_L.func_0_FXFactory_V();
++      }
++
++   }
++
++   private void func_4_Minecraft_V() {
++      this.field_1_Minecraft_List.add(this.field_15_Minecraft_L);
++   }
++
++   private ByteBuffer func_0_Minecraft_ByteBufferFile(File par1File) throws IOException {
++      BufferedImage var2 = ImageIO.read(par1File);
++      int[] var3 = var2.getRGB(0, 0, var2.getWidth(), var2.getHeight(), (int[])null, 0, var2.getWidth());
++      ByteBuffer var4 = ByteBuffer.allocate(4 * var3.length);
++      int[] var5 = var3;
++      int var6 = var3.length;
++
++      for(int var7 = 0; var7 < var6; ++var7) {
++         int var8 = var5[var7];
++         var4.putInt(var8 << 8 | var8 >> 24 & 255);
++      }
++
++      var4.flip();
++      return var4;
++   }
++
++   private void func_5_Minecraft_V() throws LWJGLException {
++      HashSet var1 = new HashSet();
++      Collections.addAll(var1, Display.getAvailableDisplayModes());
++      DisplayMode var2 = Display.getDesktopDisplayMode();
++      if(!var1.contains(var2) && UUIDUtils.func_0_UUIDUtils_EnumOperatingSystem() == EnumOperatingSystem.MACOS) {
++         Iterator var3 = field_0_Minecraft_List.iterator();
++
++         while(var3.hasNext()) {
++            DisplayMode var4 = (DisplayMode)var3.next();
++            boolean var5 = true;
++            Iterator var6 = var1.iterator();
++
++            DisplayMode var7;
++            while(var6.hasNext()) {
++               var7 = (DisplayMode)var6.next();
++               if(var7.getBitsPerPixel() == 32 && var7.getWidth() == var4.getWidth() && var7.getHeight() == var4.getHeight()) {
++                  var5 = false;
++                  break;
++               }
++            }
++
++            if(!var5) {
++               var6 = var1.iterator();
++
++               while(var6.hasNext()) {
++                  var7 = (DisplayMode)var6.next();
++                  if(var7.getBitsPerPixel() == 32 && var7.getWidth() == var4.getWidth() / 2 && var7.getHeight() == var4.getHeight() / 2) {
++                     var2 = var7;
++                     break;
++                  }
++               }
++            }
++         }
++      }
++
++      Display.setDisplayMode(var2);
++      this.field_8_Minecraft_I = var2.getWidth();
++      this.field_9_Minecraft_I = var2.getHeight();
++   }
++
++   private void func_6_Minecraft_V() {
++      GL11.glEnable(3553);
++      this.field_4_Minecraft_L.bindTexture(field_2_Minecraft_L);
++      ScaledResolution var1 = new ScaledResolution(this.field_37_Minecraft_L, this.field_8_Minecraft_I, this.field_9_Minecraft_I);
++      int var2 = var1.func_2_ScaledResolution_I();
++      Framebuffer var3 = new Framebuffer(var1.func_0_ScaledResolution_I() * var2, var1.func_1_ScaledResolution_I() * var2, true);
++      var3.func_0_Framebuffer_VZ(false);
++      GL11.glMatrixMode(5889);
++      GL11.glLoadIdentity();
++      GL11.glOrtho(0.0D, (double)var1.func_0_ScaledResolution_I(), (double)var1.func_1_ScaledResolution_I(), 0.0D, 1000.0D, 3000.0D);
++      GL11.glMatrixMode(5888);
++      GL11.glLoadIdentity();
++      GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
++      GL11.glDisable(2896);
++      GL11.glDisable(2912);
++      GL11.glDisable(2929);
++      GL11.glEnable(3553);
++      this.field_4_Minecraft_L.bindTexture(field_2_Minecraft_L);
++      Tessellator var4 = Tessellator.instance;
++      var4.func_0_Tessellator_V();
++      var4.func_3_Tessellator_VI(16777215);
++      var4.addVertexWithUV(0.0D, (double)this.field_9_Minecraft_I, 0.0D, 0.0D, 0.0D);
++      var4.addVertexWithUV((double)this.field_8_Minecraft_I, (double)this.field_9_Minecraft_I, 0.0D, 0.0D, 0.0D);
++      var4.addVertexWithUV((double)this.field_8_Minecraft_I, 0.0D, 0.0D, 0.0D, 0.0D);
++      var4.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
++      var4.draw();
++      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
++      var4.func_3_Tessellator_VI(16777215);
++      short var5 = 256;
++      short var6 = 256;
++      this.func_0_Minecraft_VIIIIII((var1.func_0_ScaledResolution_I() - var5) / 2, (var1.func_1_ScaledResolution_I() - var6) / 2, 0, 0, var5, var6);
++      GL11.glDisable(2896);
++      GL11.glDisable(2912);
++      var3.func_4_Framebuffer_V();
++      var3.func_2_Framebuffer_VII(var1.func_0_ScaledResolution_I() * var2, var1.func_1_ScaledResolution_I() * var2);
++      GL11.glEnable(3008);
++      GL11.glAlphaFunc(516, 0.1F);
++      GL11.glFlush();
++      this.func_16_Minecraft_V();
++   }
++
++   public void func_0_Minecraft_VIIIIII(int par1Int, int par2Int, int par3Int, int par4Int, int par5Int, int par6Int) {
++      float var7 = 0.00390625F;
++      float var8 = 0.00390625F;
++      Tessellator var9 = Tessellator.instance;
++      var9.func_0_Tessellator_V();
++      var9.addVertexWithUV((double)(par1Int + 0), (double)(par2Int + par6Int), 0.0D, (double)((float)(par3Int + 0) * var7), (double)((float)(par4Int + par6Int) * var8));
++      var9.addVertexWithUV((double)(par1Int + par5Int), (double)(par2Int + par6Int), 0.0D, (double)((float)(par3Int + par5Int) * var7), (double)((float)(par4Int + par6Int) * var8));
++      var9.addVertexWithUV((double)(par1Int + par5Int), (double)(par2Int + 0), 0.0D, (double)((float)(par3Int + par5Int) * var7), (double)((float)(par4Int + 0) * var8));
++      var9.addVertexWithUV((double)(par1Int + 0), (double)(par2Int + 0), 0.0D, (double)((float)(par3Int + 0) * var7), (double)((float)(par4Int + 0) * var8));
++      var9.draw();
++   }
++
++   public IWorldListLoader func_0_Minecraft_IWorldListLoader() {
++      return this.field_11_Minecraft_L;
++   }
++
++   public void func_0_Minecraft_VGuiScreen(GuiScreen par1bcd) {
++      if(this.field_31_Minecraft_L != null) {
++         this.field_31_Minecraft_L.func_36_V();
++      }
++
++      if(par1bcd == null && this.field_23_Minecraft_L == null) {
++         par1bcd = new GuiScreenMainMenu2();
++      } else if(par1bcd == null && this.field_25_Minecraft_L.func_18_F() <= 0.0F) {
++         par1bcd = new GuiScreenDeath();
++      }
++
++      if(par1bcd instanceof GuiScreenMainMenu2) {
++         this.field_37_Minecraft_L.field_3_GameOptions_Z = false;
++         this.field_35_Minecraft_L.func_0_GuiIngame_GuiChat().func_0_GuiChat_V();
++      }
++
++      this.field_31_Minecraft_L = (GuiScreen)par1bcd;
++      if(par1bcd != null) {
++         this.func_20_Minecraft_V();
++         ScaledResolution var2 = new ScaledResolution(this.field_37_Minecraft_L, this.field_8_Minecraft_I, this.field_9_Minecraft_I);
++         int var3 = var2.func_0_ScaledResolution_I();
++         int var4 = var2.func_1_ScaledResolution_I();
++         ((GuiScreen)par1bcd).func_0_GuiScreen_VMinecraftII(this, var3, var4);
++         this.field_9_Minecraft_Z = false;
++      } else {
++         this.field_20_Minecraft_L.func_3_SoundEventAccessorCompositeSerializer_V();
++         this.func_19_Minecraft_V();
++      }
++
++   }
++
++   private void func_1_Minecraft_VString(String par1String) {
++      int var2 = GL11.glGetError();
++      if(var2 != 0) {
++         String var3 = GLU.gluErrorString(var2);
++         field_1_Minecraft_L.error("########## GL ERROR ##########");
++         field_1_Minecraft_L.error("@ " + par1String);
++         field_1_Minecraft_L.error(var2 + ": " + var3);
++      }
++
++   }
++
++   public void func_14_Minecraft_V() {
++      try {
++         field_1_Minecraft_L.info("Stopping!");
++
++         try {
++            this.func_0_Minecraft_VWorldClient((WorldClient)null);
++         } catch (Throwable var7) {
++            ;
++         }
++
++         try {
++            GLUtils2.func_0_GLUtils2_V();
++         } catch (Throwable var6) {
++            ;
++         }
++
++         this.field_20_Minecraft_L.func_2_SoundEventAccessorCompositeSerializer_V();
++      } finally {
++         Display.destroy();
++         if(!this.field_2_Minecraft_Z) {
++            System.exit(0);
++         }
++
++      }
++
++      System.gc();
++   }
++
++   public void func_15_Minecraft_V() {
++      this.field_0_Minecraft_Z = true;
++
++      CrashReport var2;
++      try {
++         this.func_3_Minecraft_V();
++      } catch (Throwable var11) {
++         var2 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var11, "Initializing game");
++         var2.func_0_CrashReport_CrashCategoryWorldLocString("Initialization");
++         this.func_1_Minecraft_VCrashReport(this.func_0_Minecraft_CrashReportCrashReport(var2));
++         return;
++      }
++
++      while(true) {
++         try {
++            if(this.field_0_Minecraft_Z) {
++               if(!this.field_2_Minecraft_Z || this.field_6_Minecraft_L == null) {
++                  try {
++                     while(true) this.func_7_Minecraft_V();
++                  } catch (OutOfMemoryError var10) {
++                     this.func_17_Minecraft_V();
++                     this.func_0_Minecraft_VGuiScreen(new GuiScreenOutOfMemory());
++                     System.gc();
++                  }
++                  continue;
++               }
++
++               this.func_1_Minecraft_VCrashReport(this.field_6_Minecraft_L);
++               return;
++            }
++         } catch (TexturePackDownloadError var12) {
++            ;
++         } catch (CrashReportException var13) {
++            this.func_0_Minecraft_CrashReportCrashReport(var13.func_0_CrashReportException_CrashReport());
++            this.func_17_Minecraft_V();
++            field_1_Minecraft_L.fatal("Reported exception thrown!", var13);
++            this.func_1_Minecraft_VCrashReport(var13.func_0_CrashReportException_CrashReport());
++         } catch (Throwable var14) {
++            var2 = this.func_0_Minecraft_CrashReportCrashReport(new CrashReport("Unexpected error", var14));
++            this.func_17_Minecraft_V();
++            field_1_Minecraft_L.fatal("Unreported exception thrown!", var14);
++            this.func_1_Minecraft_VCrashReport(var2);
++         } finally {
++            this.func_14_Minecraft_V();
++         }
++
++         return;
++      }
++   }
++
++   private void func_7_Minecraft_V() throws WorldInUseException {
++      AxisAlignedBB.func_0_AxisAlignedBB_AABBPool().func_0_AABBPool_V();
++      if(this.field_23_Minecraft_L != null) {
++         this.field_23_Minecraft_L.func_0_Vec3Pool().func_0_Vec3Pool_V();
++      }
++
++      this.field_0_Minecraft_L.func_0_Profiler_VString("root");
++      if(Display.isCreated() && Display.isCloseRequested()) {
++         this.func_18_Minecraft_V();
++      }
++
++      if(this.field_3_Minecraft_Z && this.field_23_Minecraft_L != null) {
++         float var1 = this.field_7_Minecraft_L.field_1_Timer_F;
++         this.field_7_Minecraft_L.func_0_Timer_V();
++         this.field_7_Minecraft_L.field_1_Timer_F = var1;
++      } else {
++         this.field_7_Minecraft_L.func_0_Timer_V();
++      }
++
++      if((this.field_23_Minecraft_L == null || this.field_31_Minecraft_L == null) && this.field_5_Minecraft_Z) {
++         this.field_5_Minecraft_Z = false;
++         this.func_13_Minecraft_V();
++      }
++
++      long var5 = System.nanoTime();
++      this.field_0_Minecraft_L.func_0_Profiler_VString("tick");
++
++      for(int var3 = 0; var3 < this.field_7_Minecraft_L.field_0_Timer_I; ++var3) {
++         this.func_23_Minecraft_V();
++      }
++
++      this.field_0_Minecraft_L.func_1_Profiler_VString("preRenderErrors");
++      long var6 = System.nanoTime() - var5;
++      this.func_1_Minecraft_VString("Pre render");
++      RenderBlocks.field_0_RenderBlocks_Z = this.field_37_Minecraft_L.field_14_GameOptions_Z;
++      this.field_0_Minecraft_L.func_1_Profiler_VString("sound");
++      this.field_20_Minecraft_L.func_0_SoundEventAccessorCompositeSerializer_VEntityPlayerF(this.field_25_Minecraft_L, this.field_7_Minecraft_L.field_1_Timer_F);
++      this.field_0_Minecraft_L.func_2_Profiler_V();
++      this.field_0_Minecraft_L.func_0_Profiler_VString("render");
++      GL11.glPushMatrix();
++      GL11.glClear(16640);
++      this.field_18_Minecraft_L.func_0_Framebuffer_VZ(true);
++      this.field_0_Minecraft_L.func_0_Profiler_VString("display");
++      GL11.glEnable(3553);
++      if(this.field_25_Minecraft_L != null && this.field_25_Minecraft_L.func_89_Z()) {
++         this.field_37_Minecraft_L.field_4_GameOptions_I = 0;
++      }
++
++      this.field_0_Minecraft_L.func_2_Profiler_V();
++      if(!this.field_9_Minecraft_Z) {
++         this.field_0_Minecraft_L.func_1_Profiler_VString("gameRenderer");
++         this.field_33_Minecraft_L.func_1_Renderer_VF(this.field_7_Minecraft_L.field_1_Timer_F);
++         this.field_0_Minecraft_L.func_2_Profiler_V();
++      }
++
++      GL11.glFlush();
++      this.field_0_Minecraft_L.func_2_Profiler_V();
++      if(!Display.isActive() && this.field_1_Minecraft_Z) {
++         this.func_22_Minecraft_V();
++      }
++
++      if(this.field_37_Minecraft_L.field_3_GameOptions_Z && this.field_37_Minecraft_L.field_4_GameOptions_Z) {
++         if(!this.field_0_Minecraft_L.field_0_Profiler_Z) {
++            this.field_0_Minecraft_L.func_1_Profiler_V();
++         }
++
++         this.field_0_Minecraft_L.field_0_Profiler_Z = true;
++         this.func_0_Minecraft_VJ(var6);
++      } else {
++         this.field_0_Minecraft_L.field_0_Profiler_Z = false;
++         this.field_1_Minecraft_J = System.nanoTime();
++      }
++
++      this.field_34_Minecraft_L.func_0_GuiAchievementPopup_V();
++      this.field_18_Minecraft_L.func_4_Framebuffer_V();
++      GL11.glPopMatrix();
++      GL11.glPushMatrix();
++      this.field_18_Minecraft_L.func_2_Framebuffer_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
++      GL11.glPopMatrix();
++      this.field_0_Minecraft_L.func_0_Profiler_VString("root");
++      this.func_16_Minecraft_V();
++      Thread.yield();
++      this.func_8_Minecraft_V();
++      this.func_1_Minecraft_VString("Post render");
++      ++this.field_0_Minecraft_I;
++      this.field_3_Minecraft_Z = this.func_1_Minecraft_Z() && this.field_31_Minecraft_L != null && this.field_31_Minecraft_L.func_37_Z() && !this.field_10_Minecraft_L.func_0_IntegratedServer_Z();
++
++      while(func_0_Minecraft_J() >= this.field_0_Minecraft_J + 1000L) {
++         field_4_Minecraft_I = this.field_0_Minecraft_I;
++         this.field_0_Minecraft_String = field_4_Minecraft_I + " fps, " + RenderedChunkCache.field_1_RenderedChunkCache_I + " chunk updates";
++         RenderedChunkCache.field_1_RenderedChunkCache_I = 0;
++         this.field_0_Minecraft_J += 1000L;
++         this.field_0_Minecraft_I = 0;
++         this.field_8_Minecraft_L.func_1_Snooper_V();
++         if(!this.field_8_Minecraft_L.func_0_Snooper_Z()) {
++            this.field_8_Minecraft_L.func_0_Snooper_V();
++         }
++      }
++
++      this.field_0_Minecraft_L.func_2_Profiler_V();
++      if(this.func_6_Minecraft_Z()) {
++         Display.sync(this.func_1_Minecraft_I());
++      }
++
++   }
++
++   public void func_16_Minecraft_V() {
++      Display.update();
++      if(!this.field_1_Minecraft_Z && Display.wasResized()) {
++         int var1 = this.field_8_Minecraft_I;
++         int var2 = this.field_9_Minecraft_I;
++         this.field_8_Minecraft_I = Display.getWidth();
++         this.field_9_Minecraft_I = Display.getHeight();
++         if(this.field_8_Minecraft_I != var1 || this.field_9_Minecraft_I != var2) {
++            if(this.field_8_Minecraft_I <= 0) {
++               this.field_8_Minecraft_I = 1;
++            }
++
++            if(this.field_9_Minecraft_I <= 0) {
++               this.field_9_Minecraft_I = 1;
++            }
++
++            this.func_0_Minecraft_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
++         }
++      }
++
++   }
++
++   public int func_1_Minecraft_I() {
++      return this.field_23_Minecraft_L == null && this.field_31_Minecraft_L != null?30:this.field_37_Minecraft_L.field_8_GameOptions_I;
++   }
++
++   public boolean func_6_Minecraft_Z() {
++      return (float)this.func_1_Minecraft_I() < EnumOption.FRAMERATE_LIMIT.func_0_EnumOption_F();
++   }
++
++   public void func_17_Minecraft_V() {
++      try {
++         field_0_Minecraft_1B = new byte[0];
++         this.field_24_Minecraft_L.func_3_FXFactory_V();
++      } catch (Throwable var4) {
++         ;
++      }
++
++      try {
++         System.gc();
++         AxisAlignedBB.func_0_AxisAlignedBB_AABBPool().func_1_AABBPool_V();
++         this.field_23_Minecraft_L.func_0_Vec3Pool().func_1_Vec3Pool_V();
++      } catch (Throwable var3) {
++         ;
++      }
++
++      try {
++         System.gc();
++         this.func_0_Minecraft_VWorldClient((WorldClient)null);
++      } catch (Throwable var2) {
++         ;
++      }
++
++      System.gc();
++   }
++
++   private void func_8_Minecraft_V() {
++      if(this.field_37_Minecraft_L.field_15_GameOptions_L.func_1_KeyBinding_Z()) {
++         if(!this.field_10_Minecraft_Z) {
++            this.field_10_Minecraft_Z = true;
++            this.field_35_Minecraft_L.func_0_GuiIngame_GuiChat().func_0_GuiChat_VIChatComponent(Screenshotter.func_0_Screenshotter_IChatComponentFileIIFramebuffer(this.field_2_Minecraft_File, this.field_8_Minecraft_I, this.field_9_Minecraft_I, this.field_18_Minecraft_L));
++         }
++      } else {
++         this.field_10_Minecraft_Z = false;
++      }
++
++   }
++
++   private void func_1_Minecraft_VI(int par1Int) {
++      List var2 = this.field_0_Minecraft_L.func_0_Profiler_ListString(this.field_3_Minecraft_String);
++      if(var2 != null && !var2.isEmpty()) {
++         TupleDoubleDoubleString var3 = (TupleDoubleDoubleString)var2.remove(0);
++         if(par1Int == 0) {
++            if(var3.field_0_TupleDoubleDoubleString_String.length() > 0) {
++               int var4 = this.field_3_Minecraft_String.lastIndexOf(".");
++               if(var4 >= 0) {
++                  this.field_3_Minecraft_String = this.field_3_Minecraft_String.substring(0, var4);
++               }
++            }
++         } else {
++            --par1Int;
++            if(par1Int < var2.size() && !((TupleDoubleDoubleString)var2.get(par1Int)).field_0_TupleDoubleDoubleString_String.equals("unspecified")) {
++               if(this.field_3_Minecraft_String.length() > 0) {
++                  this.field_3_Minecraft_String = this.field_3_Minecraft_String + ".";
++               }
++
++               this.field_3_Minecraft_String = this.field_3_Minecraft_String + ((TupleDoubleDoubleString)var2.get(par1Int)).field_0_TupleDoubleDoubleString_String;
++            }
++         }
++
++      }
++   }
++
++   private void func_0_Minecraft_VJ(long par1Long) {
++      if(this.field_0_Minecraft_L.field_0_Profiler_Z) {
++         List var3 = this.field_0_Minecraft_L.func_0_Profiler_ListString(this.field_3_Minecraft_String);
++         TupleDoubleDoubleString var4 = (TupleDoubleDoubleString)var3.remove(0);
++         GL11.glClear(256);
++         GL11.glMatrixMode(5889);
++         GL11.glEnable(2903);
++         GL11.glLoadIdentity();
++         GL11.glOrtho(0.0D, (double)this.field_8_Minecraft_I, (double)this.field_9_Minecraft_I, 0.0D, 1000.0D, 3000.0D);
++         GL11.glMatrixMode(5888);
++         GL11.glLoadIdentity();
++         GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
++         GL11.glLineWidth(1.0F);
++         GL11.glDisable(3553);
++         Tessellator var5 = Tessellator.instance;
++         short var6 = 160;
++         int var7 = this.field_8_Minecraft_I - var6 - 10;
++         int var8 = this.field_9_Minecraft_I - var6 * 2;
++         GL11.glEnable(3042);
++         var5.func_0_Tessellator_V();
++         var5.func_0_Tessellator_VII(0, 200);
++         var5.func_0_Tessellator_VDDD((double)((float)var7 - (float)var6 * 1.1F), (double)((float)var8 - (float)var6 * 0.6F - 16.0F), 0.0D);
++         var5.func_0_Tessellator_VDDD((double)((float)var7 - (float)var6 * 1.1F), (double)(var8 + var6 * 2), 0.0D);
++         var5.func_0_Tessellator_VDDD((double)((float)var7 + (float)var6 * 1.1F), (double)(var8 + var6 * 2), 0.0D);
++         var5.func_0_Tessellator_VDDD((double)((float)var7 + (float)var6 * 1.1F), (double)((float)var8 - (float)var6 * 0.6F - 16.0F), 0.0D);
++         var5.draw();
++         GL11.glDisable(3042);
++         double var9 = 0.0D;
++
++         int var13;
++         for(int var11 = 0; var11 < var3.size(); ++var11) {
++            TupleDoubleDoubleString var12 = (TupleDoubleDoubleString)var3.get(var11);
++            var13 = FastMath.func_1_FastMath_ID(var12.field_0_TupleDoubleDoubleString_D / 4.0D) + 1;
++            var5.func_1_Tessellator_VI(6);
++            var5.func_3_Tessellator_VI(var12.func_0_TupleDoubleDoubleString_I());
++            var5.func_0_Tessellator_VDDD((double)var7, (double)var8, 0.0D);
++
++            int var14;
++            float var15;
++            float var17;
++            float var16;
++            for(var14 = var13; var14 >= 0; --var14) {
++               var15 = (float)((var9 + var12.field_0_TupleDoubleDoubleString_D * (double)var14 / (double)var13) * 3.1415927410125732D * 2.0D / 100.0D);
++               var16 = FastMath.func_0_FastMath_FF(var15) * (float)var6;
++               var17 = FastMath.func_1_FastMath_FF(var15) * (float)var6 * 0.5F;
++               var5.func_0_Tessellator_VDDD((double)((float)var7 + var16), (double)((float)var8 - var17), 0.0D);
++            }
++
++            var5.draw();
++            var5.func_1_Tessellator_VI(5);
++            var5.func_3_Tessellator_VI((var12.func_0_TupleDoubleDoubleString_I() & 16711422) >> 1);
++
++            for(var14 = var13; var14 >= 0; --var14) {
++               var15 = (float)((var9 + var12.field_0_TupleDoubleDoubleString_D * (double)var14 / (double)var13) * 3.1415927410125732D * 2.0D / 100.0D);
++               var16 = FastMath.func_0_FastMath_FF(var15) * (float)var6;
++               var17 = FastMath.func_1_FastMath_FF(var15) * (float)var6 * 0.5F;
++               var5.func_0_Tessellator_VDDD((double)((float)var7 + var16), (double)((float)var8 - var17), 0.0D);
++               var5.func_0_Tessellator_VDDD((double)((float)var7 + var16), (double)((float)var8 - var17 + 10.0F), 0.0D);
++            }
++
++            var5.draw();
++            var9 += var12.field_0_TupleDoubleDoubleString_D;
++         }
++
++         DecimalFormat var19 = new DecimalFormat("##0.00");
++         GL11.glEnable(3553);
++         String var18 = "";
++         if(!var4.field_0_TupleDoubleDoubleString_String.equals("unspecified")) {
++            var18 = var18 + "[0] ";
++         }
++
++         if(var4.field_0_TupleDoubleDoubleString_String.length() == 0) {
++            var18 = var18 + "ROOT ";
++         } else {
++            var18 = var18 + var4.field_0_TupleDoubleDoubleString_String + " ";
++         }
++
++         var13 = 16777215;
++         this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var18, var7 - var6, var8 - var6 / 2 - 16, var13);
++         this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var18 = var19.format(var4.field_1_TupleDoubleDoubleString_D) + "%", var7 + var6 - this.field_29_Minecraft_L.func_0_FontRenderer_IString(var18), var8 - var6 / 2 - 16, var13);
++
++         for(int var21 = 0; var21 < var3.size(); ++var21) {
++            TupleDoubleDoubleString var20 = (TupleDoubleDoubleString)var3.get(var21);
++            String var22 = "";
++            if(var20.field_0_TupleDoubleDoubleString_String.equals("unspecified")) {
++               var22 = var22 + "[?] ";
++            } else {
++               var22 = var22 + "[" + (var21 + 1) + "] ";
++            }
++
++            var22 = var22 + var20.field_0_TupleDoubleDoubleString_String;
++            this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var22, var7 - var6, var8 + var6 / 2 + var21 * 8 + 20, var20.func_0_TupleDoubleDoubleString_I());
++            this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var22 = var19.format(var20.field_0_TupleDoubleDoubleString_D) + "%", var7 + var6 - 50 - this.field_29_Minecraft_L.func_0_FontRenderer_IString(var22), var8 + var6 / 2 + var21 * 8 + 20, var20.func_0_TupleDoubleDoubleString_I());
++            this.field_29_Minecraft_L.func_0_FontRenderer_IStringIII(var22 = var19.format(var20.field_1_TupleDoubleDoubleString_D) + "%", var7 + var6 - this.field_29_Minecraft_L.func_0_FontRenderer_IString(var22), var8 + var6 / 2 + var21 * 8 + 20, var20.func_0_TupleDoubleDoubleString_I());
++         }
++
++      }
++   }
++
++   public void func_18_Minecraft_V() {
++      this.field_0_Minecraft_Z = false;
++   }
++
++   public void func_19_Minecraft_V() {
++      if(Display.isActive()) {
++         if(!this.field_11_Minecraft_Z) {
++            this.field_11_Minecraft_Z = true;
++            this.field_38_Minecraft_L.func_1_MouseGrabHelper_V();
++            this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
++            this.field_1_Minecraft_I = 10000;
++         }
++      }
++   }
++
++   public void func_20_Minecraft_V() {
++      if(this.field_11_Minecraft_Z) {
++         KeyBinding.func_0_KeyBinding_V();
++         this.field_11_Minecraft_Z = false;
++         this.field_38_Minecraft_L.func_2_MouseGrabHelper_V();
++      }
++   }
++
++   public void func_21_Minecraft_V() {
++      if(this.field_31_Minecraft_L == null) {
++         this.func_0_Minecraft_VGuiScreen(new GuiScreenPauseMenu());
++         if(this.func_1_Minecraft_Z() && !this.field_10_Minecraft_L.func_0_IntegratedServer_Z()) {
++            this.field_20_Minecraft_L.func_0_SoundEventAccessorCompositeSerializer_V();
++         }
++
++      }
++   }
++
++   private void func_0_Minecraft_VZ(boolean par1Boolean) {
++      if(!par1Boolean) {
++         this.field_1_Minecraft_I = 0;
++      }
++
++      if(this.field_1_Minecraft_I <= 0) {
++         if(par1Boolean && this.field_36_Minecraft_L != null && this.field_36_Minecraft_L.field_0_RayTraceResult_L == RayTraceResultType.BLOCK) {
++            int var2 = this.field_36_Minecraft_L.blockX;
++            int var3 = this.field_36_Minecraft_L.blockY;
++            int var4 = this.field_36_Minecraft_L.blockZ;
++            if(this.field_23_Minecraft_L.getBlockId(var2, var3, var4).func_0_Block_Material() != Material.air) {
++               this.field_22_Minecraft_L.func_1_PlayerPacketSenderS2C_VIIII(var2, var3, var4, this.field_36_Minecraft_L.field_3_RayTraceResult_I);
++               if(this.field_25_Minecraft_L.func_0_EntityPlayer_ZIII(var2, var3, var4)) {
++                  this.field_28_Minecraft_L.func_0_FXParticle_VIIII(var2, var3, var4, this.field_36_Minecraft_L.field_3_RayTraceResult_I);
++                  this.field_25_Minecraft_L.func_49_V();
++               }
++            }
++
++         } else {
++            this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_V();
++         }
++      }
++   }
++
++   private void func_9_Minecraft_V() {
++      if(this.field_1_Minecraft_I <= 0) {
++         this.field_25_Minecraft_L.func_49_V();
++         if(this.field_36_Minecraft_L == null) {
++            field_1_Minecraft_L.error("Null returned as \'hitResult\', this shouldn\'t happen!");
++            if(this.field_22_Minecraft_L.func_3_PlayerPacketSenderS2C_Z()) {
++               this.field_1_Minecraft_I = 10;
++            }
++
++         } else {
++            switch(Minecraft_SwitchMapRaytraceResultType.field_0_MinecraftSwitchMapRaytraceResultType_1I[this.field_36_Minecraft_L.field_0_RayTraceResult_L.ordinal()]) {
++            case 1:
++               this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VEntityPlayerEntity(this.field_25_Minecraft_L, this.field_36_Minecraft_L.field_2_RayTraceResult_L);
++               break;
++            case 2:
++               int var1 = this.field_36_Minecraft_L.blockX;
++               int var2 = this.field_36_Minecraft_L.blockY;
++               int var3 = this.field_36_Minecraft_L.blockZ;
++               if(this.field_23_Minecraft_L.getBlockId(var1, var2, var3).func_0_Block_Material() == Material.air) {
++                  if(this.field_22_Minecraft_L.func_3_PlayerPacketSenderS2C_Z()) {
++                     this.field_1_Minecraft_I = 10;
++                  }
++               } else {
++                  this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VIIII(var1, var2, var3, this.field_36_Minecraft_L.field_3_RayTraceResult_I);
++               }
++            }
++
++         }
++      }
++   }
++
++   private void func_10_Minecraft_V() {
++      this.field_5_Minecraft_I = 4;
++      boolean var1 = true;
++      ItemStack var2 = this.field_25_Minecraft_L.inventory.func_0_PlayerInventory_ItemStack();
++      if(this.field_36_Minecraft_L == null) {
++         field_1_Minecraft_L.warn("Null returned as \'hitResult\', this shouldn\'t happen!");
++      } else {
++         switch(Minecraft_SwitchMapRaytraceResultType.field_0_MinecraftSwitchMapRaytraceResultType_1I[this.field_36_Minecraft_L.field_0_RayTraceResult_L.ordinal()]) {
++         case 1:
++            if(this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_ZEntityPlayerEntity(this.field_25_Minecraft_L, this.field_36_Minecraft_L.field_2_RayTraceResult_L)) {
++               var1 = false;
++            }
++            break;
++         case 2:
++            int var3 = this.field_36_Minecraft_L.blockX;
++            int var4 = this.field_36_Minecraft_L.blockY;
++            int var5 = this.field_36_Minecraft_L.blockZ;
++            if(this.field_23_Minecraft_L.getBlockId(var3, var4, var5).func_0_Block_Material() != Material.air) {
++               int var6 = var2 != null?var2.stackSize:0;
++               if(this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_ZEntityPlayerWorldItemStackIIIIVec3(this.field_25_Minecraft_L, this.field_23_Minecraft_L, var2, var3, var4, var5, this.field_36_Minecraft_L.field_3_RayTraceResult_I, this.field_36_Minecraft_L.field_1_RayTraceResult_L)) {
++                  var1 = false;
++                  this.field_25_Minecraft_L.func_49_V();
++               }
++
++               if(var2 == null) {
++                  return;
++               }
++
++               if(var2.stackSize == 0) {
++                  this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_1L[this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_I] = null;
++               } else if(var2.stackSize != var6 || this.field_22_Minecraft_L.func_4_PlayerPacketSenderS2C_Z()) {
++                  this.field_33_Minecraft_L.field_7_Renderer_L.func_1_HeldItemRenderer_V();
++               }
++            }
++         }
++      }
++
++      if(var1) {
++         ItemStack var7 = this.field_25_Minecraft_L.inventory.func_0_PlayerInventory_ItemStack();
++         if(var7 != null && this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_ZEntityPlayerWorldItemStack(this.field_25_Minecraft_L, this.field_23_Minecraft_L, var7)) {
++            this.field_33_Minecraft_L.field_7_Renderer_L.func_2_HeldItemRenderer_V();
++         }
++      }
++
++   }
++
++   public void func_22_Minecraft_V() {
++      try {
++         this.field_1_Minecraft_Z = !this.field_1_Minecraft_Z;
++         if(this.field_1_Minecraft_Z) {
++            this.func_5_Minecraft_V();
++            this.field_8_Minecraft_I = Display.getDisplayMode().getWidth();
++            this.field_9_Minecraft_I = Display.getDisplayMode().getHeight();
++            if(this.field_8_Minecraft_I <= 0) {
++               this.field_8_Minecraft_I = 1;
++            }
++
++            if(this.field_9_Minecraft_I <= 0) {
++               this.field_9_Minecraft_I = 1;
++            }
++         } else {
++            Display.setDisplayMode(new DisplayMode(this.field_2_Minecraft_I, this.field_3_Minecraft_I));
++            this.field_8_Minecraft_I = this.field_2_Minecraft_I;
++            this.field_9_Minecraft_I = this.field_3_Minecraft_I;
++            if(this.field_8_Minecraft_I <= 0) {
++               this.field_8_Minecraft_I = 1;
++            }
++
++            if(this.field_9_Minecraft_I <= 0) {
++               this.field_9_Minecraft_I = 1;
++            }
++         }
++
++         if(this.field_31_Minecraft_L != null) {
++            this.func_0_Minecraft_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
++         } else {
++            this.func_11_Minecraft_V();
++         }
++
++         Display.setFullscreen(this.field_1_Minecraft_Z);
++         Display.setVSyncEnabled(this.field_37_Minecraft_L.field_22_GameOptions_Z);
++         this.func_16_Minecraft_V();
++      } catch (Exception var2) {
++         field_1_Minecraft_L.error("Couldn\'t toggle fullscreen", var2);
++      }
++
++   }
++
++   private void func_0_Minecraft_VII(int par1Int, int par2Int) {
++      this.field_8_Minecraft_I = par1Int <= 0?1:par1Int;
++      this.field_9_Minecraft_I = par2Int <= 0?1:par2Int;
++      if(this.field_31_Minecraft_L != null) {
++         ScaledResolution var3 = new ScaledResolution(this.field_37_Minecraft_L, par1Int, par2Int);
++         int var4 = var3.func_0_ScaledResolution_I();
++         int var5 = var3.func_1_ScaledResolution_I();
++         this.field_31_Minecraft_L.func_0_GuiScreen_VMinecraftII(this, var4, var5);
++      }
++
++      this.field_32_Minecraft_L = new TexturePackDownloader(this);
++      this.func_11_Minecraft_V();
++   }
++
++   private void func_11_Minecraft_V() {
++      this.field_18_Minecraft_L.func_0_Framebuffer_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
++      if(this.field_33_Minecraft_L != null) {
++         this.field_33_Minecraft_L.func_0_Renderer_VII(this.field_8_Minecraft_I, this.field_9_Minecraft_I);
++      }
++
++   }
++
++   public void func_23_Minecraft_V() throws WorldInUseException {
++      if(this.field_5_Minecraft_I > 0) {
++         --this.field_5_Minecraft_I;
++      }
++
++      this.field_0_Minecraft_L.func_0_Profiler_VString("gui");
++      if(!this.field_3_Minecraft_Z) {
++         this.field_35_Minecraft_L.func_0_GuiIngame_V();
++      }
++
++      this.field_0_Minecraft_L.func_1_Profiler_VString("pick");
++      this.field_33_Minecraft_L.func_0_Renderer_VF(1.0F);
++      this.field_0_Minecraft_L.func_1_Profiler_VString("gameMode");
++      if(!this.field_3_Minecraft_Z && this.field_23_Minecraft_L != null) {
++         this.field_22_Minecraft_L.func_1_PlayerPacketSenderS2C_V();
++      }
++
++      this.field_0_Minecraft_L.func_1_Profiler_VString("textures");
++      if(!this.field_3_Minecraft_Z) {
++         this.field_4_Minecraft_L.func_61_V();
++      }
++
++      if(this.field_31_Minecraft_L == null && this.field_25_Minecraft_L != null) {
++         if(this.field_25_Minecraft_L.func_18_F() <= 0.0F) {
++            this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
++         } else if(this.field_25_Minecraft_L.func_100_Z() && this.field_23_Minecraft_L != null) {
++            this.func_0_Minecraft_VGuiScreen(new GuiScreenSleeping());
++         }
++      } else if(this.field_31_Minecraft_L != null && this.field_31_Minecraft_L instanceof GuiScreenSleeping && !this.field_25_Minecraft_L.func_100_Z()) {
++         this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
++      }
++
++      if(this.field_31_Minecraft_L != null) {
++         this.field_1_Minecraft_I = 10000;
++      }
++
++      CrashReport var2;
++      CrashCategoryWorldLoc var3;
++      if(this.field_31_Minecraft_L != null) {
++         try {
++            this.field_31_Minecraft_L.func_1_GuiScreen_V();
++         } catch (Throwable var6) {
++            var2 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var6, "Updating screen events");
++            var3 = var2.func_0_CrashReport_CrashCategoryWorldLocString("Affected screen");
++            var3.func_0_CrashCategoryWorldLoc_VStringCallable("Screen name", new Minecraft_CrashCallableScreenName1(this));
++            throw new CrashReportException(var2);
++         }
++
++         if(this.field_31_Minecraft_L != null) {
++            try {
++               this.field_31_Minecraft_L.func_37_V();
++            } catch (Throwable var5) {
++               var2 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var5, "Ticking screen");
++               var3 = var2.func_0_CrashReport_CrashCategoryWorldLocString("Affected screen");
++               var3.func_0_CrashCategoryWorldLoc_VStringCallable("Screen name", new Minecraft_CrashCallableScreenName2(this));
++               throw new CrashReportException(var2);
++            }
++         }
++      }
++
++      if(this.field_31_Minecraft_L == null || this.field_31_Minecraft_L.field_0_GuiScreen_Z) {
++         this.field_0_Minecraft_L.func_1_Profiler_VString("mouse");
++
++         int var1;
++         while(Mouse.next()) {
++            var1 = Mouse.getEventButton();
++            if(field_4_Minecraft_Z && var1 == 0 && (Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157))) {
++               var1 = 1;
++            }
++
++            KeyBinding.func_0_KeyBinding_VIZ(var1 - 100, Mouse.getEventButtonState());
++            if(Mouse.getEventButtonState()) {
++               KeyBinding.func_0_KeyBinding_VI(var1 - 100);
++            }
++
++            long var9 = func_0_Minecraft_J() - this.field_3_Minecraft_J;
++            if(var9 <= 200L) {
++               int var4 = Mouse.getEventDWheel();
++               if(var4 != 0) {
++                  this.field_25_Minecraft_L.inventory.func_0_PlayerInventory_VI(var4);
++                  if(this.field_37_Minecraft_L.field_5_GameOptions_Z) {
++                     if(var4 > 0) {
++                        var4 = 1;
++                     }
++
++                     if(var4 < 0) {
++                        var4 = -1;
++                     }
++
++                     this.field_37_Minecraft_L.field_5_GameOptions_F += (float)var4 * 0.25F;
++                  }
++               }
++
++               if(this.field_31_Minecraft_L == null) {
++                  if(!this.field_11_Minecraft_Z && Mouse.getEventButtonState()) {
++                     this.func_19_Minecraft_V();
++                  }
++               } else if(this.field_31_Minecraft_L != null) {
++                  this.field_31_Minecraft_L.func_38_V();
++               }
++            }
++         }
++
++         if(this.field_1_Minecraft_I > 0) {
++            --this.field_1_Minecraft_I;
++         }
++
++         this.field_0_Minecraft_L.func_1_Profiler_VString("keyboard");
++
++         boolean var8;
++         while(Keyboard.next()) {
++            KeyBinding.func_0_KeyBinding_VIZ(Keyboard.getEventKey(), Keyboard.getEventKeyState());
++            if(Keyboard.getEventKeyState()) {
++               KeyBinding.func_0_KeyBinding_VI(Keyboard.getEventKey());
++            }
++
++            if(this.field_2_Minecraft_J > 0L) {
++               if(func_0_Minecraft_J() - this.field_2_Minecraft_J >= 6000L) {
++                  throw new CrashReportException(new CrashReport("Manually triggered debug crash", new Throwable()));
++               }
++
++               if(!Keyboard.isKeyDown(46) || !Keyboard.isKeyDown(61)) {
++                  this.field_2_Minecraft_J = -1L;
++               }
++            } else if(Keyboard.isKeyDown(46) && Keyboard.isKeyDown(61)) {
++               this.field_2_Minecraft_J = func_0_Minecraft_J();
++            }
++
++            if(Keyboard.getEventKeyState()) {
++               if(Keyboard.getEventKey() == 62 && this.field_33_Minecraft_L != null) {
++                  this.field_33_Minecraft_L.func_0_Renderer_V();
++               }
++
++               if(Keyboard.getEventKey() == 87) {
++                  this.func_22_Minecraft_V();
++               } else {
++                  if(this.field_31_Minecraft_L != null) {
++                     this.field_31_Minecraft_L.func_2_GuiScreen_V();
++                  } else {
++                     if(Keyboard.getEventKey() == 1) {
++                        this.func_21_Minecraft_V();
++                     }
++
++                     if(Keyboard.getEventKey() == 31 && Keyboard.isKeyDown(61)) {
++                        this.func_13_Minecraft_V();
++                     }
++
++                     if(Keyboard.getEventKey() == 20 && Keyboard.isKeyDown(61)) {
++                        this.func_13_Minecraft_V();
++                     }
++
++                     if(Keyboard.getEventKey() == 33 && Keyboard.isKeyDown(61)) {
++                        var8 = Keyboard.isKeyDown(42) | Keyboard.isKeyDown(54);
++                        this.field_37_Minecraft_L.func_0_GameOptions_VEnumOptionI(EnumOption.RENDER_DISTANCE, var8?-1:1);
++                     }
++
++                     if(Keyboard.getEventKey() == 30 && Keyboard.isKeyDown(61)) {
++                        this.field_24_Minecraft_L.func_0_FXFactory_V();
++                     }
++
++                     if(Keyboard.getEventKey() == 35 && Keyboard.isKeyDown(61)) {
++                        this.field_37_Minecraft_L.field_24_GameOptions_Z = !this.field_37_Minecraft_L.field_24_GameOptions_Z;
++                        this.field_37_Minecraft_L.func_2_GameOptions_V();
++                     }
++
++                     if(Keyboard.getEventKey() == 48 && Keyboard.isKeyDown(61)) {
++                        RenderEntityRegistry.field_0_RenderEntityRegistry_Z = !RenderEntityRegistry.field_0_RenderEntityRegistry_Z;
++                     }
++
++                     if(Keyboard.getEventKey() == 25 && Keyboard.isKeyDown(61)) {
++                        this.field_37_Minecraft_L.field_25_GameOptions_Z = !this.field_37_Minecraft_L.field_25_GameOptions_Z;
++                        this.field_37_Minecraft_L.func_2_GameOptions_V();
++                     }
++
++                     if(Keyboard.getEventKey() == 59) {
++                        this.field_37_Minecraft_L.field_2_GameOptions_Z = !this.field_37_Minecraft_L.field_2_GameOptions_Z;
++                     }
++
++                     if(Keyboard.getEventKey() == 61) {
++                        this.field_37_Minecraft_L.field_3_GameOptions_Z = !this.field_37_Minecraft_L.field_3_GameOptions_Z;
++                        this.field_37_Minecraft_L.field_4_GameOptions_Z = GuiScreen.func_1_GuiScreen_Z();
++                     }
++
++                     if(this.field_37_Minecraft_L.field_16_GameOptions_L.func_1_KeyBinding_Z()) {
++                        ++this.field_37_Minecraft_L.field_4_GameOptions_I;
++                        if(this.field_37_Minecraft_L.field_4_GameOptions_I > 2) {
++                           this.field_37_Minecraft_L.field_4_GameOptions_I = 0;
++                        }
++                     }
++
++                     if(this.field_37_Minecraft_L.field_17_GameOptions_L.func_1_KeyBinding_Z()) {
++                        this.field_37_Minecraft_L.field_6_GameOptions_Z = !this.field_37_Minecraft_L.field_6_GameOptions_Z;
++                     }
++                  }
++
++                  if(this.field_37_Minecraft_L.field_3_GameOptions_Z && this.field_37_Minecraft_L.field_4_GameOptions_Z) {
++                     if(Keyboard.getEventKey() == 11) {
++                        this.func_1_Minecraft_VI(0);
++                     }
++
++                     for(var1 = 0; var1 < 9; ++var1) {
++                        if(Keyboard.getEventKey() == 2 + var1) {
++                           this.func_1_Minecraft_VI(var1 + 1);
++                        }
++                     }
++                  }
++               }
++            }
++         }
++
++         for(var1 = 0; var1 < 9; ++var1) {
++            if(this.field_37_Minecraft_L.field_0_GameOptions_1L[var1].func_1_KeyBinding_Z()) {
++               this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_I = var1;
++            }
++         }
++
++         var8 = this.field_37_Minecraft_L.field_22_GameOptions_L != EnumChatVisibility.HIDDEN;
++
++         while(this.field_37_Minecraft_L.field_6_GameOptions_L.func_1_KeyBinding_Z()) {
++            if(this.field_22_Minecraft_L.func_6_PlayerPacketSenderS2C_Z()) {
++               this.field_25_Minecraft_L.func_52_V();
++            } else {
++               this.func_0_Minecraft_NetHandlerImplPlayS2C().func_0_NetHandlerImplPlayS2C_VPacket(new Packet_Play_C2S_22(Packet_Play_C2S_22_ActionType.OPEN_INVENTORY_ACHIEVEMENT));
++               this.func_0_Minecraft_VGuiScreen(new GuiContainerSurvival(this.field_25_Minecraft_L));
++            }
++         }
++
++         while(this.field_37_Minecraft_L.field_8_GameOptions_L.func_1_KeyBinding_Z()) {
++            this.field_25_Minecraft_L.func_0_EntityItemZ(GuiScreen.func_0_GuiScreen_Z());
++         }
++
++         while(this.field_37_Minecraft_L.field_12_GameOptions_L.func_1_KeyBinding_Z() && var8) {
++            this.func_0_Minecraft_VGuiScreen(new GuiScreenChat());
++         }
++
++         if(this.field_31_Minecraft_L == null && this.field_37_Minecraft_L.field_14_GameOptions_L.func_1_KeyBinding_Z() && var8) {
++            this.func_0_Minecraft_VGuiScreen(new GuiScreenChat("/"));
++         }
++
++         if(this.field_25_Minecraft_L.func_5_EntityPlayer_Z()) {
++            if(!this.field_37_Minecraft_L.field_7_GameOptions_L.func_0_KeyBinding_Z()) {
++               this.field_22_Minecraft_L.func_2_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
++            }
++
++            label391:
++            while(true) {
++               if(!this.field_37_Minecraft_L.field_9_GameOptions_L.func_1_KeyBinding_Z()) {
++                  while(this.field_37_Minecraft_L.field_7_GameOptions_L.func_1_KeyBinding_Z()) {
++                     ;
++                  }
++
++                  while(true) {
++                     if(this.field_37_Minecraft_L.field_10_GameOptions_L.func_1_KeyBinding_Z()) {
++                        continue;
++                     }
++                     break label391;
++                  }
++               }
++            }
++         } else {
++            while(this.field_37_Minecraft_L.field_9_GameOptions_L.func_1_KeyBinding_Z()) {
++               this.func_9_Minecraft_V();
++            }
++
++            while(this.field_37_Minecraft_L.field_7_GameOptions_L.func_1_KeyBinding_Z()) {
++               this.func_10_Minecraft_V();
++            }
++
++            while(this.field_37_Minecraft_L.field_10_GameOptions_L.func_1_KeyBinding_Z()) {
++               this.func_12_Minecraft_V();
++            }
++         }
++
++         if(this.field_37_Minecraft_L.field_7_GameOptions_L.func_0_KeyBinding_Z() && this.field_5_Minecraft_I == 0 && !this.field_25_Minecraft_L.func_5_EntityPlayer_Z()) {
++            this.func_10_Minecraft_V();
++         }
++
++         this.func_0_Minecraft_VZ(this.field_31_Minecraft_L == null && this.field_37_Minecraft_L.field_9_GameOptions_L.func_0_KeyBinding_Z() && this.field_11_Minecraft_Z);
++      }
++
++      if(this.field_23_Minecraft_L != null) {
++         if(this.field_25_Minecraft_L != null) {
++            ++this.field_7_Minecraft_I;
++            if(this.field_7_Minecraft_I == 30) {
++               this.field_7_Minecraft_I = 0;
++               this.field_23_Minecraft_L.func_2_World_VEntity(this.field_25_Minecraft_L);
++            }
++         }
++
++         this.field_0_Minecraft_L.func_1_Profiler_VString("gameRenderer");
++         if(!this.field_3_Minecraft_Z) {
++            this.field_33_Minecraft_L.func_2_Renderer_V();
++         }
++
++         this.field_0_Minecraft_L.func_1_Profiler_VString("levelRenderer");
++         if(!this.field_3_Minecraft_Z) {
++            this.field_24_Minecraft_L.func_2_FXFactory_V();
++         }
++
++         this.field_0_Minecraft_L.func_1_Profiler_VString("level");
++         if(!this.field_3_Minecraft_Z) {
++            if(this.field_23_Minecraft_L.field_4_World_I > 0) {
++               --this.field_23_Minecraft_L.field_4_World_I;
++            }
++
++            this.field_23_Minecraft_L.func_7_V();
++         }
++      }
++
++      if(!this.field_3_Minecraft_Z) {
++         this.field_21_Minecraft_L.func_63_V();
++         this.field_20_Minecraft_L.func_63_V();
++      }
++
++      if(this.field_23_Minecraft_L != null) {
++         if(!this.field_3_Minecraft_Z) {
++            this.field_23_Minecraft_L.func_0_World_VZZ(this.field_23_Minecraft_L.field_5_World_L != EnumDifficulty.PEACEFUL, true);
++
++            try {
++               this.field_23_Minecraft_L.func_3_V();
++            } catch (Throwable var7) {
++               var2 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var7, "Exception in world tick");
++               if(this.field_23_Minecraft_L == null) {
++                  var3 = var2.func_0_CrashReport_CrashCategoryWorldLocString("Affected level");
++                  var3.func_0_CrashCategoryWorldLoc_VStringObject("Problem", "Level is null!");
++               } else {
++                  this.field_23_Minecraft_L.func_0_CrashCategoryWorldLocCrashReport(var2);
++               }
++
++               throw new CrashReportException(var2);
++            }
++         }
++
++         this.field_0_Minecraft_L.func_1_Profiler_VString("animateTick");
++         if(!this.field_3_Minecraft_Z && this.field_23_Minecraft_L != null) {
++            this.field_23_Minecraft_L.func_0_WorldClient_VIII(FastMath.func_1_FastMath_ID(this.field_25_Minecraft_L.field_9_Entity_D), FastMath.func_1_FastMath_ID(this.field_25_Minecraft_L.field_10_Entity_D), FastMath.func_1_FastMath_ID(this.field_25_Minecraft_L.field_11_Entity_D));
++         }
++
++         this.field_0_Minecraft_L.func_1_Profiler_VString("particles");
++         if(!this.field_3_Minecraft_Z) {
++            this.field_28_Minecraft_L.func_0_FXParticle_V();
++         }
++      } else if(this.field_12_Minecraft_L != null) {
++         this.field_0_Minecraft_L.func_1_Profiler_VString("pendingConnection");
++         this.field_12_Minecraft_L.func_0_MCChannelInboundHandler_V();
++      }
++
++      this.field_0_Minecraft_L.func_2_Profiler_V();
++      this.field_3_Minecraft_J = func_0_Minecraft_J();
++   }
++
++   public void func_0_Minecraft_VStringStringWorldSettings(String par1String, String par2String, WorldSettings par3afv) {
++      this.func_0_Minecraft_VWorldClient((WorldClient)null);
++      System.gc();
++      IWorldLoader var4 = this.field_11_Minecraft_L.func_0_IWorldLoaderStringZ(par1String, false);
++      WorldInfo var5 = var4.func_0_WorldInfo();
++      if(var5 == null && par3afv != null) {
++         var5 = new WorldInfo(par3afv, par1String);
++         var4.func_0_VWorldInfo(var5);
++      }
++
++      if(par3afv == null) {
++         par3afv = new WorldSettings(var5);
++      }
++
++      try {
++         this.field_10_Minecraft_L = new IntegratedServer(this, par1String, par2String, par3afv);
++         this.field_10_Minecraft_L.func_79_V();
++         this.field_8_Minecraft_Z = true;
++      } catch (Throwable var10) {
++         CrashReport var7 = CrashReport.func_0_CrashReport_CrashReportThrowableString(var10, "Starting integrated server");
++         CrashCategoryWorldLoc var8 = var7.func_0_CrashReport_CrashCategoryWorldLocString("Starting integrated server");
++         var8.func_0_CrashCategoryWorldLoc_VStringObject("Level ID", par1String);
++         var8.func_0_CrashCategoryWorldLoc_VStringObject("Level Name", par2String);
++         throw new CrashReportException(var7);
++      }
++
++      this.field_32_Minecraft_L.func_3_VString(I18n.getString("menu.loadingLevel", new Object[0]));
++
++      while(!this.field_10_Minecraft_L.func_71_Z()) {
++         String var6 = this.field_10_Minecraft_L.func_35_String();
++         if(var6 != null) {
++            this.field_32_Minecraft_L.func_5_VString(I18n.getString(var6, new Object[0]));
++         } else {
++            this.field_32_Minecraft_L.func_5_VString("");
++         }
++
++         try {
++            Thread.sleep(200L);
++         } catch (InterruptedException var9) {
++            ;
++         }
++      }
++
++      this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
++      SocketAddress var11 = this.field_10_Minecraft_L.func_0_NetworkSystem().func_0_NetworkSystem_SocketAddress();
++      MCChannelInboundHandler var12 = MCChannelInboundHandler.func_0_MCChannelInboundHandler_MCChannelInboundHandlerSocketAddress(var11);
++      var12.func_0_MCChannelInboundHandler_VNetHandler(new NetHandlerImplLoginS2C(var12, this, (GuiScreen)null));
++      var12.func_0_MCChannelInboundHandler_VPacket1L(new Packet_Handshake_C2S_0(4, var11.toString(), 0, EnumConnectionState.LOGIN), new GenericFutureListener[0]);
++      var12.func_0_MCChannelInboundHandler_VPacket1L(new Packet_Login_C2S_0(this.func_0_Minecraft_SessionInfo().func_0_SessionInfo_L()), new GenericFutureListener[0]);
++      this.field_12_Minecraft_L = var12;
++   }
++
++   public void func_0_Minecraft_VWorldClient(WorldClient par1biz) {
++      this.func_0_Minecraft_VWorldClientString(par1biz, "");
++   }
++
++   public void func_0_Minecraft_VWorldClientString(WorldClient par1biz, String par2String) {
++      if(par1biz == null) {
++         NetHandlerImplPlayS2C var3 = this.func_0_Minecraft_NetHandlerImplPlayS2C();
++         if(var3 != null) {
++            var3.func_0_NetHandlerImplPlayS2C_V();
++         }
++
++         if(this.field_10_Minecraft_L != null) {
++            this.field_10_Minecraft_L.func_65_V();
++         }
++
++         this.field_10_Minecraft_L = null;
++         this.field_34_Minecraft_L.func_1_GuiAchievementPopup_V();
++         this.field_33_Minecraft_L.func_0_Renderer_GuiMap().func_0_GuiMap_V();
++      }
++
++      this.field_26_Minecraft_L = null;
++      this.field_12_Minecraft_L = null;
++      if(this.field_32_Minecraft_L != null) {
++         this.field_32_Minecraft_L.func_4_VString(par2String);
++         this.field_32_Minecraft_L.func_5_VString("");
++      }
++
++      if(par1biz == null && this.field_23_Minecraft_L != null) {
++         if(this.field_16_Minecraft_L.func_0_ResourcePackDownloader_IResourcePack() != null) {
++            this.func_0_Minecraft_V();
++         }
++
++         this.field_16_Minecraft_L.func_1_ResourcePackDownloader_V();
++         this.func_0_Minecraft_VServerListFileEntry((ServerListFileEntry)null);
++         this.field_8_Minecraft_Z = false;
++      }
++
++      this.field_20_Minecraft_L.func_1_SoundEventAccessorCompositeSerializer_V();
++      this.field_23_Minecraft_L = par1biz;
++      if(par1biz != null) {
++         if(this.field_24_Minecraft_L != null) {
++            this.field_24_Minecraft_L.func_0_FXFactory_VWorldClient(par1biz);
++         }
++
++         if(this.field_28_Minecraft_L != null) {
++            this.field_28_Minecraft_L.func_0_FXParticle_VWorld(par1biz);
++         }
++
++         if(this.field_25_Minecraft_L == null) {
++            this.field_25_Minecraft_L = this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_EntityPlayerClientWorldStatsMap(par1biz, new StatsMap());
++            this.field_22_Minecraft_L.func_1_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
++         }
++
++         this.field_25_Minecraft_L.func_80_V();
++         par1biz.func_1_ZEntity(this.field_25_Minecraft_L);
++         this.field_25_Minecraft_L.field_3_EntityBaseYourPlayerClient_L = new PlayerMoveHelper(this.field_37_Minecraft_L);
++         this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
++         this.field_26_Minecraft_L = this.field_25_Minecraft_L;
++      } else {
++         this.field_11_Minecraft_L.func_29_V();
++         this.field_25_Minecraft_L = null;
++      }
++
++      System.gc();
++      this.field_3_Minecraft_J = 0L;
++   }
++
++   public String func_0_Minecraft_String() {
++      return this.field_24_Minecraft_L.func_0_FXFactory_String();
++   }
++
++   public String func_1_Minecraft_String() {
++      return this.field_24_Minecraft_L.func_1_FXFactory_String();
++   }
++
++   public String func_2_Minecraft_String() {
++      return this.field_23_Minecraft_L.func_1_World_String();
++   }
++
++   public String func_3_Minecraft_String() {
++      return "P: " + this.field_28_Minecraft_L.func_0_FXParticle_String() + ". T: " + this.field_23_Minecraft_L.func_0_World_String();
++   }
++
++   public void func_0_Minecraft_VI(int par1Int) {
++      this.field_23_Minecraft_L.func_5_V();
++      this.field_23_Minecraft_L.func_2_V();
++      int var2 = 0;
++      String var3 = null;
++      if(this.field_25_Minecraft_L != null) {
++         var2 = this.field_25_Minecraft_L.func_2_Entity_I();
++         this.field_23_Minecraft_L.func_2_VEntity(this.field_25_Minecraft_L);
++         var3 = this.field_25_Minecraft_L.func_0_EntityPlayerClient_String();
++      }
++
++      this.field_26_Minecraft_L = null;
++      this.field_25_Minecraft_L = this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_EntityPlayerClientWorldStatsMap(this.field_23_Minecraft_L, this.field_25_Minecraft_L == null?new StatsMap():this.field_25_Minecraft_L.func_0_EntityPlayerClient_StatsMap());
++      this.field_25_Minecraft_L.field_8_Entity_I = par1Int;
++      this.field_26_Minecraft_L = this.field_25_Minecraft_L;
++      this.field_25_Minecraft_L.func_80_V();
++      this.field_25_Minecraft_L.func_1_EntityPlayerClient_VString(var3);
++      this.field_23_Minecraft_L.func_1_ZEntity(this.field_25_Minecraft_L);
++      this.field_22_Minecraft_L.func_1_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
++      this.field_25_Minecraft_L.field_3_EntityBaseYourPlayerClient_L = new PlayerMoveHelper(this.field_37_Minecraft_L);
++      this.field_25_Minecraft_L.func_0_Entity_VI(var2);
++      this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VEntityPlayer(this.field_25_Minecraft_L);
++      if(this.field_31_Minecraft_L instanceof GuiScreenDeath) {
++         this.func_0_Minecraft_VGuiScreen((GuiScreen)null);
++      }
++
++   }
++
++   public final boolean func_7_Minecraft_Z() {
++      return this.field_7_Minecraft_Z;
++   }
++
++   public NetHandlerImplPlayS2C func_0_Minecraft_NetHandlerImplPlayS2C() {
++      return this.field_25_Minecraft_L != null?this.field_25_Minecraft_L.field_0_EntityPlayerClient_L:null;
++   }
++
++   public static boolean func_8_Minecraft_Z() {
++      return field_5_Minecraft_L == null || !field_5_Minecraft_L.field_37_Minecraft_L.field_2_GameOptions_Z;
++   }
++
++   public static boolean func_9_Minecraft_Z() {
++      return field_5_Minecraft_L != null && field_5_Minecraft_L.field_37_Minecraft_L.field_14_GameOptions_Z;
++   }
++
++   public static boolean func_10_Minecraft_Z() {
++      return field_5_Minecraft_L != null && field_5_Minecraft_L.field_37_Minecraft_L.field_9_GameOptions_I != 0;
++   }
++
++   private void func_12_Minecraft_V() {
++      if(this.field_36_Minecraft_L != null) {
++         boolean var1 = this.field_25_Minecraft_L.field_2_EntityPlayer_L.field_3_PlayerCapabilities_Z;
++         int var3 = 0;
++         boolean var4 = false;
++         Item var2;
++         int var5;
++         if(this.field_36_Minecraft_L.field_0_RayTraceResult_L == RayTraceResultType.BLOCK) {
++            var5 = this.field_36_Minecraft_L.blockX;
++            int var6 = this.field_36_Minecraft_L.blockY;
++            int var7 = this.field_36_Minecraft_L.blockZ;
++            Block var8 = this.field_23_Minecraft_L.getBlockId(var5, var6, var7);
++            if(var8.func_0_Block_Material() == Material.air) {
++               return;
++            }
++
++            var2 = var8.func_0_ItemWorldIII(this.field_23_Minecraft_L, var5, var6, var7);
++            if(var2 == null) {
++               return;
++            }
++
++            var4 = var2.func_0_Item_Z();
++            Block var9 = var2 instanceof ItemBlock && !var8.func_10_Z()?Block.func_0_Block_BlockItem(var2):var8;
++            var3 = var9.func_1_IWorldIII(this.field_23_Minecraft_L, var5, var6, var7);
++         } else {
++            if(this.field_36_Minecraft_L.field_0_RayTraceResult_L != RayTraceResultType.ENTITY || this.field_36_Minecraft_L.field_2_RayTraceResult_L == null || !var1) {
++               return;
++            }
++
++            if(this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityPainting) {
++               var2 = Items.painting;
++            } else if(this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityLeashKnot) {
++               var2 = Items.lead;
++            } else if(this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityItemFrame) {
++               EntityItemFrame var10 = (EntityItemFrame)this.field_36_Minecraft_L.field_2_RayTraceResult_L;
++               ItemStack var12 = var10.func_0_EntityItemFrame_ItemStack();
++               if(var12 == null) {
++                  var2 = Items.item_frame;
++               } else {
++                  var2 = var12.getItem();
++                  var3 = var12.func_4_ItemStack_I();
++                  var4 = true;
++               }
++            } else if(this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityMinecartBase) {
++               EntityMinecartBase var11 = (EntityMinecartBase)this.field_36_Minecraft_L.field_2_RayTraceResult_L;
++               if(var11.func_64_I() == 2) {
++                  var2 = Items.furnace_minecart;
++               } else if(var11.func_64_I() == 1) {
++                  var2 = Items.chest_minecart;
++               } else if(var11.func_64_I() == 3) {
++                  var2 = Items.tnt_minecart;
++               } else if(var11.func_64_I() == 5) {
++                  var2 = Items.hopper_minecart;
++               } else if(var11.func_64_I() == 6) {
++                  var2 = Items.command_block_minecart;
++               } else {
++                  var2 = Items.minecart;
++               }
++            } else if(this.field_36_Minecraft_L.field_2_RayTraceResult_L instanceof EntityBoat) {
++               var2 = Items.boat;
++            } else {
++               var2 = Items.spawn_egg;
++               var3 = EntitySerialization.func_0_EntitySerialization_IEntity(this.field_36_Minecraft_L.field_2_RayTraceResult_L);
++               var4 = true;
++               if(var3 <= 0 || !EntitySerialization.field_0_EntitySerialization_HashMap.containsKey(Integer.valueOf(var3))) {
++                  return;
++               }
++            }
++         }
++
++         this.field_25_Minecraft_L.inventory.func_0_PlayerInventory_VItemIZZ(var2, var3, var4, var1);
++         if(var1) {
++            var5 = this.field_25_Minecraft_L.field_5_EntityPlayer_L.inventorySlots.size() - 9 + this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_I;
++            this.field_22_Minecraft_L.func_0_PlayerPacketSenderS2C_VItemStackI(this.field_25_Minecraft_L.inventory.getStackInSlot(this.field_25_Minecraft_L.inventory.field_0_PlayerInventory_I), var5);
++         }
++
++      }
++   }
++
++   public CrashReport func_0_Minecraft_CrashReportCrashReport(CrashReport par1b) {
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Launched Version", new Minecraft_CrashCallableLaunchedVersion(this));
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("LWJGL", new Minecraft_CrashCallableLWJGL(this));
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("OpenGL", new Minecraft_CrashCallableOpenGL(this));
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Is Modded", new Minecraft_CrashCallableIsModded(this));
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Type", new Minecraft_CrashCallableType(this));
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Resource Packs", new Minecraft_CrashCallableResourcePacks(this));
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Current Language", new Minecraft_CrashCallableLanguage(this));
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Profiler Position", new Minecraft_CrashCallableProfilerPosition(this));
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Vec3 Pool Size", new Minecraft_CrashCallableVec3PoolSize(this));
++      par1b.func_0_CrashReport_CrashCategoryWorldLoc().func_0_CrashCategoryWorldLoc_VStringCallable("Anisotropic Filtering", new Minecraft_CrashCallableAnisotropicFiltering(this));
++      if(this.field_23_Minecraft_L != null) {
++         this.field_23_Minecraft_L.func_0_CrashCategoryWorldLocCrashReport(par1b);
++      }
++
++      return par1b;
++   }
++
++   public static Minecraft getMinecraft() {
++      return field_5_Minecraft_L;
++   }
++
++   public void func_0_Minecraft_V() {
++      this.field_5_Minecraft_Z = true;
++   }
++
++   public void func_0_VSnooper(Snooper par1pv) {
++      par1pv.func_0_Snooper_VStringObject("fps", Integer.valueOf(field_4_Minecraft_I));
++      par1pv.func_0_Snooper_VStringObject("vsync_enabled", Boolean.valueOf(this.field_37_Minecraft_L.field_22_GameOptions_Z));
++      par1pv.func_0_Snooper_VStringObject("display_frequency", Integer.valueOf(Display.getDisplayMode().getFrequency()));
++      par1pv.func_0_Snooper_VStringObject("display_type", this.field_1_Minecraft_Z?"fullscreen":"windowed");
++      par1pv.func_0_Snooper_VStringObject("run_time", Long.valueOf((MinecraftServer.func_6_J() - par1pv.func_0_Snooper_J()) / 60L * 1000L));
++      par1pv.func_0_Snooper_VStringObject("resource_packs", Integer.valueOf(this.field_16_Minecraft_L.func_1_ResourcePackDownloader_List().size()));
++      int var2 = 0;
++      Iterator var3 = this.field_16_Minecraft_L.func_1_ResourcePackDownloader_List().iterator();
++
++      while(var3.hasNext()) {
++         ResourcePackDownloader_UnknownInner var4 = (ResourcePackDownloader_UnknownInner)var3.next();
++         par1pv.func_0_Snooper_VStringObject("resource_pack[" + var2++ + "]", var4.func_0_ResourcePackDownloader_UnknownInner_String());
++      }
++
++      if(this.field_10_Minecraft_L != null && this.field_10_Minecraft_L.func_0_Snooper() != null) {
++         par1pv.func_0_Snooper_VStringObject("snooper_partner", this.field_10_Minecraft_L.func_0_Snooper().func_0_Snooper_String());
++      }
++
++   }
++
++   public void func_1_VSnooper(Snooper par1pv) {
++      par1pv.func_0_Snooper_VStringObject("opengl_version", GL11.glGetString(7938));
++      par1pv.func_0_Snooper_VStringObject("opengl_vendor", GL11.glGetString(7936));
++      par1pv.func_0_Snooper_VStringObject("client_brand", ClientBrandRetriever.getClientModName());
++      par1pv.func_0_Snooper_VStringObject("launched_version", this.field_1_Minecraft_String);
++      ContextCapabilities var2 = GLContext.getCapabilities();
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_multitexture]", Boolean.valueOf(var2.GL_ARB_multitexture));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_multisample]", Boolean.valueOf(var2.GL_ARB_multisample));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_texture_cube_map]", Boolean.valueOf(var2.GL_ARB_texture_cube_map));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_vertex_blend]", Boolean.valueOf(var2.GL_ARB_vertex_blend));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_matrix_palette]", Boolean.valueOf(var2.GL_ARB_matrix_palette));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_vertex_program]", Boolean.valueOf(var2.GL_ARB_vertex_program));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_vertex_shader]", Boolean.valueOf(var2.GL_ARB_vertex_shader));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_fragment_program]", Boolean.valueOf(var2.GL_ARB_fragment_program));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_fragment_shader]", Boolean.valueOf(var2.GL_ARB_fragment_shader));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_shader_objects]", Boolean.valueOf(var2.GL_ARB_shader_objects));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_vertex_buffer_object]", Boolean.valueOf(var2.GL_ARB_vertex_buffer_object));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_framebuffer_object]", Boolean.valueOf(var2.GL_ARB_framebuffer_object));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_pixel_buffer_object]", Boolean.valueOf(var2.GL_ARB_pixel_buffer_object));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_uniform_buffer_object]", Boolean.valueOf(var2.GL_ARB_uniform_buffer_object));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[ARB_texture_non_power_of_two]", Boolean.valueOf(var2.GL_ARB_texture_non_power_of_two));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[gl_max_vertex_uniforms]", Integer.valueOf(GL11.glGetInteger('\u8b4a')));
++      par1pv.func_0_Snooper_VStringObject("gl_caps[gl_max_fragment_uniforms]", Integer.valueOf(GL11.glGetInteger('\u8b49')));
++      par1pv.func_0_Snooper_VStringObject("gl_max_texture_size", Integer.valueOf(func_0_Minecraft_I()));
++   }
++
++   public static int func_0_Minecraft_I() {
++      for(int var0 = 16384; var0 > 0; var0 >>= 1) {
++         GL11.glTexImage2D('\u8064', 0, 6408, var0, var0, 0, 6408, 5121, (ByteBuffer)null);
++         int var1 = GL11.glGetTexLevelParameteri('\u8064', 0, 4096);
++         if(var1 != 0) {
++            return var0;
++         }
++      }
++
++      return -1;
++   }
++
++   public boolean func_36_Z() {
++      return this.field_37_Minecraft_L.field_20_GameOptions_Z;
++   }
++
++   public void func_0_Minecraft_VServerListFileEntry(ServerListFileEntry par1bjh) {
++      this.field_3_Minecraft_L = par1bjh;
++   }
++
++   public ServerListFileEntry func_0_Minecraft_ServerListFileEntry() {
++      return this.field_3_Minecraft_L;
++   }
++
++   public boolean func_0_Minecraft_Z() {
++      return this.field_8_Minecraft_Z;
++   }
++
++   public boolean func_1_Minecraft_Z() {
++      return this.field_8_Minecraft_Z && this.field_10_Minecraft_L != null;
++   }
++
++   public IntegratedServer func_0_Minecraft_IntegratedServer() {
++      return this.field_10_Minecraft_L;
++   }
++
++   public static void func_1_Minecraft_V() {
++      if(field_5_Minecraft_L != null) {
++         IntegratedServer var0 = field_5_Minecraft_L.func_0_Minecraft_IntegratedServer();
++         if(var0 != null) {
++            var0.func_64_V();
++         }
++
++      }
++   }
++
++   public Snooper func_0_Minecraft_Snooper() {
++      return this.field_8_Minecraft_L;
++   }
++
++   public static long func_0_Minecraft_J() {
++      return Sys.getTime() * 1000L / Sys.getTimerResolution();
++   }
++
++   public boolean func_2_Minecraft_Z() {
++      return this.field_1_Minecraft_Z;
++   }
++
++   public SessionInfo func_0_Minecraft_SessionInfo() {
++      return this.field_9_Minecraft_L;
++   }
++
++   public Proxy func_0_Minecraft_Proxy() {
++      return this.field_0_Minecraft_Proxy;
++   }
++
++   public TextureWrapper getTextureManager() {
++      return this.field_4_Minecraft_L;
++   }
++
++   public IResourceManager func_0_Minecraft_IResourceManager() {
++      return this.field_13_Minecraft_L;
++   }
++
++   public ResourcePackDownloader func_0_Minecraft_ResourcePackDownloader() {
++      return this.field_16_Minecraft_L;
++   }
++
++   public LanguageList func_0_Minecraft_LanguageList() {
++      return this.field_17_Minecraft_L;
++   }
++
++   public TextureMap func_0_Minecraft_TextureMap() {
++      return this.field_19_Minecraft_L;
++   }
++
++   public boolean func_3_Minecraft_Z() {
++      return this.field_6_Minecraft_Z;
++   }
++
++   public boolean func_4_Minecraft_Z() {
++      return this.field_3_Minecraft_Z;
++   }
++
++   public SoundEventAccessorCompositeSerializer func_0_Minecraft_SoundEventAccessorCompositeSerializer() {
++      return this.field_20_Minecraft_L;
++   }
++
++   public EnumMusicType func_0_Minecraft_EnumMusicType() {
++      return this.field_31_Minecraft_L instanceof GuiScreenMainMenu?EnumMusicType.CREDITS:(this.field_25_Minecraft_L != null?(this.field_25_Minecraft_L.worldObj.field_6_World_L instanceof WorldProviderNether?EnumMusicType.NETHER:(this.field_25_Minecraft_L.worldObj.field_6_World_L instanceof WorldProviderEnd?(CurrentBoss.field_0_CurrentBoss_String != null && CurrentBoss.field_0_CurrentBoss_I > 0?EnumMusicType.END_BOSS:EnumMusicType.END):(this.field_25_Minecraft_L.field_2_EntityPlayer_L.field_3_PlayerCapabilities_Z && this.field_25_Minecraft_L.field_2_EntityPlayer_L.field_2_PlayerCapabilities_Z?EnumMusicType.CREATIVE:EnumMusicType.GAME))):EnumMusicType.MENU);
++   }
++
++   static String func_0_Minecraft_StringMinecraft(Minecraft par1azd) {
++      return par1azd.field_1_Minecraft_String;
++   }
++
++   static LanguageList func_0_Minecraft_LanguageListMinecraft(Minecraft par1azd) {
++      return par1azd.field_17_Minecraft_L;
++   }
++
++}
