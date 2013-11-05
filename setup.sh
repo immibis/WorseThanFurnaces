@@ -6,12 +6,17 @@ if [ -e ../non-redist/mcp811.zip ]; then
 #	if [ `md5sum ../non-redist/mcp811.zip | cut '-d ' -f1` != 2d7a759309b5cc10ca29caa0b10f3bfc ]; then
 #		echo mcp811.zip md5 not what was expected
 #	fi
+	SAVESDIR=
 	if [ -e ../mcp ]; then
 		echo -n 'Deleting ../mcp folder. Enter 'yes' to confirm: '
 		read confirm
 		if [ "$confirm" != 'yes' ]; then
 			echo Exiting.
 			exit 1
+		fi
+		if [ -e ../mcp/jars/saves ]; then
+			SAVESDIR="`pwd`/../temp-setup-saves"
+			mv ../mcp/jars/saves "$SAVESDIR"
 		fi
 		rm -rf ../mcp
 	fi
@@ -26,7 +31,14 @@ if [ -e ../non-redist/mcp811.zip ]; then
 
 	# hack for cygwin
 	cmd "/c decompile.bat
-" || ./decompile.sh
+ < NUL" || ./decompile.sh < /dev/null
+
+	if [ ! -z "$SAVESDIR" ]; then
+		if [ ! -e jars ]; then
+			mkdir jars
+		fi
+		mv "$SAVESDIR" jars/saves
+	fi
 
 	cp -rf src src-base
 	cd src
