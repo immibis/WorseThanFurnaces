@@ -33,6 +33,11 @@ if [ -e ../non-redist/mcp811.zip ]; then
 	cmd "/c decompile.bat
  < NUL" || ./decompile.sh < /dev/null
 
+	if [ ! -e src/minecraft ]; then
+		echo Decompile failed. Exiting.
+		exit 1
+	fi
+
 	if [ ! -z "$SAVESDIR" ]; then
 		if [ ! -e jars ]; then
 			mkdir jars

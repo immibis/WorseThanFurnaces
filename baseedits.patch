@@ -1,0 +1,30 @@
+diff -r -U 3 src-base/minecraft/mc/Block.java src/minecraft/mc/Block.java
+--- src-base/minecraft/mc/Block.java	Tue Nov  5 21:52:23 2013
++++ src/minecraft/mc/Block.java	Tue Nov  5 22:01:58 2013
+@@ -297,6 +297,7 @@
+         field_4_Block_L.func_0_VIStringObject(173, "coal_block", (new Block(Material.field_13_Material_L)).func_2_Block_BlockF(5.0F).func_1_Block_BlockF(10.0F).func_0_Block_BlockBlockSound(field_9_Block_L).func_1_Block_BlockString("blockCoal").func_0_Block_BlockCreativeTab(CreativeTab.buildingBlocks).func_2_Block_BlockString("coal_block"));
+         field_4_Block_L.func_0_VIStringObject(174, "packed_ice", (new BlockPackedIce()).func_2_Block_BlockF(0.5F).func_0_Block_BlockBlockSound(field_11_Block_L).func_1_Block_BlockString("icePacked").func_2_Block_BlockString("ice_packed"));
+         field_4_Block_L.func_0_VIStringObject(175, "double_plant", new BlockDoublePlant());
++        wtfml.WTFML.h_initBlocks(field_4_Block_L);
+         Iterator var10 = field_4_Block_L.iterator();
+ 
+         while (var10.hasNext())
+diff -r -U 3 src-base/minecraft/mc/Item.java src/minecraft/mc/Item.java
+--- src-base/minecraft/mc/Item.java	Tue Nov  5 21:52:26 2013
++++ src/minecraft/mc/Item.java	Tue Nov  5 22:03:32 2013
+@@ -214,6 +214,7 @@
+         field_2_Item_L.func_0_VIStringObject(2265, "record_ward", (new ItemRecord("ward")).func_0_ItemString("record").func_1_Item_ItemString("record_ward"));
+         field_2_Item_L.func_0_VIStringObject(2266, "record_11", (new ItemRecord("11")).func_0_ItemString("record").func_1_Item_ItemString("record_11"));
+         field_2_Item_L.func_0_VIStringObject(2267, "record_wait", (new ItemRecord("wait")).func_0_ItemString("record").func_1_Item_ItemString("record_wait"));
++        wtfml.WTFML.h_initItems(field_2_Item_L);
+         HashSet var1 = Sets.newHashSet(new Block[] {Blocks.air, Blocks.brewing_stand, Blocks.bed, Blocks.nether_wart, Blocks.cauldron, Blocks.flower_pot, Blocks.wheat, Blocks.reeds, Blocks.cake, Blocks.skull, Blocks.piston_head, Blocks.piston_extension, Blocks.lit_redstone_ore, Blocks.powered_repeater, Blocks.pumpkin_stem, Blocks.standing_sign, Blocks.powered_comparator, Blocks.tripwire, Blocks.lit_redstone_lamp, Blocks.melon_stem, Blocks.unlit_redstone_torch, Blocks.unpowered_comparator, Blocks.redstone_wire, Blocks.wall_sign, Blocks.unpowered_repeater, Blocks.iron_door, Blocks.wooden_door});
+         Iterator var2 = Block.field_4_Block_L.func_0_RegistryImpl_Set().iterator();
+ 
+@@ -358,6 +359,7 @@
+                     continue;
+                 }
+ 
++                var5 = wtfml.WTFML.h_createItemBlock(var4); if(var5 == null)
+                 var5 = new ItemBlock(var4);
+             }
+ 
