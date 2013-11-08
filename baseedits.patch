@@ -28,3 +28,23 @@ diff -r -U 3 src-base/minecraft/mc/Item.java src/minecraft/mc/Item.java
                  var5 = new ItemBlock(var4);
              }
  
+diff -r -U 3 src-base/minecraft/net/minecraft/server/MinecraftServer.java src/minecraft/net/minecraft/server/MinecraftServer.java
+--- src-base/minecraft/net/minecraft/server/MinecraftServer.java	Wed Nov  6 19:33:08 2013
++++ src/minecraft/net/minecraft/server/MinecraftServer.java	Fri Nov  8 16:46:18 2013
+@@ -70,6 +70,8 @@
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ 
++import wtfml.WTFML;
++
+ public abstract class MinecraftServer implements ICommandSender, Runnable, Snoopable
+ {
+     private static final Logger h = LogManager.getLogger();
+@@ -491,6 +493,7 @@
+         long var1 = System.nanoTime();
+         AxisAlignedBB.func_0_AxisAlignedBB_AABBPool().func_0_AABBPool_V();
+         ++this.w;
++        WTFML.h_tick(true);
+ 
+         if (this.Q)
+         {

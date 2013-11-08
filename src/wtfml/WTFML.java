@@ -10,6 +10,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import com.google.common.eventbus.EventBus;
+
+import wtfml.internal.WTFBlockWrapper;
+
 import mc.Block;
 import mc.ItemBlock;
 import mc.Minecraft;
@@ -23,6 +27,8 @@ import mc.RegistryNamespaced;
  *
  */
 public class WTFML {
+	
+	public static final EventBus eventBus = new EventBus();
 	
 	private static List<Mod> mods = Arrays.<Mod>asList(new wtf.ModWTF());
 	
@@ -70,6 +76,10 @@ public class WTFML {
 		Block.field_4_Block_L.func_0_VIStringObject(id, name, block);
 	}
 	
+	public static void addBlock(String name, WTFBlockType block) {
+		addBlock(name, new WTFBlockWrapper(block));
+	}
+	
 	
 	
 	
@@ -90,5 +100,9 @@ public class WTFML {
 
 	public static ItemBlock h_createItemBlock(Block block) {
 		return null;
+	}
+	
+	public static void h_tick(boolean server) {
+		eventBus.post(TickEvent.get(server));
 	}
 }
