@@ -11,13 +11,13 @@ import mc.IconRegister;
 import mc.ItemStack;
 import mc.Material;
 import mc.World;
-import wtfml.BlockIconHandler;
-import wtfml.BlockMetaHandler;
-import wtfml.BlockRedstoneHandler;
-import wtfml.BlockUpdateEvent;
 import wtfml.RunLater;
 import wtfml.RunLater.ZeroGarbageBlockActionHandler;
-import wtfml.WTFBlockType;
+import wtfml.blocks.BlockIconHandler;
+import wtfml.blocks.BlockMetaHandler;
+import wtfml.blocks.BlockRedstoneHandler;
+import wtfml.blocks.BlockUpdateEvent;
+import wtfml.blocks.WTFBlockType;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -87,9 +87,8 @@ class BlockSensor {
 		
 		block.causesRedstoneUpdates = true;
 		
-		block.material = Material.stone;
 		block.hardness = 0.2f;
-		block.unlocalizedName = "bed";
+		block.unlocalizedName = "blocksensor";
 		block.creativeTab = CreativeTab.brewing;
 	}
 	
@@ -106,8 +105,9 @@ class BlockSensor {
 		case 5: x++; break;
 		}
 		
+		Block block_under = ((old_meta & 7) == 0 ? Blocks.air : par1afn.getBlockId(par2Int*2-x, par3Int*2-y, par4Int*2-z));
 		Block block = par1afn.getBlockId(x, y, z);
 		
-		return (old_meta & 7) | (block != Blocks.air && block != Blocks.piston_head ? 8 : 0);		
+		return (old_meta & 7) | ((block_under == Blocks.air ? block != Blocks.air && block != Blocks.piston_head : block_under == block) ? 8 : 0);		
 	}
 }

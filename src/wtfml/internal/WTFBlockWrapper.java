@@ -7,8 +7,8 @@ import mc.Icon;
 import mc.IconRegister;
 import mc.ItemStack;
 import mc.World;
-import wtfml.BlockUpdateEvent;
-import wtfml.WTFBlockType;
+import wtfml.blocks.BlockUpdateEvent;
+import wtfml.blocks.WTFBlockType;
 
 public class WTFBlockWrapper extends Block {
 

@@ -12,6 +12,7 @@ import mc.Block;
 import mc.ItemBlock;
 import mc.Minecraft;
 import mc.RegistryNamespaced;
+import wtfml.blocks.WTFBlockType;
 import wtfml.internal.WTFBlockWrapper;
 
 import com.google.common.eventbus.EventBus;

@@ -1,4 +1,4 @@
-package wtfml;
+package wtfml.blocks;
 
 import mc.IBlockAccess;
 
