@@ -1,9 +1,6 @@
 package wtfml;
 
-import mc.EntityLiving;
 import mc.IBlockAccess;
-import mc.ItemStack;
-import mc.World;
 
 public interface BlockRedstoneHandler {
 	public int getWeakEmittedPower(IBlockAccess w, int x, int y, int z, int direction);

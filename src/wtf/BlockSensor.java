@@ -1,17 +1,5 @@
 package wtf;
 
-import java.util.Random;
-
-import com.google.common.eventbus.Subscribe;
-
-import wtfml.BlockIconHandler;
-import wtfml.BlockMetaHandler;
-import wtfml.BlockRedstoneHandler;
-import wtfml.BlockUpdateEvent;
-import wtfml.RunLater;
-import wtfml.WTFBlockType;
-import wtfml.RunLater.ZeroGarbageBlockActionHandler;
-
 import mc.Block;
 import mc.BlockPiston;
 import mc.Blocks;
@@ -22,8 +10,16 @@ import mc.Icon;
 import mc.IconRegister;
 import mc.ItemStack;
 import mc.Material;
-import mc.TileDispenser;
 import mc.World;
+import wtfml.BlockIconHandler;
+import wtfml.BlockMetaHandler;
+import wtfml.BlockRedstoneHandler;
+import wtfml.BlockUpdateEvent;
+import wtfml.RunLater;
+import wtfml.RunLater.ZeroGarbageBlockActionHandler;
+import wtfml.WTFBlockType;
+
+import com.google.common.eventbus.Subscribe;
 
 class BlockSensor {
 	static void init(WTFBlockType block) {
@@ -59,6 +55,14 @@ class BlockSensor {
 			
 			@Override
 			public void registerIcons(IconRegister register) {
+			}
+
+			@Override
+			public Icon getItemIcon(int side, int meta) {
+				if(1 == side)
+					return Blocks.redstone_block.func_0_Block_IconI(0);
+				else
+					return Blocks.stone.func_0_Block_IconI(0);
 			}
 		};
 		

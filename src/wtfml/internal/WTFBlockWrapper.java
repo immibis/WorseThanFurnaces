@@ -1,16 +1,14 @@
 package wtfml.internal;
 
-import wtfml.BlockUpdateEvent;
-import wtfml.WTFBlockType;
 import mc.Block;
-import mc.CreativeTab;
 import mc.EntityLiving;
 import mc.IBlockAccess;
 import mc.Icon;
 import mc.IconRegister;
 import mc.ItemStack;
-import mc.Material;
 import mc.World;
+import wtfml.BlockUpdateEvent;
+import wtfml.WTFBlockType;
 
 public class WTFBlockWrapper extends Block {
 
@@ -32,6 +30,11 @@ public class WTFBlockWrapper extends Block {
 	@Override
 	public Icon func_0_IconIBlockAccessIIII(IBlockAccess par1afx, int par2Int, int par3Int, int par4Int, int par5Int) {
 		return wraps.iconHandler.getIcon(par1afx, par2Int, par3Int, par4Int, par5Int);
+	}
+	
+	@Override
+	public Icon getIcon(int par1Int, int par2Int) {
+		return wraps.iconHandler.getItemIcon(par1Int, par2Int);
 	}
 	
 	public void func_0_VWorldIIIEntityLivingItemStack(World par1afn, int par2Int, int par3Int, int par4Int, EntityLiving par5rh, ItemStack par6abp) {

@@ -1,8 +1,6 @@
 package wtfml;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,14 +8,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import com.google.common.eventbus.EventBus;
-
-import wtfml.internal.WTFBlockWrapper;
-
 import mc.Block;
 import mc.ItemBlock;
 import mc.Minecraft;
 import mc.RegistryNamespaced;
+import wtfml.internal.WTFBlockWrapper;
+
+import com.google.common.eventbus.EventBus;
 
 /**
  * Main interface to WTFML.

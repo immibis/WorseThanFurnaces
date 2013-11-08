@@ -1,10 +1,7 @@
 package wtfml;
 
 import mc.CreativeTab;
-import mc.Icon;
-import mc.IconRegister;
 import mc.Material;
-import mc.World;
 
 import com.google.common.eventbus.EventBus;
 
@@ -16,11 +13,12 @@ public final class WTFBlockType {
 	public BlockMetaHandler metaHandler = BlockMetaHandler.defaultHandler;
 	public BlockRedstoneHandler redstoneHandler = BlockRedstoneHandler.defaultHandler;
 	
-	// XXX notch-hack; canProvidePower in MCP. Remove if possible
-	public boolean causesRedstoneUpdates = false;
-
-	public Material material;
 	public float hardness;
 	public String unlocalizedName;
 	public CreativeTab creativeTab;
+	
+	// XXX notch-hacks. Remove if possible
+	@Deprecated public boolean causesRedstoneUpdates = false; // MCP: canProvidePower
+	@Deprecated public Material material;
+	
 }
