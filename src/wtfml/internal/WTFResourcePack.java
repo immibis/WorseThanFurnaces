@@ -70,13 +70,10 @@ public class WTFResourcePack implements IResourcePack {
 		} catch(IOException e) {
 			throw new RuntimeException(e);
 		}
-		
-		System.out.println("WTFML namespaces: "+namespaces);
 	}
 	
 	@Override
 	public InputStream func_0_InputStreamResourceLocation(ResourceLocation var1) throws ZipException, FileNotFoundException, ResourceNotFoundException, IOException {
-		System.out.println("WTFResourcePack: requested file: "+var1);
 		String path = var1.func_1_ResourceLocation_String()+"/assets/"+var1.func_0_ResourceLocation_String();
 		InputStream is = classLoader.getResourceAsStream(path);
 		if(is == null)
@@ -99,9 +96,6 @@ public class WTFResourcePack implements IResourcePack {
 	public IResourceMetadataSection func_0_IResourceMetadataSectionResourceMetadataSectionTypeRegistryString(
 			ResourceMetadataSectionTypeRegistry var1, String var2) throws ZipException, FileNotFoundException, ResourceNotFoundException, IOException {
 		
-		System.out.println("WTFResourcePack: requested metadata section '"+var2+"'");
-		if(var2.equals("language"))
-			return Minecraft.getMinecraft().func_0_Minecraft_ResourcePackDownloader().field_0_ResourcePackDownloader_L.func_0_IResourceMetadataSectionResourceMetadataSectionTypeRegistryString(var1, var2);
 		return null;
 	}
 
