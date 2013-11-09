@@ -14,7 +14,7 @@ import mc.World;
 import wtfml.RunLater;
 import wtfml.RunLater.ZeroGarbageBlockActionHandler;
 import wtfml.blocks.BlockIconHandler;
-import wtfml.blocks.BlockMetaHandler;
+import wtfml.blocks.BlockPlaceEvent;
 import wtfml.blocks.BlockRedstoneHandler;
 import wtfml.blocks.BlockUpdateEvent;
 import wtfml.blocks.WTFBlockType;
@@ -41,6 +41,12 @@ class BlockSensor {
 					RunLater.onBlock(2, evt.world, evt.x, evt.y, evt.z, updateBlockActionID, 0);
 				}
 			}
+			
+			@Subscribe
+			public void onPlace(BlockPlaceEvent evt) {
+				int meta = BlockPiston.func_0_BlockPiston_IWorldIIIEntityLiving(evt.world, evt.x, evt.y, evt.z, evt.player);
+				evt.world.func_0_World_ZIIIII(evt.x, evt.y, evt.z, meta, 2);
+			}
 		});
 		
 		block.iconHandler = new BlockIconHandler() {
@@ -63,13 +69,6 @@ class BlockSensor {
 					return Blocks.redstone_block.func_0_Block_IconI(0);
 				else
 					return Blocks.stone.func_0_Block_IconI(0);
-			}
-		};
-		
-		block.metaHandler = new BlockMetaHandler() {
-			@Override
-			public int getMetaOnPlace(World w, int x, int y, int z, EntityLiving player, ItemStack stack) {
-				return BlockPiston.func_0_BlockPiston_IWorldIIIEntityLiving(w, x, y, z, player);
 			}
 		};
 		

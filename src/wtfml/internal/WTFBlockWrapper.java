@@ -9,6 +9,7 @@ import mc.Icon;
 import mc.IconRegister;
 import mc.ItemStack;
 import mc.World;
+import wtfml.blocks.BlockPlaceEvent;
 import wtfml.blocks.BlockRandomTickEvent;
 import wtfml.blocks.BlockUpdateEvent;
 import wtfml.blocks.WTFBlockType;
@@ -41,7 +42,7 @@ public class WTFBlockWrapper extends Block {
 	}
 	
 	public void func_0_VWorldIIIEntityLivingItemStack(World par1afn, int par2Int, int par3Int, int par4Int, EntityLiving par5rh, ItemStack par6abp) {
-		par1afn.func_0_World_ZIIIII(par2Int, par3Int, par4Int, wraps.metaHandler.getMetaOnPlace(par1afn, par2Int, par3Int, par4Int, par5rh, par6abp), 2);
+		wraps.eventBus.post(BlockPlaceEvent.get(par1afn, par2Int, par3Int, par4Int, par5rh, par6abp));
 	}
 	
 	public boolean func_8_Z() {

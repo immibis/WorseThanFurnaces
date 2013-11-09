@@ -10,7 +10,6 @@ public final class WTFBlockType {
 	public final EventBus eventBus = new EventBus();
 	
 	public BlockIconHandler iconHandler = BlockIconHandler.defaultHandler;
-	public BlockMetaHandler metaHandler = BlockMetaHandler.defaultHandler;
 	public BlockRedstoneHandler redstoneHandler = BlockRedstoneHandler.defaultHandler;
 	public BlockTEHandler tileEntityHandler = BlockTEHandler.defaultHandler;
 	
