@@ -1,0 +1,4 @@
+UPGRADES:
+* Reinforced block sensor
+* Auto-piston
+* Longer-range piston

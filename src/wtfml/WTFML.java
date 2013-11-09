@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import mc.Block;
 import mc.ItemBlock;
@@ -14,6 +15,7 @@ import mc.Minecraft;
 import mc.RegistryNamespaced;
 import wtfml.blocks.WTFBlockType;
 import wtfml.internal.WTFBlockWrapper;
+import wtfml.internal.WTFBlockWrapperReverse;
 
 import com.google.common.eventbus.EventBus;
 
@@ -76,6 +78,18 @@ public class WTFML {
 	
 	public static void addBlock(String name, WTFBlockType block) {
 		addBlock(name, new WTFBlockWrapper(block));
+	}
+	
+	public static WTFBlockType getBlockType(String name) {
+		Block b = (Block)Block.field_4_Block_L.func_0_ObjectString(name);
+		if(!(b instanceof WTFBlockWrapper)) {
+			System.out.println("Wrapping vanilla block "+name);
+			Block wrapped = new WTFBlockWrapper(WTFBlockWrapperReverse.wrap(b));
+			Block.field_4_Block_L.func_0_VIStringObject(Block.func_0_Block_IBlock(b), name, wrapped);
+			b = wrapped;
+		}
+		
+		return ((WTFBlockWrapper)b).getWrapped();
 	}
 	
 	

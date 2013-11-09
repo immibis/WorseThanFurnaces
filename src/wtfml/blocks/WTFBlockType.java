@@ -23,6 +23,8 @@ public final class WTFBlockType {
 	/** Only takes effect at block registration time. */
 	public boolean hasTileEntities = false;
 	
+	public boolean hasRandomTicks = false;
+	
 	
 	// XXX notch-hacks. Remove if possible
 	@Deprecated public boolean causesRedstoneUpdates = false; // MCP: canProvidePower

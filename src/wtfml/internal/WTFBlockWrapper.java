@@ -1,5 +1,7 @@
 package wtfml.internal;
 
+import java.util.Random;
+
 import mc.Block;
 import mc.EntityLiving;
 import mc.IBlockAccess;
@@ -7,6 +9,7 @@ import mc.Icon;
 import mc.IconRegister;
 import mc.ItemStack;
 import mc.World;
+import wtfml.blocks.BlockRandomTickEvent;
 import wtfml.blocks.BlockUpdateEvent;
 import wtfml.blocks.WTFBlockType;
 
@@ -18,7 +21,7 @@ public class WTFBlockWrapper extends Block {
 		super(wraps.material);
 		this.wraps = wraps;
 		func_0_Block_BlockCreativeTab(wraps.creativeTab);
-		func_0_Block_BlockF(wraps.hardness);
+		func_2_Block_BlockF(wraps.hardness);
 		func_1_Block_BlockString(wraps.unlocalizedName);
 	}
 	
@@ -58,5 +61,19 @@ public class WTFBlockWrapper extends Block {
 	@Override
 	public void func_0_VWorldIIIBlock(World par1afn, int par2Int, int par3Int, int par4Int, Block par5ahu) {
 		wraps.eventBus.post(BlockUpdateEvent.get(par1afn, par2Int, par3Int, par4Int));
+	}
+	
+	@Override
+	public void func_0_VWorldIIIRandom(World par1afn, int par2Int, int par3Int, int par4Int, Random par5Random) {
+		wraps.eventBus.post(BlockRandomTickEvent.get(par1afn, par2Int, par3Int, par4Int));
+	}
+	
+	@Override
+	public boolean func_6_Block_Z() {
+		return wraps.hasRandomTicks;
+	}
+
+	public WTFBlockType getWrapped() {
+		return wraps;
 	}
 }

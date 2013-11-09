@@ -5,7 +5,7 @@ import mc.Icon;
 import mc.IconRegister;
 
 public interface BlockIconHandler {
-	public Icon getIcon(IBlockAccess par1afx, int x, int y, int z, int side);
+	public Icon getIcon(IBlockAccess world, int x, int y, int z, int side);
 	public Icon getItemIcon(int side, int damageValue);
 	public void registerIcons(IconRegister register);
 	

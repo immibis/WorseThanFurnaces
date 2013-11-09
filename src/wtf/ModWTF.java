@@ -1,5 +1,10 @@
 package wtf;
 
+import mc.Blocks;
+
+import com.google.common.eventbus.Subscribe;
+import wtfml.blocks.BlockRandomTickEvent;
+
 import wtfml.Mod;
 import wtfml.WTFML;
 import wtfml.blocks.WTFBlockType;
@@ -18,5 +23,14 @@ public class ModWTF extends Mod {
 		WTFBlockType blockGen = new WTFBlockType();
 		BlockGenerator.init(blockGen);
 		WTFML.addBlock("wtf:block-testing-generator", blockGen);
+		
+		WTFBlockType ironOre = WTFML.getBlockType("minecraft:iron_ore");
+		ironOre.hasRandomTicks = true;
+		ironOre.eventBus.register(new Object() {
+			@Subscribe
+			public void onrandomtick(BlockRandomTickEvent evt) {
+				evt.world.func_0_World_ZIIIBlockII(evt.x, evt.y, evt.z, Blocks.gold_block, 0, 3);
+			}
+		});
 	}
 }
