@@ -32,7 +32,7 @@ if [ -e ../non-redist/mcp811.zip ]; then
 		if [ -e ../mcp/jars/saves ]; then
 			SAVESDIR="`pwd`/../temp-setup-saves"
 			mkdir "$SAVESDIR"
-			mv "../mcp/jars/saves"/{saves,config} "$SAVESDIR"
+			mv ../mcp/jars/{saves,config,options.txt} "$SAVESDIR"
 		fi
 		rm -rf ../mcp
 	fi
@@ -58,7 +58,8 @@ if [ -e ../non-redist/mcp811.zip ]; then
 		if [ ! -e jars ]; then
 			mkdir jars
 		fi
-		mv "$SAVESDIR/*" jars
+		mv "$SAVESDIR"/{saves,config,options.txt} jars
+		rmdir "$SAVESDIR"
 	fi
 
 	cp -rf src src-base
