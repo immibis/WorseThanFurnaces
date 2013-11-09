@@ -24,12 +24,16 @@ public class ModWTF extends Mod {
 		BlockGenerator.init(blockGen);
 		WTFML.addBlock("wtf:block-testing-generator", blockGen);
 		
+		final WTFBlockType shatteredIronOre = new WTFBlockType();
+		ShatteredOre.init(shatteredIronOre);
+		WTFML.addBlock("wtf:shattered-iron-ore", shatteredIronOre);
+		
 		WTFBlockType ironOre = WTFML.getBlockType("minecraft:iron_ore");
 		ironOre.hasRandomTicks = true;
 		ironOre.eventBus.register(new Object() {
 			@Subscribe
 			public void onrandomtick(BlockRandomTickEvent evt) {
-				evt.world.func_0_World_ZIIIBlockII(evt.x, evt.y, evt.z, Blocks.gold_block, 0, 3);
+				evt.world.func_0_World_ZIIIBlockII(evt.x, evt.y, evt.z, WTFML.getMinecraftBlock(shatteredIronOre), 0, 3);
 			}
 		});
 	}

@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -16,6 +18,7 @@ import mc.RegistryNamespaced;
 import wtfml.blocks.WTFBlockType;
 import wtfml.internal.WTFBlockWrapper;
 import wtfml.internal.WTFBlockWrapperReverse;
+import wtfml.internal.WTFResourcePack;
 
 import com.google.common.eventbus.EventBus;
 
@@ -76,20 +79,34 @@ public class WTFML {
 		Block.field_4_Block_L.func_0_VIStringObject(id, name, block);
 	}
 	
+	private static Map<WTFBlockType, Block> wrappedBlocks = new HashMap<WTFBlockType, Block>();
+	
 	public static void addBlock(String name, WTFBlockType block) {
-		addBlock(name, new WTFBlockWrapper(block));
+		Block wrapper = new WTFBlockWrapper(block);
+		wrappedBlocks.put(block, wrapper);
+		addBlock(name, wrapper);
 	}
+	
+	
+	
+	
+	////// BLOCK WRAPPING/UNWRAPPING \\\\\\
 	
 	public static WTFBlockType getBlockType(String name) {
 		Block b = (Block)Block.field_4_Block_L.func_0_ObjectString(name);
 		if(!(b instanceof WTFBlockWrapper)) {
 			System.out.println("Wrapping vanilla block "+name);
-			Block wrapped = new WTFBlockWrapper(WTFBlockWrapperReverse.wrap(b));
-			Block.field_4_Block_L.func_0_VIStringObject(Block.func_0_Block_IBlock(b), name, wrapped);
-			b = wrapped;
+			WTFBlockWrapper wrapper = new WTFBlockWrapper(WTFBlockWrapperReverse.wrap(b));
+			wrappedBlocks.put(wrapper.getWrapped(), wrapper);
+			Block.field_4_Block_L.func_0_VIStringObject(Block.func_0_Block_IBlock(b), name, wrapper);
+			b = wrapper;
 		}
 		
 		return ((WTFBlockWrapper)b).getWrapped();
+	}
+	
+	public static Block getMinecraftBlock(WTFBlockType block) {
+		return wrappedBlocks.get(block);
 	}
 	
 	
@@ -116,5 +133,9 @@ public class WTFML {
 	
 	public static void h_tick(boolean server) {
 		eventBus.post(TickEvent.get(server));
+	}
+
+	public static void h_initResourcePacks(List list) {
+		list.add(new WTFResourcePack());
 	}
 }

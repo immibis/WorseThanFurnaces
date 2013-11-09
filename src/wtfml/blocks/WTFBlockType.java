@@ -1,5 +1,6 @@
 package wtfml.blocks;
 
+import mc.Block;
 import mc.CreativeTab;
 import mc.Material;
 
@@ -28,5 +29,4 @@ public final class WTFBlockType {
 	// XXX notch-hacks. Remove if possible
 	@Deprecated public boolean causesRedstoneUpdates = false; // MCP: canProvidePower
 	@Deprecated public Material material = Material.stone;
-	
 }

@@ -1,6 +1,6 @@
 diff -r -U 3 src-base/minecraft/mc/Block.java src/minecraft/mc/Block.java
---- src-base/minecraft/mc/Block.java	Wed Nov  6 19:32:59 2013
-+++ src/minecraft/mc/Block.java	Wed Nov  6 19:33:25 2013
+--- src-base/minecraft/mc/Block.java	Sat Nov  9 15:57:28 2013
++++ src/minecraft/mc/Block.java	Sat Nov  9 15:57:57 2013
 @@ -297,6 +297,7 @@
          field_4_Block_L.func_0_VIStringObject(173, "coal_block", (new Block(Material.stone)).func_2_Block_BlockF(5.0F).func_1_Block_BlockF(10.0F).func_0_Block_BlockBlockSound(field_9_Block_L).func_1_Block_BlockString("blockCoal").func_0_Block_BlockCreativeTab(CreativeTab.buildingBlocks).func_2_Block_BlockString("coal_block"));
          field_4_Block_L.func_0_VIStringObject(174, "packed_ice", (new BlockPackedIce()).func_2_Block_BlockF(0.5F).func_0_Block_BlockBlockSound(field_11_Block_L).func_1_Block_BlockString("icePacked").func_2_Block_BlockString("ice_packed"));
@@ -10,8 +10,8 @@ diff -r -U 3 src-base/minecraft/mc/Block.java src/minecraft/mc/Block.java
  
          while (var10.hasNext())
 diff -r -U 3 src-base/minecraft/mc/Item.java src/minecraft/mc/Item.java
---- src-base/minecraft/mc/Item.java	Wed Nov  6 19:33:03 2013
-+++ src/minecraft/mc/Item.java	Wed Nov  6 19:33:34 2013
+--- src-base/minecraft/mc/Item.java	Sat Nov  9 15:57:33 2013
++++ src/minecraft/mc/Item.java	Sat Nov  9 15:58:08 2013
 @@ -214,6 +214,7 @@
          field_2_Item_L.func_0_VIStringObject(2265, "record_ward", (new ItemRecord("ward")).func_0_ItemString("record").func_1_Item_ItemString("record_ward"));
          field_2_Item_L.func_0_VIStringObject(2266, "record_11", (new ItemRecord("11")).func_0_ItemString("record").func_1_Item_ItemString("record_11"));
@@ -28,9 +28,20 @@ diff -r -U 3 src-base/minecraft/mc/Item.java src/minecraft/mc/Item.java
                  var5 = new ItemBlock(var4);
              }
  
+diff -r -U 3 src-base/minecraft/mc/Minecraft.java src/minecraft/mc/Minecraft.java
+--- src-base/minecraft/mc/Minecraft.java	Sat Nov  9 15:57:34 2013
++++ src/minecraft/mc/Minecraft.java	Sat Nov  9 20:18:52 2013
+@@ -416,6 +416,7 @@
+     private void func_4_Minecraft_V()
+     {
+         this.field_1_Minecraft_List.add(this.field_15_Minecraft_L);
++        wtfml.WTFML.h_initResourcePacks(this.field_1_Minecraft_List);
+     }
+ 
+     private ByteBuffer func_0_Minecraft_ByteBufferFile(File par1File) throws IOException
 diff -r -U 3 src-base/minecraft/net/minecraft/server/MinecraftServer.java src/minecraft/net/minecraft/server/MinecraftServer.java
---- src-base/minecraft/net/minecraft/server/MinecraftServer.java	Wed Nov  6 19:33:08 2013
-+++ src/minecraft/net/minecraft/server/MinecraftServer.java	Fri Nov  8 16:46:18 2013
+--- src-base/minecraft/net/minecraft/server/MinecraftServer.java	Sat Nov  9 15:57:38 2013
++++ src/minecraft/net/minecraft/server/MinecraftServer.java	Sat Nov  9 15:58:16 2013
 @@ -70,6 +70,8 @@
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
