@@ -881,7 +881,7 @@ CL: kp mc/DispenseActionFireCharge
 CL: kq mc/DispenseActionBoat
 CL: ku mc/_ku_ne
 CL: kw mc/LevelConvertProgressUpdater
-CL: kx mc/_kx_ne
+CL: kx mc/ThreadServerShutdown
 CL: ky mc/ThreadServer
 CL: kz mc/CrashCallableProfilerPosition
 CL: l mc/CrashCallableBlockType
@@ -889,25 +889,25 @@ CL: la mc/CrashCallableVec3PoolSize
 CL: lb mc/CrashCallablePlayerCount
 CL: lc mc/PlayerDistanceToBlockComparator
 CL: ld mc/ServerConfigurationManager
-CL: le mc/_le_ne
+CL: le mc/IDedicatedServer
 CL: lf mc/Scoreboard2
-CL: lg mc/_lg_ne
+CL: lg mc/ServerProperties
 CL: lh mc/ITickable
-CL: li mc/_li_ne
-CL: lj mc/_lj_ne
-CL: lk mc/_lk_ne
-CL: ll mc/_ll_ne
-CL: lm mc/_lm_ne
-CL: ln mc/_ln_ne
-CL: lo mc/_lo_ne
-CL: lp mc/_lp_ne
-CL: lq mc/_lq_ne
-CL: lr mc/_lr_ne
-CL: ls mc/_ls_ne
-CL: lt mc/_lt_ne
-CL: lu mc/_lu_ne
-CL: lv mc/_lv_ne
-CL: lw mc/_lw_ne
+CL: li mc/DedicatedServerConfigurationManager
+CL: lj mc/DedicatedServer
+CL: lk mc/ThreadServerSleep
+CL: ll mc/DedicatedServer_ConsoleInputThread
+CL: lm mc/DedicatedServer_CallableIsModded
+CL: ln mc/DedicatedServer_CallableServerType
+CL: lo mc/DedicatedServerGUI
+CL: lp mc/DedicatedServerGUI_WindowListener
+CL: lq mc/DedicatedServerGUI_ActionListener1
+CL: lr mc/DedicatedServerGUI_FocusListener
+CL: ls mc/DedicatedServerGUI_LogHandlerThread
+CL: lt mc/DedicatedServerGUI_RunCommandThread
+CL: lu mc/DedicatedServerGUI_PlayerList
+CL: lv mc/DedicatedServerGUI_StatsPanel
+CL: lw mc/DedicatedServerGUI_ActionListener2
 CL: m mc/CrashCallableBlockDataValue
 CL: ma mc/DemoWorldServer
 CL: mb mc/PlayerControllerServerDemo
@@ -941,14 +941,14 @@ CL: ne mc/ThreadVerifyUsername
 CL: net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 CL: nf mc/EnumLoginState
 CL: ng mc/NetHandlerImplStatusC2S
-CL: nh mc/_nh_ne
-CL: ni mc/_ni_ne
-CL: nj mc/_nj_ne
-CL: nk mc/_nk_ne
-CL: nl mc/_nl_ne
-CL: nm mc/_nm_ne
-CL: nn mc/_nn_ne
-CL: no mc/_no_ne
+CL: nh mc/QueryResponseBuilder
+CL: ni mc/QueryRconHelper1
+CL: nj mc/RconCommandSender
+CL: nk mc/QueryRconListenerBase
+CL: nl mc/QueryListener
+CL: nm mc/QueryConnectionState
+CL: nn mc/RconConnectionHandler
+CL: no mc/RconListener
 CL: np mc/StatAchievement
 CL: nq mc/AchievementInitializer
 CL: ns mc/StatCustom
@@ -1887,16 +1887,16 @@ MD: ac/a (ILjava/lang/String;)Z mc/ICommandSender/func_0_ZIString (ILjava/lang/S
 MD: afb/a (ILjava/lang/String;)Z mc/CommandBlockCommandSenderBase/func_0_ZIString (ILjava/lang/String;)Z
 MD: mm/a (ILjava/lang/String;)Z mc/EntityPlayerMP/func_0_ZIString (ILjava/lang/String;)Z
 MD: net/minecraft/server/MinecraftServer/a (ILjava/lang/String;)Z net/minecraft/server/MinecraftServer/func_0_ZIString (ILjava/lang/String;)Z
-MD: nj/a (ILjava/lang/String;)Z mc/_nj_ne/func_0_ZIString (ILjava/lang/String;)Z
+MD: nj/a (ILjava/lang/String;)Z mc/RconCommandSender/func_0_ZIString (ILjava/lang/String;)Z
 MD: ac/a (Lfa;)V mc/ICommandSender/func_0_VIChatComponent (Lmc/IChatComponent;)V
 MD: afb/a (Lfa;)V mc/CommandBlockCommandSenderBase/func_0_VIChatComponent (Lmc/IChatComponent;)V
 MD: mm/a (Lfa;)V mc/EntityPlayerMP/func_0_VIChatComponent (Lmc/IChatComponent;)V
 MD: net/minecraft/server/MinecraftServer/a (Lfa;)V net/minecraft/server/MinecraftServer/func_0_VIChatComponent (Lmc/IChatComponent;)V
-MD: nj/a (Lfa;)V mc/_nj_ne/func_0_VIChatComponent (Lmc/IChatComponent;)V
+MD: nj/a (Lfa;)V mc/RconCommandSender/func_0_VIChatComponent (Lmc/IChatComponent;)V
 MD: ac/b_ ()Ljava/lang/String; mc/ICommandSender/func_3_String ()Ljava/lang/String;
 MD: afb/b_ ()Ljava/lang/String; mc/CommandBlockCommandSenderBase/func_3_String ()Ljava/lang/String;
 MD: net/minecraft/server/MinecraftServer/b_ ()Ljava/lang/String; net/minecraft/server/MinecraftServer/func_3_String ()Ljava/lang/String;
-MD: nj/b_ ()Ljava/lang/String; mc/_nj_ne/func_3_String ()Ljava/lang/String;
+MD: nj/b_ ()Ljava/lang/String; mc/RconCommandSender/func_3_String ()Ljava/lang/String;
 MD: qn/b_ ()Ljava/lang/String; mc/Entity/func_3_String ()Ljava/lang/String;
 MD: ri/b_ ()Ljava/lang/String; mc/EntityMob/func_3_String ()Ljava/lang/String;
 MD: uu/b_ ()Ljava/lang/String; mc/EntityHorse/func_3_String ()Ljava/lang/String;
@@ -1907,20 +1907,20 @@ MD: xl/b_ ()Ljava/lang/String; mc/EntityPlayer/func_3_String ()Ljava/lang/String
 MD: ac/c_ ()Lfa; mc/ICommandSender/func_0_IChatComponent ()Lmc/IChatComponent;
 MD: afb/c_ ()Lfa; mc/CommandBlockCommandSenderBase/func_0_IChatComponent ()Lmc/IChatComponent;
 MD: net/minecraft/server/MinecraftServer/c_ ()Lfa; net/minecraft/server/MinecraftServer/func_0_IChatComponent ()Lmc/IChatComponent;
-MD: nj/c_ ()Lfa; mc/_nj_ne/func_0_IChatComponent ()Lmc/IChatComponent;
+MD: nj/c_ ()Lfa; mc/RconCommandSender/func_0_IChatComponent ()Lmc/IChatComponent;
 MD: qn/c_ ()Lfa; mc/Entity/func_0_IChatComponent ()Lmc/IChatComponent;
 MD: xl/c_ ()Lfa; mc/EntityPlayer/func_0_IChatComponent ()Lmc/IChatComponent;
 MD: ac/d ()Lafn; mc/ICommandSender/func_0_World ()Lmc/World;
 MD: ank/d ()Lafn; mc/TileCommandBlock_CommandSender/func_0_World ()Lmc/World;
 MD: net/minecraft/server/MinecraftServer/d ()Lafn; net/minecraft/server/MinecraftServer/func_0_World ()Lmc/World;
-MD: nj/d ()Lafn; mc/_nj_ne/func_0_World ()Lmc/World;
+MD: nj/d ()Lafn; mc/RconCommandSender/func_0_World ()Lmc/World;
 MD: wa/d ()Lafn; mc/EntityMinecartCommandBlock_CommandSender/func_0_World ()Lmc/World;
 MD: xl/d ()Lafn; mc/EntityPlayer/func_0_World ()Lmc/World;
 MD: ac/f_ ()Lr; mc/ICommandSender/func_0_BlockPos ()Lmc/BlockPos;
 MD: ank/f_ ()Lr; mc/TileCommandBlock_CommandSender/func_0_BlockPos ()Lmc/BlockPos;
 MD: mm/f_ ()Lr; mc/EntityPlayerMP/func_0_BlockPos ()Lmc/BlockPos;
 MD: net/minecraft/server/MinecraftServer/f_ ()Lr; net/minecraft/server/MinecraftServer/func_0_BlockPos ()Lmc/BlockPos;
-MD: nj/f_ ()Lr; mc/_nj_ne/func_0_BlockPos ()Lmc/BlockPos;
+MD: nj/f_ ()Lr; mc/RconCommandSender/func_0_BlockPos ()Lmc/BlockPos;
 MD: wa/f_ ()Lr; mc/EntityMinecartCommandBlock_CommandSender/func_0_BlockPos ()Lmc/BlockPos;
 MD: aca/<init> (Lahu;)V mc/ItemPiston/<init> (Lmc/Block;)V
 MD: acb/<init> ()V mc/ItemPotion/<init> ()V
@@ -2661,8 +2661,8 @@ MD: kz/call ()Ljava/lang/Object; mc/CrashCallableProfilerPosition/call ()Ljava/l
 MD: l/call ()Ljava/lang/Object; mc/CrashCallableBlockType/call ()Ljava/lang/Object;
 MD: la/call ()Ljava/lang/Object; mc/CrashCallableVec3PoolSize/call ()Ljava/lang/Object;
 MD: lb/call ()Ljava/lang/Object; mc/CrashCallablePlayerCount/call ()Ljava/lang/Object;
-MD: lm/call ()Ljava/lang/Object; mc/_lm_ne/call ()Ljava/lang/Object;
-MD: ln/call ()Ljava/lang/Object; mc/_ln_ne/call ()Ljava/lang/Object;
+MD: lm/call ()Ljava/lang/Object; mc/DedicatedServer_CallableIsModded/call ()Ljava/lang/Object;
+MD: ln/call ()Ljava/lang/Object; mc/DedicatedServer_CallableServerType/call ()Ljava/lang/Object;
 MD: m/call ()Ljava/lang/Object; mc/CrashCallableBlockDataValue/call ()Ljava/lang/Object;
 MD: me/call ()Ljava/lang/Object; mc/EntityTracker_CrashCallableUpdateInterval/call ()Ljava/lang/Object;
 MD: mv/call ()Ljava/lang/Object; mc/NetworkSystem_CrashCallableConnection/call ()Ljava/lang/Object;
@@ -5988,17 +5988,17 @@ MD: ayd/a (Laye;)V mc/ThreadRunnableFileIO/func_0_ThreadRunnableFileIO_VIFileIO 
 MD: ayd/b ()V mc/ThreadRunnableFileIO/func_2_ThreadRunnableFileIO_V ()V
 MD: ayd/run ()V mc/ThreadRunnableFileIO/run ()V
 MD: eg/run ()V mc/MCChannelInboundHandler_SendPacketTask/run ()V
-MD: kx/run ()V mc/_kx_ne/run ()V
+MD: kx/run ()V mc/ThreadServerShutdown/run ()V
 MD: ky/run ()V mc/ThreadServer/run ()V
-MD: lk/run ()V mc/_lk_ne/run ()V
-MD: ll/run ()V mc/_ll_ne/run ()V
-MD: ls/run ()V mc/_ls_ne/run ()V
-MD: lt/run ()V mc/_lt_ne/run ()V
+MD: lk/run ()V mc/ThreadServerSleep/run ()V
+MD: ll/run ()V mc/DedicatedServer_ConsoleInputThread/run ()V
+MD: ls/run ()V mc/DedicatedServerGUI_LogHandlerThread/run ()V
+MD: lt/run ()V mc/DedicatedServerGUI_RunCommandThread/run ()V
 MD: ne/run ()V mc/ThreadVerifyUsername/run ()V
 MD: net/minecraft/server/MinecraftServer/run ()V net/minecraft/server/MinecraftServer/run ()V
-MD: nl/run ()V mc/_nl_ne/run ()V
-MD: nn/run ()V mc/_nn_ne/run ()V
-MD: no/run ()V mc/_no_ne/run ()V
+MD: nl/run ()V mc/QueryListener/run ()V
+MD: nn/run ()V mc/RconConnectionHandler/run ()V
+MD: no/run ()V mc/RconListener/run ()V
 MD: pw/run ()V mc/Snooper_TimerTask/run ()V
 MD: ayf/<init> (DDDDDD)V mc/AxisAlignedBB/<init> (DDDDDD)V
 MD: ayf/a ()Layh; mc/AxisAlignedBB/func_0_AxisAlignedBB_AABBPool ()Lmc/AABBPool;
@@ -7883,7 +7883,7 @@ MD: kw/a (Ljava/lang/String;)V mc/LevelConvertProgressUpdater/func_3_VString (Lj
 MD: ox/a (Ljava/lang/String;)V mc/IGuiProgressIndicator/func_3_VString (Ljava/lang/String;)V
 MD: kw/c (Ljava/lang/String;)V mc/LevelConvertProgressUpdater/func_4_VString (Ljava/lang/String;)V
 MD: ox/c (Ljava/lang/String;)V mc/IGuiProgressIndicator/func_4_VString (Ljava/lang/String;)V
-MD: kx/<init> (Ljava/lang/String;Llj;)V mc/_kx_ne/<init> (Ljava/lang/String;Lmc/_lj_ne;)V
+MD: kx/<init> (Ljava/lang/String;Llj;)V mc/ThreadServerShutdown/<init> (Ljava/lang/String;Lmc/DedicatedServer;)V
 MD: ky/<init> (Lnet/minecraft/server/MinecraftServer;Ljava/lang/String;)V mc/ThreadServer/<init> (Lnet/minecraft/server/MinecraftServer;Ljava/lang/String;)V
 MD: kz/<init> (Lnet/minecraft/server/MinecraftServer;)V mc/CrashCallableProfilerPosition/<init> (Lnet/minecraft/server/MinecraftServer;)V
 MD: kz/a ()Ljava/lang/String; mc/CrashCallableProfilerPosition/func_0_CrashCallableProfilerPosition_String ()Ljava/lang/String;
@@ -7905,7 +7905,7 @@ MD: ld/a (Lfa;Z)V mc/ServerConfigurationManager/func_0_ServerConfigurationManage
 MD: ld/a (Lfk;)V mc/ServerConfigurationManager/func_0_ServerConfigurationManager_VPacket (Lmc/Packet;)V
 MD: ld/a (Lfk;I)V mc/ServerConfigurationManager/func_0_ServerConfigurationManager_VPacketI (Lmc/Packet;I)V
 MD: ld/a (Ljava/lang/String;)V mc/ServerConfigurationManager/func_5_VString (Ljava/lang/String;)V
-MD: li/a (Ljava/lang/String;)V mc/_li_ne/func_5_VString (Ljava/lang/String;)V
+MD: li/a (Ljava/lang/String;)V mc/DedicatedServerConfigurationManager/func_5_VString (Ljava/lang/String;)V
 MD: ld/a (Ljava/net/SocketAddress;Lcom/mojang/authlib/GameProfile;)Ljava/lang/String; mc/ServerConfigurationManager/func_0_ServerConfigurationManager_StringSocketAddressL (Ljava/net/SocketAddress;Lcom/mojang/authlib/GameProfile;)Ljava/lang/String;
 MD: ld/a (Llf;Lmm;)V mc/ServerConfigurationManager/func_0_ServerConfigurationManager_VScoreboard2EntityPlayerMP (Lmc/Scoreboard2;Lmc/EntityPlayerMP;)V
 MD: ld/a (Lmm;)Ldg; mc/ServerConfigurationManager/func_0_ServerConfigurationManager_NBTCompoundEntityPlayerMP (Lmc/EntityPlayerMP;)Lmc/NBTCompound;
@@ -7918,16 +7918,16 @@ MD: ld/a (Lr;IIIIIILjava/util/Map;Ljava/lang/String;Ljava/lang/String;Lafn;)Ljav
 MD: ld/a (Lxl;DDDDILfk;)V mc/ServerConfigurationManager/func_0_ServerConfigurationManager_VEntityPlayerDDDDIPacket (Lmc/EntityPlayer;DDDDILmc/Packet;)V
 MD: ld/a (Lxl;Ljava/util/Map;)Z mc/ServerConfigurationManager/func_0_ServerConfigurationManager_ZEntityPlayerMap (Lmc/EntityPlayer;Ljava/util/Map;)Z
 MD: ld/a (Z)V mc/ServerConfigurationManager/func_3_VZ (Z)V
-MD: li/a (Z)V mc/_li_ne/func_3_VZ (Z)V
+MD: li/a (Z)V mc/DedicatedServerConfigurationManager/func_3_VZ (Z)V
 MD: ld/a ([Lmj;)V mc/ServerConfigurationManager/func_0_ServerConfigurationManager_V1WorldServer ([Lmc/WorldServer;)V
 MD: ld/b ()V mc/ServerConfigurationManager/func_0_ServerConfigurationManager_V ()V
 MD: ld/b (Ljava/lang/String;)V mc/ServerConfigurationManager/func_6_VString (Ljava/lang/String;)V
-MD: li/b (Ljava/lang/String;)V mc/_li_ne/func_6_VString (Ljava/lang/String;)V
+MD: li/b (Ljava/lang/String;)V mc/DedicatedServerConfigurationManager/func_6_VString (Ljava/lang/String;)V
 MD: ld/b (Lmm;)V mc/ServerConfigurationManager/func_0_ServerConfigurationManager_VEntityPlayerMP (Lmc/EntityPlayerMP;)V
 MD: ld/b (Lmm;Lmj;)V mc/ServerConfigurationManager/func_1_ServerConfigurationManager_VEntityPlayerMPWorldServer (Lmc/EntityPlayerMP;Lmc/WorldServer;)V
 MD: ld/c ()Ljava/lang/String; mc/ServerConfigurationManager/func_0_ServerConfigurationManager_String ()Ljava/lang/String;
 MD: ld/c (Ljava/lang/String;)Z mc/ServerConfigurationManager/func_2_ZString (Ljava/lang/String;)Z
-MD: li/c (Ljava/lang/String;)Z mc/_li_ne/func_2_ZString (Ljava/lang/String;)Z
+MD: li/c (Ljava/lang/String;)Z mc/DedicatedServerConfigurationManager/func_2_ZString (Ljava/lang/String;)Z
 MD: ld/c (Lmm;)V mc/ServerConfigurationManager/func_1_ServerConfigurationManager_VEntityPlayerMP (Lmc/EntityPlayerMP;)V
 MD: ld/d ()[Ljava/lang/String; mc/ServerConfigurationManager/func_0_ServerConfigurationManager_1String ()[Ljava/lang/String;
 MD: ld/d (Ljava/lang/String;)Z mc/ServerConfigurationManager/func_0_ServerConfigurationManager_ZString (Ljava/lang/String;)Z
@@ -7937,65 +7937,65 @@ MD: ld/e (Ljava/lang/String;)Lmm; mc/ServerConfigurationManager/func_0_ServerCon
 MD: ld/e (Lmm;)V mc/ServerConfigurationManager/func_3_ServerConfigurationManager_VEntityPlayerMP (Lmc/EntityPlayerMP;)V
 MD: ld/f ()Lka; mc/ServerConfigurationManager/func_1_ServerConfigurationManager_BanFile ()Lmc/BanFile;
 MD: ld/f (Ljava/lang/String;)V mc/ServerConfigurationManager/func_7_VString (Ljava/lang/String;)V
-MD: li/f (Ljava/lang/String;)V mc/_li_ne/func_7_VString (Ljava/lang/String;)V
+MD: li/f (Ljava/lang/String;)V mc/DedicatedServerConfigurationManager/func_7_VString (Ljava/lang/String;)V
 MD: ld/f (Lmm;)V mc/ServerConfigurationManager/func_4_ServerConfigurationManager_VEntityPlayerMP (Lmc/EntityPlayerMP;)V
 MD: ld/g ()V mc/ServerConfigurationManager/func_1_ServerConfigurationManager_V ()V
 MD: ld/g (Ljava/lang/String;)V mc/ServerConfigurationManager/func_8_VString (Ljava/lang/String;)V
-MD: li/g (Ljava/lang/String;)V mc/_li_ne/func_8_VString (Ljava/lang/String;)V
+MD: li/g (Ljava/lang/String;)V mc/DedicatedServerConfigurationManager/func_8_VString (Ljava/lang/String;)V
 MD: ld/h ()Ljava/util/Set; mc/ServerConfigurationManager/func_0_ServerConfigurationManager_Set ()Ljava/util/Set;
 MD: ld/h (Ljava/lang/String;)Ljava/util/List; mc/ServerConfigurationManager/func_0_ServerConfigurationManager_ListString (Ljava/lang/String;)Ljava/util/List;
 MD: ld/i ()Ljava/util/Set; mc/ServerConfigurationManager/func_1_ServerConfigurationManager_Set ()Ljava/util/Set;
 MD: ld/i (Ljava/lang/String;)Lnu; mc/ServerConfigurationManager/func_0_ServerConfigurationManager_StatisticsFileString (Ljava/lang/String;)Lmc/StatisticsFile;
 MD: ld/j ()V mc/ServerConfigurationManager/func_29_V ()V
-MD: li/j ()V mc/_li_ne/func_29_V ()V
+MD: li/j ()V mc/DedicatedServerConfigurationManager/func_29_V ()V
 MD: ld/k ()I mc/ServerConfigurationManager/func_1_ServerConfigurationManager_I ()I
 MD: ld/l ()I mc/ServerConfigurationManager/func_2_ServerConfigurationManager_I ()I
 MD: ld/m ()[Ljava/lang/String; mc/ServerConfigurationManager/func_1_ServerConfigurationManager_1String ()[Ljava/lang/String;
 MD: ld/n ()Z mc/ServerConfigurationManager/func_0_ServerConfigurationManager_Z ()Z
 MD: ld/o ()I mc/ServerConfigurationManager/func_3_ServerConfigurationManager_I ()I
 MD: ld/p ()Lnet/minecraft/server/MinecraftServer; mc/ServerConfigurationManager/func_2_L ()Lnet/minecraft/server/MinecraftServer;
-MD: li/p ()Lnet/minecraft/server/MinecraftServer; mc/_li_ne/func_2_L ()Lnet/minecraft/server/MinecraftServer;
+MD: li/p ()Lnet/minecraft/server/MinecraftServer; mc/DedicatedServerConfigurationManager/func_2_L ()Lnet/minecraft/server/MinecraftServer;
 MD: ld/q ()Ldg; mc/ServerConfigurationManager/func_0_ServerConfigurationManager_NBTCompound ()Lmc/NBTCompound;
 MD: ld/r ()V mc/ServerConfigurationManager/func_2_ServerConfigurationManager_V ()V
-MD: le/A ()Ljava/lang/String; mc/_le_ne/func_19_String ()Ljava/lang/String;
+MD: le/A ()Ljava/lang/String; mc/IDedicatedServer/func_19_String ()Ljava/lang/String;
 MD: net/minecraft/server/MinecraftServer/A ()Ljava/lang/String; net/minecraft/server/MinecraftServer/func_19_String ()Ljava/lang/String;
-MD: le/B ()I mc/_le_ne/func_27_I ()I
+MD: le/B ()I mc/IDedicatedServer/func_27_I ()I
 MD: net/minecraft/server/MinecraftServer/B ()I net/minecraft/server/MinecraftServer/func_27_I ()I
-MD: le/C ()I mc/_le_ne/func_28_I ()I
+MD: le/C ()I mc/IDedicatedServer/func_28_I ()I
 MD: net/minecraft/server/MinecraftServer/C ()I net/minecraft/server/MinecraftServer/func_28_I ()I
-MD: le/D ()[Ljava/lang/String; mc/_le_ne/func_2_1String ()[Ljava/lang/String;
+MD: le/D ()[Ljava/lang/String; mc/IDedicatedServer/func_2_1String ()[Ljava/lang/String;
 MD: net/minecraft/server/MinecraftServer/D ()[Ljava/lang/String; net/minecraft/server/MinecraftServer/func_2_1String ()[Ljava/lang/String;
-MD: le/E ()Ljava/lang/String; mc/_le_ne/func_20_String ()Ljava/lang/String;
+MD: le/E ()Ljava/lang/String; mc/IDedicatedServer/func_20_String ()Ljava/lang/String;
 MD: net/minecraft/server/MinecraftServer/E ()Ljava/lang/String; net/minecraft/server/MinecraftServer/func_20_String ()Ljava/lang/String;
-MD: le/F ()Z mc/_le_ne/func_35_Z ()Z
+MD: le/F ()Z mc/IDedicatedServer/func_35_Z ()Z
 MD: net/minecraft/server/MinecraftServer/F ()Z net/minecraft/server/MinecraftServer/func_35_Z ()Z
-MD: le/M ()Ljava/lang/String; mc/_le_ne/func_21_String ()Ljava/lang/String;
+MD: le/M ()Ljava/lang/String; mc/IDedicatedServer/func_21_String ()Ljava/lang/String;
 MD: net/minecraft/server/MinecraftServer/M ()Ljava/lang/String; net/minecraft/server/MinecraftServer/func_21_String ()Ljava/lang/String;
-MD: le/a ()V mc/_le_ne/func_30_V ()V
-MD: lj/a ()V mc/_lj_ne/func_30_V ()V
-MD: le/a (Ljava/lang/String;I)I mc/_le_ne/func_0_IStringI (Ljava/lang/String;I)I
-MD: lj/a (Ljava/lang/String;I)I mc/_lj_ne/func_0_IStringI (Ljava/lang/String;I)I
-MD: le/a (Ljava/lang/String;Ljava/lang/Object;)V mc/_le_ne/func_0_VStringObject (Ljava/lang/String;Ljava/lang/Object;)V
-MD: lj/a (Ljava/lang/String;Ljava/lang/Object;)V mc/_lj_ne/func_0_VStringObject (Ljava/lang/String;Ljava/lang/Object;)V
-MD: le/a (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; mc/_le_ne/func_0_StringStringString (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-MD: lj/a (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; mc/_lj_ne/func_0_StringStringString (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-MD: le/b ()Ljava/lang/String; mc/_le_ne/func_22_String ()Ljava/lang/String;
-MD: lj/b ()Ljava/lang/String; mc/_lj_ne/func_22_String ()Ljava/lang/String;
-MD: le/e (Ljava/lang/String;)V mc/_le_ne/func_9_VString (Ljava/lang/String;)V
+MD: le/a ()V mc/IDedicatedServer/func_30_V ()V
+MD: lj/a ()V mc/DedicatedServer/func_30_V ()V
+MD: le/a (Ljava/lang/String;I)I mc/IDedicatedServer/func_0_IStringI (Ljava/lang/String;I)I
+MD: lj/a (Ljava/lang/String;I)I mc/DedicatedServer/func_0_IStringI (Ljava/lang/String;I)I
+MD: le/a (Ljava/lang/String;Ljava/lang/Object;)V mc/IDedicatedServer/func_0_VStringObject (Ljava/lang/String;Ljava/lang/Object;)V
+MD: lj/a (Ljava/lang/String;Ljava/lang/Object;)V mc/DedicatedServer/func_0_VStringObject (Ljava/lang/String;Ljava/lang/Object;)V
+MD: le/a (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; mc/IDedicatedServer/func_0_StringStringString (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+MD: lj/a (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; mc/DedicatedServer/func_0_StringStringString (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+MD: le/b ()Ljava/lang/String; mc/IDedicatedServer/func_22_String ()Ljava/lang/String;
+MD: lj/b ()Ljava/lang/String; mc/DedicatedServer/func_22_String ()Ljava/lang/String;
+MD: le/e (Ljava/lang/String;)V mc/IDedicatedServer/func_9_VString (Ljava/lang/String;)V
 MD: net/minecraft/server/MinecraftServer/e (Ljava/lang/String;)V net/minecraft/server/MinecraftServer/func_9_VString (Ljava/lang/String;)V
-MD: le/f (Ljava/lang/String;)V mc/_le_ne/func_10_VString (Ljava/lang/String;)V
+MD: le/f (Ljava/lang/String;)V mc/IDedicatedServer/func_10_VString (Ljava/lang/String;)V
 MD: net/minecraft/server/MinecraftServer/f (Ljava/lang/String;)V net/minecraft/server/MinecraftServer/func_10_VString (Ljava/lang/String;)V
-MD: le/g (Ljava/lang/String;)Ljava/lang/String; mc/_le_ne/func_1_StringString (Ljava/lang/String;)Ljava/lang/String;
+MD: le/g (Ljava/lang/String;)Ljava/lang/String; mc/IDedicatedServer/func_1_StringString (Ljava/lang/String;)Ljava/lang/String;
 MD: net/minecraft/server/MinecraftServer/g (Ljava/lang/String;)Ljava/lang/String; net/minecraft/server/MinecraftServer/func_1_StringString (Ljava/lang/String;)Ljava/lang/String;
-MD: le/h (Ljava/lang/String;)V mc/_le_ne/func_11_VString (Ljava/lang/String;)V
+MD: le/h (Ljava/lang/String;)V mc/IDedicatedServer/func_11_VString (Ljava/lang/String;)V
 MD: net/minecraft/server/MinecraftServer/h (Ljava/lang/String;)V net/minecraft/server/MinecraftServer/func_11_VString (Ljava/lang/String;)V
-MD: le/i (Ljava/lang/String;)V mc/_le_ne/func_12_VString (Ljava/lang/String;)V
+MD: le/i (Ljava/lang/String;)V mc/IDedicatedServer/func_12_VString (Ljava/lang/String;)V
 MD: net/minecraft/server/MinecraftServer/i (Ljava/lang/String;)V net/minecraft/server/MinecraftServer/func_12_VString (Ljava/lang/String;)V
-MD: le/x ()Ljava/lang/String; mc/_le_ne/func_23_String ()Ljava/lang/String;
+MD: le/x ()Ljava/lang/String; mc/IDedicatedServer/func_23_String ()Ljava/lang/String;
 MD: net/minecraft/server/MinecraftServer/x ()Ljava/lang/String; net/minecraft/server/MinecraftServer/func_23_String ()Ljava/lang/String;
-MD: le/y ()I mc/_le_ne/func_29_I ()I
+MD: le/y ()I mc/IDedicatedServer/func_29_I ()I
 MD: net/minecraft/server/MinecraftServer/y ()I net/minecraft/server/MinecraftServer/func_29_I ()I
-MD: le/z ()Ljava/lang/String; mc/_le_ne/func_24_String ()Ljava/lang/String;
+MD: le/z ()Ljava/lang/String; mc/IDedicatedServer/func_24_String ()Ljava/lang/String;
 MD: net/minecraft/server/MinecraftServer/z ()Ljava/lang/String; net/minecraft/server/MinecraftServer/func_24_String ()Ljava/lang/String;
 MD: lf/<init> (Lnet/minecraft/server/MinecraftServer;)V mc/Scoreboard2/<init> (Lnet/minecraft/server/MinecraftServer;)V
 MD: lf/a (Lays;)V mc/Scoreboard2/func_0_Scoreboard2_VScoreboardSavedData (Lmc/ScoreboardSavedData;)V
@@ -8005,106 +8005,106 @@ MD: lf/e (Laym;)V mc/Scoreboard2/func_0_Scoreboard2_VScoreboardDisplaySlot (Lmc/
 MD: lf/f (Laym;)Ljava/util/List; mc/Scoreboard2/func_1_Scoreboard2_ListScoreboardDisplaySlot (Lmc/ScoreboardDisplaySlot;)Ljava/util/List;
 MD: lf/g (Laym;)V mc/Scoreboard2/func_1_Scoreboard2_VScoreboardDisplaySlot (Lmc/ScoreboardDisplaySlot;)V
 MD: lf/h (Laym;)I mc/Scoreboard2/func_0_Scoreboard2_IScoreboardDisplaySlot (Lmc/ScoreboardDisplaySlot;)I
-MD: lg/<init> (Ljava/io/File;)V mc/_lg_ne/<init> (Ljava/io/File;)V
-MD: lg/a ()V mc/_lg_ne/func_0__lg_ne_V ()V
-MD: lg/a (Ljava/lang/String;I)I mc/_lg_ne/func_0__lg_ne_IStringI (Ljava/lang/String;I)I
-MD: lg/a (Ljava/lang/String;Ljava/lang/Object;)V mc/_lg_ne/func_0__lg_ne_VStringObject (Ljava/lang/String;Ljava/lang/Object;)V
-MD: lg/a (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; mc/_lg_ne/func_0__lg_ne_StringStringString (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-MD: lg/a (Ljava/lang/String;Z)Z mc/_lg_ne/func_0__lg_ne_ZStringZ (Ljava/lang/String;Z)Z
-MD: lg/b ()V mc/_lg_ne/func_1__lg_ne_V ()V
-MD: lg/c ()Ljava/io/File; mc/_lg_ne/func_0__lg_ne_File ()Ljava/io/File;
+MD: lg/<init> (Ljava/io/File;)V mc/ServerProperties/<init> (Ljava/io/File;)V
+MD: lg/a ()V mc/ServerProperties/func_0_ServerProperties_V ()V
+MD: lg/a (Ljava/lang/String;I)I mc/ServerProperties/func_0_ServerProperties_IStringI (Ljava/lang/String;I)I
+MD: lg/a (Ljava/lang/String;Ljava/lang/Object;)V mc/ServerProperties/func_0_ServerProperties_VStringObject (Ljava/lang/String;Ljava/lang/Object;)V
+MD: lg/a (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; mc/ServerProperties/func_0_ServerProperties_StringStringString (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+MD: lg/a (Ljava/lang/String;Z)Z mc/ServerProperties/func_0_ServerProperties_ZStringZ (Ljava/lang/String;Z)Z
+MD: lg/b ()V mc/ServerProperties/func_1_ServerProperties_V ()V
+MD: lg/c ()Ljava/io/File; mc/ServerProperties/func_0_ServerProperties_File ()Ljava/io/File;
 MD: lh/a ()V mc/ITickable/func_31_V ()V
-MD: lu/a ()V mc/_lu_ne/func_31_V ()V
-MD: li/<init> (Llj;)V mc/_li_ne/<init> (Lmc/_lj_ne;)V
-MD: li/s ()Llj; mc/_li_ne/func_0__li_ne__lj_ne ()Lmc/_lj_ne;
-MD: li/t ()V mc/_li_ne/func_0__li_ne_V ()V
-MD: li/u ()V mc/_li_ne/func_1__li_ne_V ()V
-MD: li/v ()V mc/_li_ne/func_2__li_ne_V ()V
-MD: li/w ()V mc/_li_ne/func_3__li_ne_V ()V
-MD: lj/<init> (Ljava/io/File;)V mc/_lj_ne/<init> (Ljava/io/File;)V
-MD: lj/O ()Z mc/_lj_ne/func_36_Z ()Z
+MD: lu/a ()V mc/DedicatedServerGUI_PlayerList/func_31_V ()V
+MD: li/<init> (Llj;)V mc/DedicatedServerConfigurationManager/<init> (Lmc/DedicatedServer;)V
+MD: li/s ()Llj; mc/DedicatedServerConfigurationManager/func_0_DedicatedServerConfigurationManager_DedicatedServer ()Lmc/DedicatedServer;
+MD: li/t ()V mc/DedicatedServerConfigurationManager/func_0_DedicatedServerConfigurationManager_V ()V
+MD: li/u ()V mc/DedicatedServerConfigurationManager/func_1_DedicatedServerConfigurationManager_V ()V
+MD: li/v ()V mc/DedicatedServerConfigurationManager/func_2_DedicatedServerConfigurationManager_V ()V
+MD: li/w ()V mc/DedicatedServerConfigurationManager/func_3_DedicatedServerConfigurationManager_V ()V
+MD: lj/<init> (Ljava/io/File;)V mc/DedicatedServer/<init> (Ljava/io/File;)V
+MD: lj/O ()Z mc/DedicatedServer/func_36_Z ()Z
 MD: net/minecraft/server/MinecraftServer/O ()Z net/minecraft/server/MinecraftServer/func_36_Z ()Z
-MD: lj/U ()Z mc/_lj_ne/func_37_Z ()Z
+MD: lj/U ()Z mc/DedicatedServer/func_37_Z ()Z
 MD: net/minecraft/server/MinecraftServer/U ()Z net/minecraft/server/MinecraftServer/func_37_Z ()Z
 MD: px/U ()Z mc/Snoopable/func_37_Z ()Z
-MD: lj/V ()Z mc/_lj_ne/func_38_Z ()Z
+MD: lj/V ()Z mc/DedicatedServer/func_38_Z ()Z
 MD: net/minecraft/server/MinecraftServer/V ()Z net/minecraft/server/MinecraftServer/func_38_Z ()Z
-MD: lj/a (Lafn;IIILxl;)Z mc/_lj_ne/func_0_ZWorldIIIEntityPlayer (Lmc/World;IIILmc/EntityPlayer;)Z
+MD: lj/a (Lafn;IIILxl;)Z mc/DedicatedServer/func_0_ZWorldIIIEntityPlayer (Lmc/World;IIILmc/EntityPlayer;)Z
 MD: net/minecraft/server/MinecraftServer/a (Lafn;IIILxl;)Z net/minecraft/server/MinecraftServer/func_0_ZWorldIIIEntityPlayer (Lmc/World;IIILmc/EntityPlayer;)Z
-MD: lj/a (Lafw;Z)Ljava/lang/String; mc/_lj_ne/func_0_StringEnumGameModeZ (Lmc/EnumGameMode;Z)Ljava/lang/String;
+MD: lj/a (Lafw;Z)Ljava/lang/String; mc/DedicatedServer/func_0_StringEnumGameModeZ (Lmc/EnumGameMode;Z)Ljava/lang/String;
 MD: net/minecraft/server/MinecraftServer/a (Lafw;Z)Ljava/lang/String; net/minecraft/server/MinecraftServer/func_0_StringEnumGameModeZ (Lmc/EnumGameMode;Z)Ljava/lang/String;
-MD: lj/a (Lb;)V mc/_lj_ne/func_0_VCrashReport (Lmc/CrashReport;)V
+MD: lj/a (Lb;)V mc/DedicatedServer/func_0_VCrashReport (Lmc/CrashReport;)V
 MD: net/minecraft/server/MinecraftServer/a (Lb;)V net/minecraft/server/MinecraftServer/func_0_VCrashReport (Lmc/CrashReport;)V
-MD: lj/a (Ljava/lang/String;Lac;)V mc/_lj_ne/func_0__lj_ne_VStringICommandSender (Ljava/lang/String;Lmc/ICommandSender;)V
-MD: lj/a (Ljava/lang/String;Z)Z mc/_lj_ne/func_0__lj_ne_ZStringZ (Ljava/lang/String;Z)Z
-MD: lj/a (Lpv;)V mc/_lj_ne/func_0_VSnooper (Lmc/Snooper;)V
+MD: lj/a (Ljava/lang/String;Lac;)V mc/DedicatedServer/func_0_DedicatedServer_VStringICommandSender (Ljava/lang/String;Lmc/ICommandSender;)V
+MD: lj/a (Ljava/lang/String;Z)Z mc/DedicatedServer/func_0_DedicatedServer_ZStringZ (Ljava/lang/String;Z)Z
+MD: lj/a (Lpv;)V mc/DedicatedServer/func_0_VSnooper (Lmc/Snooper;)V
 MD: net/minecraft/server/MinecraftServer/a (Lpv;)V net/minecraft/server/MinecraftServer/func_0_VSnooper (Lmc/Snooper;)V
 MD: px/a (Lpv;)V mc/Snoopable/func_0_VSnooper (Lmc/Snooper;)V
-MD: lj/ab ()Z mc/_lj_ne/func_39_Z ()Z
+MD: lj/ab ()Z mc/DedicatedServer/func_39_Z ()Z
 MD: net/minecraft/server/MinecraftServer/ab ()Z net/minecraft/server/MinecraftServer/func_39_Z ()Z
-MD: lj/af ()Lld; mc/_lj_ne/func_0_ServerConfigurationManager ()Lmc/ServerConfigurationManager;
+MD: lj/af ()Lld; mc/DedicatedServer/func_0_ServerConfigurationManager ()Lmc/ServerConfigurationManager;
 MD: net/minecraft/server/MinecraftServer/af ()Lld; net/minecraft/server/MinecraftServer/func_0_ServerConfigurationManager ()Lmc/ServerConfigurationManager;
-MD: lj/ai ()Z mc/_lj_ne/func_40_Z ()Z
+MD: lj/ai ()Z mc/DedicatedServer/func_40_Z ()Z
 MD: net/minecraft/server/MinecraftServer/ai ()Z net/minecraft/server/MinecraftServer/func_40_Z ()Z
-MD: lj/am ()I mc/_lj_ne/func_30_I ()I
+MD: lj/am ()I mc/DedicatedServer/func_30_I ()I
 MD: net/minecraft/server/MinecraftServer/am ()I net/minecraft/server/MinecraftServer/func_30_I ()I
-MD: lj/ar ()Z mc/_lj_ne/func_41_Z ()Z
+MD: lj/ar ()Z mc/DedicatedServer/func_41_Z ()Z
 MD: net/minecraft/server/MinecraftServer/ar ()Z net/minecraft/server/MinecraftServer/func_41_Z ()Z
-MD: lj/aw ()V mc/_lj_ne/func_0__lj_ne_V ()V
-MD: lj/ax ()Lli; mc/_lj_ne/func_0__lj_ne__li_ne ()Lmc/_li_ne;
-MD: lj/ay ()V mc/_lj_ne/func_1__lj_ne_V ()V
-MD: lj/az ()Lorg/apache/logging/log4j/Logger; mc/_lj_ne/func_0__lj_ne_L ()Lorg/apache/logging/log4j/Logger;
-MD: lj/b (Lb;)Lb; mc/_lj_ne/func_0_CrashReportCrashReport (Lmc/CrashReport;)Lmc/CrashReport;
+MD: lj/aw ()V mc/DedicatedServer/func_0_DedicatedServer_V ()V
+MD: lj/ax ()Lli; mc/DedicatedServer/func_0_DedicatedServer_DedicatedServerConfigurationManager ()Lmc/DedicatedServerConfigurationManager;
+MD: lj/ay ()V mc/DedicatedServer/func_1_DedicatedServer_V ()V
+MD: lj/az ()Lorg/apache/logging/log4j/Logger; mc/DedicatedServer/func_0_DedicatedServer_L ()Lorg/apache/logging/log4j/Logger;
+MD: lj/b (Lb;)Lb; mc/DedicatedServer/func_0_CrashReportCrashReport (Lmc/CrashReport;)Lmc/CrashReport;
 MD: net/minecraft/server/MinecraftServer/b (Lb;)Lb; net/minecraft/server/MinecraftServer/func_0_CrashReportCrashReport (Lmc/CrashReport;)Lmc/CrashReport;
-MD: lj/d (I)V mc/_lj_ne/func_5_VI (I)V
+MD: lj/d (I)V mc/DedicatedServer/func_5_VI (I)V
 MD: net/minecraft/server/MinecraftServer/d (I)V net/minecraft/server/MinecraftServer/func_5_VI (I)V
-MD: lj/e ()Z mc/_lj_ne/func_42_Z ()Z
+MD: lj/e ()Z mc/DedicatedServer/func_42_Z ()Z
 MD: net/minecraft/server/MinecraftServer/e ()Z net/minecraft/server/MinecraftServer/func_42_Z ()Z
-MD: lj/h ()Z mc/_lj_ne/func_43_Z ()Z
+MD: lj/h ()Z mc/DedicatedServer/func_43_Z ()Z
 MD: net/minecraft/server/MinecraftServer/h ()Z net/minecraft/server/MinecraftServer/func_43_Z ()Z
-MD: lj/i ()Lafw; mc/_lj_ne/func_1_EnumGameMode ()Lmc/EnumGameMode;
+MD: lj/i ()Lafw; mc/DedicatedServer/func_1_EnumGameMode ()Lmc/EnumGameMode;
 MD: net/minecraft/server/MinecraftServer/i ()Lafw; net/minecraft/server/MinecraftServer/func_1_EnumGameMode ()Lmc/EnumGameMode;
-MD: lj/j ()Lpq; mc/_lj_ne/func_0_EnumDifficulty ()Lmc/EnumDifficulty;
+MD: lj/j ()Lpq; mc/DedicatedServer/func_0_EnumDifficulty ()Lmc/EnumDifficulty;
 MD: net/minecraft/server/MinecraftServer/j ()Lpq; net/minecraft/server/MinecraftServer/func_0_EnumDifficulty ()Lmc/EnumDifficulty;
-MD: lj/k ()Z mc/_lj_ne/func_44_Z ()Z
+MD: lj/k ()Z mc/DedicatedServer/func_44_Z ()Z
 MD: net/minecraft/server/MinecraftServer/k ()Z net/minecraft/server/MinecraftServer/func_44_Z ()Z
-MD: lj/l ()I mc/_lj_ne/func_31_I ()I
+MD: lj/l ()I mc/DedicatedServer/func_31_I ()I
 MD: net/minecraft/server/MinecraftServer/l ()I net/minecraft/server/MinecraftServer/func_31_I ()I
-MD: lj/s ()V mc/_lj_ne/func_32_V ()V
+MD: lj/s ()V mc/DedicatedServer/func_32_V ()V
 MD: net/minecraft/server/MinecraftServer/s ()V net/minecraft/server/MinecraftServer/func_32_V ()V
-MD: lj/u ()V mc/_lj_ne/func_33_V ()V
+MD: lj/u ()V mc/DedicatedServer/func_33_V ()V
 MD: net/minecraft/server/MinecraftServer/u ()V net/minecraft/server/MinecraftServer/func_33_V ()V
-MD: lj/v ()Z mc/_lj_ne/func_45_Z ()Z
+MD: lj/v ()Z mc/DedicatedServer/func_45_Z ()Z
 MD: net/minecraft/server/MinecraftServer/v ()Z net/minecraft/server/MinecraftServer/func_45_Z ()Z
-MD: lk/<init> (Llj;Ljava/lang/String;)V mc/_lk_ne/<init> (Lmc/_lj_ne;Ljava/lang/String;)V
-MD: ll/<init> (Llj;Ljava/lang/String;)V mc/_ll_ne/<init> (Lmc/_lj_ne;Ljava/lang/String;)V
-MD: lm/<init> (Llj;)V mc/_lm_ne/<init> (Lmc/_lj_ne;)V
-MD: lm/a ()Ljava/lang/String; mc/_lm_ne/func_0__lm_ne_String ()Ljava/lang/String;
-MD: ln/<init> (Llj;)V mc/_ln_ne/<init> (Lmc/_lj_ne;)V
-MD: ln/a ()Ljava/lang/String; mc/_ln_ne/func_0__ln_ne_String ()Ljava/lang/String;
-MD: lo/<init> (Llj;)V mc/_lo_ne/<init> (Lmc/_lj_ne;)V
-MD: lo/a ()Ljavax/swing/JComponent; mc/_lo_ne/func_0__lo_ne_L ()Ljavax/swing/JComponent;
-MD: lo/a (Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V mc/_lo_ne/func_0__lo_ne_VLLString (Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V
-MD: lo/a (Llj;)V mc/_lo_ne/func_1__lo_ne_V_lj_ne (Lmc/_lj_ne;)V
-MD: lo/a (Llo;)Llj; mc/_lo_ne/func_0__lo_ne__lj_ne_lo_ne (Lmc/_lo_ne;)Lmc/_lj_ne;
-MD: lo/b ()Ljavax/swing/JComponent; mc/_lo_ne/func_1__lo_ne_L ()Ljavax/swing/JComponent;
-MD: lo/c ()Ljavax/swing/JComponent; mc/_lo_ne/func_2__lo_ne_L ()Ljavax/swing/JComponent;
-MD: lp/<init> (Llj;)V mc/_lp_ne/<init> (Lmc/_lj_ne;)V
-MD: lp/windowClosing (Ljava/awt/event/WindowEvent;)V mc/_lp_ne/windowClosing (Ljava/awt/event/WindowEvent;)V
-MD: lq/<init> (Llo;Ljavax/swing/JTextField;)V mc/_lq_ne/<init> (Lmc/_lo_ne;Ljavax/swing/JTextField;)V
-MD: lq/actionPerformed (Ljava/awt/event/ActionEvent;)V mc/_lq_ne/actionPerformed (Ljava/awt/event/ActionEvent;)V
-MD: lw/actionPerformed (Ljava/awt/event/ActionEvent;)V mc/_lw_ne/actionPerformed (Ljava/awt/event/ActionEvent;)V
-MD: lr/<init> (Llo;)V mc/_lr_ne/<init> (Lmc/_lo_ne;)V
-MD: lr/focusGained (Ljava/awt/event/FocusEvent;)V mc/_lr_ne/focusGained (Ljava/awt/event/FocusEvent;)V
-MD: ls/<init> (Llo;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;)V mc/_ls_ne/<init> (Lmc/_lo_ne;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;)V
-MD: lt/<init> (Llo;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V mc/_lt_ne/<init> (Lmc/_lo_ne;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V
-MD: lu/<init> (Lnet/minecraft/server/MinecraftServer;)V mc/_lu_ne/<init> (Lnet/minecraft/server/MinecraftServer;)V
-MD: lv/<init> (Lnet/minecraft/server/MinecraftServer;)V mc/_lv_ne/<init> (Lnet/minecraft/server/MinecraftServer;)V
-MD: lv/a ()V mc/_lv_ne/func_0__lv_ne_V ()V
-MD: lv/a (Llv;)V mc/_lv_ne/func_0__lv_ne_V_lv_ne (Lmc/_lv_ne;)V
-MD: lv/a ([J)D mc/_lv_ne/func_0__lv_ne_D1J ([J)D
-MD: lv/paint (Ljava/awt/Graphics;)V mc/_lv_ne/paint (Ljava/awt/Graphics;)V
-MD: lw/<init> (Llv;)V mc/_lw_ne/<init> (Lmc/_lv_ne;)V
+MD: lk/<init> (Llj;Ljava/lang/String;)V mc/ThreadServerSleep/<init> (Lmc/DedicatedServer;Ljava/lang/String;)V
+MD: ll/<init> (Llj;Ljava/lang/String;)V mc/DedicatedServer_ConsoleInputThread/<init> (Lmc/DedicatedServer;Ljava/lang/String;)V
+MD: lm/<init> (Llj;)V mc/DedicatedServer_CallableIsModded/<init> (Lmc/DedicatedServer;)V
+MD: lm/a ()Ljava/lang/String; mc/DedicatedServer_CallableIsModded/func_0_DedicatedServer_CallableIsModded_String ()Ljava/lang/String;
+MD: ln/<init> (Llj;)V mc/DedicatedServer_CallableServerType/<init> (Lmc/DedicatedServer;)V
+MD: ln/a ()Ljava/lang/String; mc/DedicatedServer_CallableServerType/func_0_DedicatedServer_CallableServerType_String ()Ljava/lang/String;
+MD: lo/<init> (Llj;)V mc/DedicatedServerGUI/<init> (Lmc/DedicatedServer;)V
+MD: lo/a ()Ljavax/swing/JComponent; mc/DedicatedServerGUI/func_0_DedicatedServerGUI_L ()Ljavax/swing/JComponent;
+MD: lo/a (Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V mc/DedicatedServerGUI/func_0_DedicatedServerGUI_VLLString (Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V
+MD: lo/a (Llj;)V mc/DedicatedServerGUI/func_1_DedicatedServerGUI_VDedicatedServer (Lmc/DedicatedServer;)V
+MD: lo/a (Llo;)Llj; mc/DedicatedServerGUI/func_0_DedicatedServerGUI_DedicatedServerDedicatedServerGUI (Lmc/DedicatedServerGUI;)Lmc/DedicatedServer;
+MD: lo/b ()Ljavax/swing/JComponent; mc/DedicatedServerGUI/func_1_DedicatedServerGUI_L ()Ljavax/swing/JComponent;
+MD: lo/c ()Ljavax/swing/JComponent; mc/DedicatedServerGUI/func_2_DedicatedServerGUI_L ()Ljavax/swing/JComponent;
+MD: lp/<init> (Llj;)V mc/DedicatedServerGUI_WindowListener/<init> (Lmc/DedicatedServer;)V
+MD: lp/windowClosing (Ljava/awt/event/WindowEvent;)V mc/DedicatedServerGUI_WindowListener/windowClosing (Ljava/awt/event/WindowEvent;)V
+MD: lq/<init> (Llo;Ljavax/swing/JTextField;)V mc/DedicatedServerGUI_ActionListener1/<init> (Lmc/DedicatedServerGUI;Ljavax/swing/JTextField;)V
+MD: lq/actionPerformed (Ljava/awt/event/ActionEvent;)V mc/DedicatedServerGUI_ActionListener1/actionPerformed (Ljava/awt/event/ActionEvent;)V
+MD: lw/actionPerformed (Ljava/awt/event/ActionEvent;)V mc/DedicatedServerGUI_ActionListener2/actionPerformed (Ljava/awt/event/ActionEvent;)V
+MD: lr/<init> (Llo;)V mc/DedicatedServerGUI_FocusListener/<init> (Lmc/DedicatedServerGUI;)V
+MD: lr/focusGained (Ljava/awt/event/FocusEvent;)V mc/DedicatedServerGUI_FocusListener/focusGained (Ljava/awt/event/FocusEvent;)V
+MD: ls/<init> (Llo;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;)V mc/DedicatedServerGUI_LogHandlerThread/<init> (Lmc/DedicatedServerGUI;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;)V
+MD: lt/<init> (Llo;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V mc/DedicatedServerGUI_RunCommandThread/<init> (Lmc/DedicatedServerGUI;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V
+MD: lu/<init> (Lnet/minecraft/server/MinecraftServer;)V mc/DedicatedServerGUI_PlayerList/<init> (Lnet/minecraft/server/MinecraftServer;)V
+MD: lv/<init> (Lnet/minecraft/server/MinecraftServer;)V mc/DedicatedServerGUI_StatsPanel/<init> (Lnet/minecraft/server/MinecraftServer;)V
+MD: lv/a ()V mc/DedicatedServerGUI_StatsPanel/func_0_DedicatedServerGUI_StatsPanel_V ()V
+MD: lv/a (Llv;)V mc/DedicatedServerGUI_StatsPanel/func_0_DedicatedServerGUI_StatsPanel_VDedicatedServerGUI_StatsPanel (Lmc/DedicatedServerGUI_StatsPanel;)V
+MD: lv/a ([J)D mc/DedicatedServerGUI_StatsPanel/func_0_DedicatedServerGUI_StatsPanel_D1J ([J)D
+MD: lv/paint (Ljava/awt/Graphics;)V mc/DedicatedServerGUI_StatsPanel/paint (Ljava/awt/Graphics;)V
+MD: lw/<init> (Llv;)V mc/DedicatedServerGUI_ActionListener2/<init> (Lmc/DedicatedServerGUI_StatsPanel;)V
 MD: m/<init> (I)V mc/CrashCallableBlockDataValue/<init> (I)V
 MD: m/a ()Ljava/lang/String; mc/CrashCallableBlockDataValue/func_0_CrashCallableBlockDataValue_String ()Ljava/lang/String;
 MD: ma/<init> (Lnet/minecraft/server/MinecraftServer;Laxo;Ljava/lang/String;ILov;)V mc/DemoWorldServer/<init> (Lnet/minecraft/server/MinecraftServer;Lmc/IWorldLoader;Ljava/lang/String;ILmc/Profiler;)V
@@ -8617,60 +8617,60 @@ MD: nf/<init> (Ljava/lang/String;I)V mc/EnumLoginState/<init> (Ljava/lang/String
 MD: nf/valueOf (Ljava/lang/String;)Lnf; mc/EnumLoginState/valueOf (Ljava/lang/String;)Lmc/EnumLoginState;
 MD: nf/values ()[Lnf; mc/EnumLoginState/values ()[Lmc/EnumLoginState;
 MD: ng/<init> (Lnet/minecraft/server/MinecraftServer;Lef;)V mc/NetHandlerImplStatusC2S/<init> (Lnet/minecraft/server/MinecraftServer;Lmc/MCChannelInboundHandler;)V
-MD: nh/<init> (I)V mc/_nh_ne/<init> (I)V
-MD: nh/a ()[B mc/_nh_ne/func_0__nh_ne_1B ()[B
-MD: nh/a (I)V mc/_nh_ne/func_1__nh_ne_VI (I)V
-MD: nh/a (Ljava/lang/String;)V mc/_nh_ne/func_0__nh_ne_VString (Ljava/lang/String;)V
-MD: nh/a (S)V mc/_nh_ne/func_0__nh_ne_VS (S)V
-MD: nh/a ([B)V mc/_nh_ne/func_0__nh_ne_V1B ([B)V
-MD: nh/b ()V mc/_nh_ne/func_0__nh_ne_V ()V
-MD: ni/a (B)Ljava/lang/String; mc/_ni_ne/func_0__ni_ne_StringB (B)Ljava/lang/String;
-MD: ni/a ([BII)Ljava/lang/String; mc/_ni_ne/func_0__ni_ne_String1BII ([BII)Ljava/lang/String;
-MD: ni/b ([BI)I mc/_ni_ne/func_0__ni_ne_I1BI ([BI)I
-MD: ni/b ([BII)I mc/_ni_ne/func_0__ni_ne_I1BII ([BII)I
-MD: ni/c ([BII)I mc/_ni_ne/func_1__ni_ne_I1BII ([BII)I
-MD: nj/<init> ()V mc/_nj_ne/<init> ()V
-MD: nj/e ()V mc/_nj_ne/func_1__nj_ne_V ()V
-MD: nj/f ()Ljava/lang/String; mc/_nj_ne/func_0__nj_ne_String ()Ljava/lang/String;
-MD: nk/<init> (Lle;Ljava/lang/String;)V mc/_nk_ne/<init> (Lmc/_le_ne;Ljava/lang/String;)V
-MD: nk/a ()V mc/_nk_ne/func_50_V ()V
-MD: nl/a ()V mc/_nl_ne/func_50_V ()V
-MD: no/a ()V mc/_no_ne/func_50_V ()V
-MD: nk/a (Ljava/lang/String;)V mc/_nk_ne/func_0__nk_ne_VString (Ljava/lang/String;)V
-MD: nk/a (Ljava/net/DatagramSocket;)V mc/_nk_ne/func_0__nk_ne_VDatagramSocket (Ljava/net/DatagramSocket;)V
-MD: nk/a (Ljava/net/DatagramSocket;Z)Z mc/_nk_ne/func_0__nk_ne_ZDatagramSocketZ (Ljava/net/DatagramSocket;Z)Z
-MD: nk/a (Ljava/net/ServerSocket;Z)Z mc/_nk_ne/func_0__nk_ne_ZServerSocketZ (Ljava/net/ServerSocket;Z)Z
-MD: nk/a (Z)V mc/_nk_ne/func_0__nk_ne_VZ (Z)V
-MD: nk/b (Ljava/lang/String;)V mc/_nk_ne/func_1__nk_ne_VString (Ljava/lang/String;)V
-MD: nk/b (Ljava/net/ServerSocket;)Z mc/_nk_ne/func_0__nk_ne_ZServerSocket (Ljava/net/ServerSocket;)Z
-MD: nk/c ()Z mc/_nk_ne/func_0__nk_ne_Z ()Z
-MD: nk/c (Ljava/lang/String;)V mc/_nk_ne/func_2__nk_ne_VString (Ljava/lang/String;)V
-MD: nk/d ()I mc/_nk_ne/func_0__nk_ne_I ()I
-MD: nk/d (Ljava/lang/String;)V mc/_nk_ne/func_3__nk_ne_VString (Ljava/lang/String;)V
-MD: nk/e ()V mc/_nk_ne/func_0__nk_ne_V ()V
-MD: nl/<init> (Lle;)V mc/_nl_ne/<init> (Lmc/_le_ne;)V
-MD: nl/a (Ljava/lang/Exception;)V mc/_nl_ne/func_0__nl_ne_VException (Ljava/lang/Exception;)V
-MD: nl/a (Ljava/net/DatagramPacket;)Z mc/_nl_ne/func_0__nl_ne_ZDatagramPacket (Ljava/net/DatagramPacket;)Z
-MD: nl/a (Ljava/net/SocketAddress;)[B mc/_nl_ne/func_0__nl_ne_1BSocketAddress (Ljava/net/SocketAddress;)[B
-MD: nl/a ([BLjava/net/DatagramPacket;)V mc/_nl_ne/func_0__nl_ne_V1BDatagramPacket ([BLjava/net/DatagramPacket;)V
-MD: nl/b (Ljava/net/DatagramPacket;)[B mc/_nl_ne/func_0__nl_ne_1BDatagramPacket (Ljava/net/DatagramPacket;)[B
-MD: nl/c (Ljava/net/DatagramPacket;)Ljava/lang/Boolean; mc/_nl_ne/func_0__nl_ne_BooleanDatagramPacket (Ljava/net/DatagramPacket;)Ljava/lang/Boolean;
-MD: nl/d (Ljava/net/DatagramPacket;)V mc/_nl_ne/func_0__nl_ne_VDatagramPacket (Ljava/net/DatagramPacket;)V
-MD: nl/f ()V mc/_nl_ne/func_0__nl_ne_V ()V
-MD: nl/g ()Z mc/_nl_ne/func_0__nl_ne_Z ()Z
-MD: nm/<init> (Lnl;Ljava/net/DatagramPacket;)V mc/_nm_ne/<init> (Lmc/_nl_ne;Ljava/net/DatagramPacket;)V
-MD: nm/a ()I mc/_nm_ne/func_0__nm_ne_I ()I
-MD: nm/a (J)Ljava/lang/Boolean; mc/_nm_ne/func_0__nm_ne_BooleanJ (J)Ljava/lang/Boolean;
-MD: nm/b ()[B mc/_nm_ne/func_0__nm_ne_1B ()[B
-MD: nm/c ()[B mc/_nm_ne/func_1__nm_ne_1B ()[B
-MD: nn/<init> (Lle;Ljava/net/Socket;)V mc/_nn_ne/<init> (Lmc/_le_ne;Ljava/net/Socket;)V
-MD: nn/a (IILjava/lang/String;)V mc/_nn_ne/func_0__nn_ne_VIIString (IILjava/lang/String;)V
-MD: nn/a (ILjava/lang/String;)V mc/_nn_ne/func_0__nn_ne_VIString (ILjava/lang/String;)V
-MD: nn/f ()V mc/_nn_ne/func_0__nn_ne_V ()V
-MD: nn/g ()V mc/_nn_ne/func_1__nn_ne_V ()V
-MD: no/<init> (Lle;)V mc/_no_ne/<init> (Lmc/_le_ne;)V
-MD: no/f ()V mc/_no_ne/func_0__no_ne_V ()V
-MD: no/g ()V mc/_no_ne/func_1__no_ne_V ()V
+MD: nh/<init> (I)V mc/QueryResponseBuilder/<init> (I)V
+MD: nh/a ()[B mc/QueryResponseBuilder/func_0_QueryResponseBuilder_1B ()[B
+MD: nh/a (I)V mc/QueryResponseBuilder/func_1_QueryResponseBuilder_VI (I)V
+MD: nh/a (Ljava/lang/String;)V mc/QueryResponseBuilder/func_0_QueryResponseBuilder_VString (Ljava/lang/String;)V
+MD: nh/a (S)V mc/QueryResponseBuilder/func_0_QueryResponseBuilder_VS (S)V
+MD: nh/a ([B)V mc/QueryResponseBuilder/func_0_QueryResponseBuilder_V1B ([B)V
+MD: nh/b ()V mc/QueryResponseBuilder/func_0_QueryResponseBuilder_V ()V
+MD: ni/a (B)Ljava/lang/String; mc/QueryRconHelper1/func_0_QueryRconHelper1_StringB (B)Ljava/lang/String;
+MD: ni/a ([BII)Ljava/lang/String; mc/QueryRconHelper1/func_0_QueryRconHelper1_String1BII ([BII)Ljava/lang/String;
+MD: ni/b ([BI)I mc/QueryRconHelper1/func_0_QueryRconHelper1_I1BI ([BI)I
+MD: ni/b ([BII)I mc/QueryRconHelper1/func_0_QueryRconHelper1_I1BII ([BII)I
+MD: ni/c ([BII)I mc/QueryRconHelper1/func_1_QueryRconHelper1_I1BII ([BII)I
+MD: nj/<init> ()V mc/RconCommandSender/<init> ()V
+MD: nj/e ()V mc/RconCommandSender/func_1_RconCommandSender_V ()V
+MD: nj/f ()Ljava/lang/String; mc/RconCommandSender/func_0_RconCommandSender_String ()Ljava/lang/String;
+MD: nk/<init> (Lle;Ljava/lang/String;)V mc/QueryRconListenerBase/<init> (Lmc/IDedicatedServer;Ljava/lang/String;)V
+MD: nk/a ()V mc/QueryRconListenerBase/func_50_V ()V
+MD: nl/a ()V mc/QueryListener/func_50_V ()V
+MD: no/a ()V mc/RconListener/func_50_V ()V
+MD: nk/a (Ljava/lang/String;)V mc/QueryRconListenerBase/func_0_QueryRconListenerBase_VString (Ljava/lang/String;)V
+MD: nk/a (Ljava/net/DatagramSocket;)V mc/QueryRconListenerBase/func_0_QueryRconListenerBase_VDatagramSocket (Ljava/net/DatagramSocket;)V
+MD: nk/a (Ljava/net/DatagramSocket;Z)Z mc/QueryRconListenerBase/func_0_QueryRconListenerBase_ZDatagramSocketZ (Ljava/net/DatagramSocket;Z)Z
+MD: nk/a (Ljava/net/ServerSocket;Z)Z mc/QueryRconListenerBase/func_0_QueryRconListenerBase_ZServerSocketZ (Ljava/net/ServerSocket;Z)Z
+MD: nk/a (Z)V mc/QueryRconListenerBase/func_0_QueryRconListenerBase_VZ (Z)V
+MD: nk/b (Ljava/lang/String;)V mc/QueryRconListenerBase/func_1_QueryRconListenerBase_VString (Ljava/lang/String;)V
+MD: nk/b (Ljava/net/ServerSocket;)Z mc/QueryRconListenerBase/func_0_QueryRconListenerBase_ZServerSocket (Ljava/net/ServerSocket;)Z
+MD: nk/c ()Z mc/QueryRconListenerBase/func_0_QueryRconListenerBase_Z ()Z
+MD: nk/c (Ljava/lang/String;)V mc/QueryRconListenerBase/func_2_QueryRconListenerBase_VString (Ljava/lang/String;)V
+MD: nk/d ()I mc/QueryRconListenerBase/func_0_QueryRconListenerBase_I ()I
+MD: nk/d (Ljava/lang/String;)V mc/QueryRconListenerBase/func_3_QueryRconListenerBase_VString (Ljava/lang/String;)V
+MD: nk/e ()V mc/QueryRconListenerBase/func_0_QueryRconListenerBase_V ()V
+MD: nl/<init> (Lle;)V mc/QueryListener/<init> (Lmc/IDedicatedServer;)V
+MD: nl/a (Ljava/lang/Exception;)V mc/QueryListener/func_0_QueryListener_VException (Ljava/lang/Exception;)V
+MD: nl/a (Ljava/net/DatagramPacket;)Z mc/QueryListener/func_0_QueryListener_ZDatagramPacket (Ljava/net/DatagramPacket;)Z
+MD: nl/a (Ljava/net/SocketAddress;)[B mc/QueryListener/func_0_QueryListener_1BSocketAddress (Ljava/net/SocketAddress;)[B
+MD: nl/a ([BLjava/net/DatagramPacket;)V mc/QueryListener/func_0_QueryListener_V1BDatagramPacket ([BLjava/net/DatagramPacket;)V
+MD: nl/b (Ljava/net/DatagramPacket;)[B mc/QueryListener/func_0_QueryListener_1BDatagramPacket (Ljava/net/DatagramPacket;)[B
+MD: nl/c (Ljava/net/DatagramPacket;)Ljava/lang/Boolean; mc/QueryListener/func_0_QueryListener_BooleanDatagramPacket (Ljava/net/DatagramPacket;)Ljava/lang/Boolean;
+MD: nl/d (Ljava/net/DatagramPacket;)V mc/QueryListener/func_0_QueryListener_VDatagramPacket (Ljava/net/DatagramPacket;)V
+MD: nl/f ()V mc/QueryListener/func_0_QueryListener_V ()V
+MD: nl/g ()Z mc/QueryListener/func_0_QueryListener_Z ()Z
+MD: nm/<init> (Lnl;Ljava/net/DatagramPacket;)V mc/QueryConnectionState/<init> (Lmc/QueryListener;Ljava/net/DatagramPacket;)V
+MD: nm/a ()I mc/QueryConnectionState/func_0_QueryConnectionState_I ()I
+MD: nm/a (J)Ljava/lang/Boolean; mc/QueryConnectionState/func_0_QueryConnectionState_BooleanJ (J)Ljava/lang/Boolean;
+MD: nm/b ()[B mc/QueryConnectionState/func_0_QueryConnectionState_1B ()[B
+MD: nm/c ()[B mc/QueryConnectionState/func_1_QueryConnectionState_1B ()[B
+MD: nn/<init> (Lle;Ljava/net/Socket;)V mc/RconConnectionHandler/<init> (Lmc/IDedicatedServer;Ljava/net/Socket;)V
+MD: nn/a (IILjava/lang/String;)V mc/RconConnectionHandler/func_0_RconConnectionHandler_VIIString (IILjava/lang/String;)V
+MD: nn/a (ILjava/lang/String;)V mc/RconConnectionHandler/func_0_RconConnectionHandler_VIString (ILjava/lang/String;)V
+MD: nn/f ()V mc/RconConnectionHandler/func_0_RconConnectionHandler_V ()V
+MD: nn/g ()V mc/RconConnectionHandler/func_1_RconConnectionHandler_V ()V
+MD: no/<init> (Lle;)V mc/RconListener/<init> (Lmc/IDedicatedServer;)V
+MD: no/f ()V mc/RconListener/func_0_RconListener_V ()V
+MD: no/g ()V mc/RconListener/func_1_RconListener_V ()V
 MD: np/<init> (Ljava/lang/String;Ljava/lang/String;IILabn;Lnp;)V mc/StatAchievement/<init> (Ljava/lang/String;Ljava/lang/String;IILmc/Item;Lmc/StatAchievement;)V
 MD: np/<init> (Ljava/lang/String;Ljava/lang/String;IILabp;Lnp;)V mc/StatAchievement/<init> (Ljava/lang/String;Ljava/lang/String;IILmc/ItemStack;Lmc/StatAchievement;)V
 MD: np/<init> (Ljava/lang/String;Ljava/lang/String;IILahu;Lnp;)V mc/StatAchievement/<init> (Ljava/lang/String;Ljava/lang/String;IILmc/Block;Lmc/StatAchievement;)V
@@ -12762,14 +12762,14 @@ FD: ava/e mc/NoiseOctaveGenerator/field_0_NoiseOctaveGenerator_2I
 FD: ava/f mc/NoiseOctaveGenerator/field_0_NoiseOctaveGenerator_1I
 FD: ava/g mc/NoiseOctaveGenerator/field_4_NoiseOctaveGenerator_D
 FD: ava/h mc/NoiseOctaveGenerator/field_5_NoiseOctaveGenerator_D
-FD: avf/A mc/Material/field_0_Material_L
-FD: avf/B mc/Material/field_1_Material_L
-FD: avf/C mc/Material/field_2_Material_L
-FD: avf/D mc/Material/field_3_Material_L
-FD: avf/E mc/Material/field_4_Material_L
-FD: avf/F mc/Material/field_5_Material_L
-FD: avf/G mc/Material/field_6_Material_L
-FD: avf/H mc/Material/field_7_Material_L
+FD: avf/A mc/Material/cactus
+FD: avf/B mc/Material/clay
+FD: avf/C mc/Material/pumpkin
+FD: avf/D mc/Material/dragonEgg
+FD: avf/E mc/Material/portal
+FD: avf/F mc/Material/cake
+FD: avf/G mc/Material/web
+FD: avf/H mc/Material/piston
 FD: avf/I mc/Material/field_0_Material_Z
 FD: avf/J mc/Material/field_1_Material_Z
 FD: avf/K mc/Material/field_2_Material_Z
@@ -12778,31 +12778,31 @@ FD: avf/M mc/Material/field_3_Material_Z
 FD: avf/N mc/Material/field_0_Material_I
 FD: avf/O mc/Material/field_4_Material_Z
 FD: avf/a mc/Material/air
-FD: avf/b mc/Material/field_10_Material_L
-FD: avf/c mc/Material/field_11_Material_L
-FD: avf/d mc/Material/field_12_Material_L
-FD: avf/e mc/Material/field_13_Material_L
+FD: avf/b mc/Material/grass
+FD: avf/c mc/Material/dirt
+FD: avf/d mc/Material/wood
+FD: avf/e mc/Material/stone
 FD: avf/f mc/Material/iron
 FD: avf/g mc/Material/field_15_Material_L
-FD: avf/h mc/Material/field_16_Material_L
-FD: avf/i mc/Material/field_17_Material_L
-FD: avf/j mc/Material/field_18_Material_L
-FD: avf/k mc/Material/field_19_Material_L
-FD: avf/l mc/Material/field_20_Material_L
-FD: avf/m mc/Material/field_21_Material_L
-FD: avf/n mc/Material/field_22_Material_L
-FD: avf/o mc/Material/field_23_Material_L
-FD: avf/p mc/Material/field_24_Material_L
-FD: avf/q mc/Material/field_25_Material_L
-FD: avf/r mc/Material/field_26_Material_L
-FD: avf/s mc/Material/field_27_Material_L
-FD: avf/t mc/Material/field_28_Material_L
-FD: avf/u mc/Material/field_29_Material_L
-FD: avf/v mc/Material/field_30_Material_L
-FD: avf/w mc/Material/field_31_Material_L
-FD: avf/x mc/Material/field_32_Material_L
-FD: avf/y mc/Material/field_33_Material_L
-FD: avf/z mc/Material/field_34_Material_L
+FD: avf/h mc/Material/water
+FD: avf/i mc/Material/lava
+FD: avf/j mc/Material/leaves
+FD: avf/k mc/Material/plant
+FD: avf/l mc/Material/tallGrass
+FD: avf/m mc/Material/sponge
+FD: avf/n mc/Material/wool
+FD: avf/o mc/Material/fire
+FD: avf/p mc/Material/soulSand
+FD: avf/q mc/Material/destroyableByAnvil
+FD: avf/r mc/Material/carpet
+FD: avf/s mc/Material/glass
+FD: avf/t mc/Material/redstoneLamp
+FD: avf/u mc/Material/tnt
+FD: avf/v mc/Material/unused
+FD: avf/w mc/Material/ice
+FD: avf/x mc/Material/packedIce
+FD: avf/y mc/Material/snowLayer
+FD: avf/z mc/Material/snowBlock
 FD: avh/A mc/MapColor/field_0_MapColor_L
 FD: avh/B mc/MapColor/field_1_MapColor_L
 FD: avh/C mc/MapColor/field_2_MapColor_L
@@ -13599,7 +13599,7 @@ FD: ku/a mc/_ku_ne/field_0_kune_String
 FD: ku/b mc/_ku_ne/field_0_kune_L
 FD: kw/a mc/LevelConvertProgressUpdater/field_0_LevelConvertProgressUpdater_L
 FD: kw/b mc/LevelConvertProgressUpdater/field_0_LevelConvertProgressUpdater_J
-FD: kx/a mc/_kx_ne/field_0_kxne_L
+FD: kx/a mc/ThreadServerShutdown/field_0_ThreadServerShutdown_L
 FD: ky/a mc/ThreadServer/field_0_ThreadServer_L
 FD: kz/a mc/CrashCallableProfilerPosition/field_0_CrashCallableProfilerPosition_L
 FD: l/a mc/CrashCallableBlockType/field_0_CrashCallableBlockType_I
@@ -13626,46 +13626,46 @@ FD: ld/p mc/ServerConfigurationManager/field_2_ServerConfigurationManager_I
 FD: lf/a mc/Scoreboard2/field_0_Scoreboard2_L
 FD: lf/b mc/Scoreboard2/field_0_Scoreboard2_Set
 FD: lf/c mc/Scoreboard2/field_1_Scoreboard2_L
-FD: lg/a mc/_lg_ne/field_0_lgne_L
-FD: lg/b mc/_lg_ne/field_0_lgne_Properties
-FD: lg/c mc/_lg_ne/field_0_lgne_File
-FD: li/d mc/_li_ne/field_0_line_L
-FD: li/e mc/_li_ne/field_0_line_File
-FD: li/f mc/_li_ne/field_1_line_File
-FD: lj/h mc/_lj_ne/field_0_ljne_L
-FD: lj/i mc/_lj_ne/field_0_ljne_List
-FD: lj/j mc/_lj_ne/field_1_ljne_L
-FD: lj/k mc/_lj_ne/field_2_ljne_L
-FD: lj/l mc/_lj_ne/field_3_ljne_L
-FD: lj/m mc/_lj_ne/field_0_ljne_Z
-FD: lj/n mc/_lj_ne/field_4_ljne_L
-FD: lj/o mc/_lj_ne/field_1_ljne_Z
-FD: lk/a mc/_lk_ne/field_0_lkne_L
-FD: ll/a mc/_ll_ne/field_0_llne_L
-FD: lm/a mc/_lm_ne/field_0_lmne_L
-FD: ln/a mc/_ln_ne/field_0_lnne_L
-FD: lo/a mc/_lo_ne/field_0_lone_Font
-FD: lo/b mc/_lo_ne/field_0_lone_L
-FD: lo/c mc/_lo_ne/field_1_lone_L
-FD: lp/a mc/_lp_ne/field_0_lpne_L
-FD: lq/a mc/_lq_ne/field_0_lqne_L
-FD: lq/b mc/_lq_ne/field_1_lqne_L
-FD: lr/a mc/_lr_ne/field_0_lrne_L
-FD: ls/a mc/_ls_ne/field_0_lsne_L
-FD: ls/b mc/_ls_ne/field_1_lsne_L
-FD: ls/c mc/_ls_ne/field_2_lsne_L
-FD: lt/a mc/_lt_ne/field_0_ltne_L
-FD: lt/b mc/_lt_ne/field_1_ltne_L
-FD: lt/c mc/_lt_ne/field_0_ltne_String
-FD: lt/d mc/_lt_ne/field_2_ltne_L
-FD: lu/a mc/_lu_ne/field_0_lune_L
-FD: lu/b mc/_lu_ne/field_0_lune_I
-FD: lv/a mc/_lv_ne/field_0_lvne_DecimalFormat
-FD: lv/b mc/_lv_ne/field_0_lvne_1I
-FD: lv/c mc/_lv_ne/field_0_lvne_I
-FD: lv/d mc/_lv_ne/field_0_lvne_1String
-FD: lv/e mc/_lv_ne/field_0_lvne_L
-FD: lw/a mc/_lw_ne/field_0_lwne_L
+FD: lg/a mc/ServerProperties/field_0_ServerProperties_L
+FD: lg/b mc/ServerProperties/field_0_ServerProperties_Properties
+FD: lg/c mc/ServerProperties/field_0_ServerProperties_File
+FD: li/d mc/DedicatedServerConfigurationManager/field_0_DedicatedServerConfigurationManager_L
+FD: li/e mc/DedicatedServerConfigurationManager/field_0_DedicatedServerConfigurationManager_File
+FD: li/f mc/DedicatedServerConfigurationManager/field_1_DedicatedServerConfigurationManager_File
+FD: lj/h mc/DedicatedServer/field_0_DedicatedServer_L
+FD: lj/i mc/DedicatedServer/field_0_DedicatedServer_List
+FD: lj/j mc/DedicatedServer/field_1_DedicatedServer_L
+FD: lj/k mc/DedicatedServer/field_2_DedicatedServer_L
+FD: lj/l mc/DedicatedServer/field_3_DedicatedServer_L
+FD: lj/m mc/DedicatedServer/field_0_DedicatedServer_Z
+FD: lj/n mc/DedicatedServer/field_4_DedicatedServer_L
+FD: lj/o mc/DedicatedServer/field_1_DedicatedServer_Z
+FD: lk/a mc/ThreadServerSleep/field_0_ThreadServerSleep_L
+FD: ll/a mc/DedicatedServer_ConsoleInputThread/field_0_DedicatedServerConsoleInputThread_L
+FD: lm/a mc/DedicatedServer_CallableIsModded/field_0_DedicatedServerCallableIsModded_L
+FD: ln/a mc/DedicatedServer_CallableServerType/field_0_DedicatedServerCallableServerType_L
+FD: lo/a mc/DedicatedServerGUI/field_0_DedicatedServerGUI_Font
+FD: lo/b mc/DedicatedServerGUI/field_0_DedicatedServerGUI_L
+FD: lo/c mc/DedicatedServerGUI/field_1_DedicatedServerGUI_L
+FD: lp/a mc/DedicatedServerGUI_WindowListener/field_0_DedicatedServerGUIWindowListener_L
+FD: lq/a mc/DedicatedServerGUI_ActionListener1/field_0_DedicatedServerGUIActionListener1_L
+FD: lq/b mc/DedicatedServerGUI_ActionListener1/field_1_DedicatedServerGUIActionListener1_L
+FD: lr/a mc/DedicatedServerGUI_FocusListener/field_0_DedicatedServerGUIFocusListener_L
+FD: ls/a mc/DedicatedServerGUI_LogHandlerThread/field_0_DedicatedServerGUILogHandlerThread_L
+FD: ls/b mc/DedicatedServerGUI_LogHandlerThread/field_1_DedicatedServerGUILogHandlerThread_L
+FD: ls/c mc/DedicatedServerGUI_LogHandlerThread/field_2_DedicatedServerGUILogHandlerThread_L
+FD: lt/a mc/DedicatedServerGUI_RunCommandThread/field_0_DedicatedServerGUIRunCommandThread_L
+FD: lt/b mc/DedicatedServerGUI_RunCommandThread/field_1_DedicatedServerGUIRunCommandThread_L
+FD: lt/c mc/DedicatedServerGUI_RunCommandThread/field_0_DedicatedServerGUIRunCommandThread_String
+FD: lt/d mc/DedicatedServerGUI_RunCommandThread/field_2_DedicatedServerGUIRunCommandThread_L
+FD: lu/a mc/DedicatedServerGUI_PlayerList/field_0_DedicatedServerGUIPlayerList_L
+FD: lu/b mc/DedicatedServerGUI_PlayerList/field_0_DedicatedServerGUIPlayerList_I
+FD: lv/a mc/DedicatedServerGUI_StatsPanel/field_0_DedicatedServerGUIStatsPanel_DecimalFormat
+FD: lv/b mc/DedicatedServerGUI_StatsPanel/field_0_DedicatedServerGUIStatsPanel_1I
+FD: lv/c mc/DedicatedServerGUI_StatsPanel/field_0_DedicatedServerGUIStatsPanel_I
+FD: lv/d mc/DedicatedServerGUI_StatsPanel/field_0_DedicatedServerGUIStatsPanel_1String
+FD: lv/e mc/DedicatedServerGUI_StatsPanel/field_0_DedicatedServerGUIStatsPanel_L
+FD: lw/a mc/DedicatedServerGUI_ActionListener2/field_0_DedicatedServerGUIActionListener2_L
 FD: m/a mc/CrashCallableBlockDataValue/field_0_CrashCallableBlockDataValue_I
 FD: ma/J mc/DemoWorldServer/field_0_DemoWorldServer_J
 FD: ma/a mc/DemoWorldServer/field_0_DemoWorldServer_L
@@ -13894,52 +13894,52 @@ FD: nf/e mc/EnumLoginState/ACCEPTED
 FD: nf/f mc/EnumLoginState/field_0_EnumLoginState_1L
 FD: ng/a mc/NetHandlerImplStatusC2S/field_0_NetHandlerImplStatusC2S_L
 FD: ng/b mc/NetHandlerImplStatusC2S/field_1_NetHandlerImplStatusC2S_L
-FD: nh/a mc/_nh_ne/field_0_nhne_ByteArrayOutputStream
-FD: nh/b mc/_nh_ne/field_0_nhne_DataOutputStream
-FD: ni/a mc/_ni_ne/field_0_nine_1C
-FD: nj/a mc/_nj_ne/field_0_njne_L
-FD: nj/b mc/_nj_ne/field_0_njne_StringBuffer
-FD: nk/a mc/_nk_ne/field_0_nkne_Z
-FD: nk/b mc/_nk_ne/field_0_nkne_L
-FD: nk/c mc/_nk_ne/field_0_nkne_String
-FD: nk/d mc/_nk_ne/field_0_nkne_Thread
-FD: nk/e mc/_nk_ne/field_0_nkne_I
-FD: nk/f mc/_nk_ne/field_0_nkne_List
-FD: nk/g mc/_nk_ne/field_1_nkne_List
-FD: nk/h mc/_nk_ne/field_0_nkne_AtomicInteger
-FD: nl/h mc/_nl_ne/field_0_nlne_J
-FD: nl/i mc/_nl_ne/field_0_nlne_I
-FD: nl/j mc/_nl_ne/field_1_nlne_I
-FD: nl/k mc/_nl_ne/field_2_nlne_I
-FD: nl/l mc/_nl_ne/field_0_nlne_String
-FD: nl/m mc/_nl_ne/field_1_nlne_String
-FD: nl/n mc/_nl_ne/field_0_nlne_DatagramSocket
-FD: nl/o mc/_nl_ne/field_0_nlne_1B
-FD: nl/p mc/_nl_ne/field_0_nlne_DatagramPacket
-FD: nl/q mc/_nl_ne/field_0_nlne_Map
-FD: nl/r mc/_nl_ne/field_2_nlne_String
-FD: nl/s mc/_nl_ne/field_3_nlne_String
-FD: nl/t mc/_nl_ne/field_1_nlne_Map
-FD: nl/u mc/_nl_ne/field_1_nlne_J
-FD: nl/v mc/_nl_ne/field_0_nlne_L
-FD: nl/w mc/_nl_ne/field_2_nlne_J
-FD: nm/a mc/_nm_ne/field_0_nmne_L
-FD: nm/b mc/_nm_ne/field_0_nmne_J
-FD: nm/c mc/_nm_ne/field_0_nmne_I
-FD: nm/d mc/_nm_ne/field_0_nmne_1B
-FD: nm/e mc/_nm_ne/field_1_nmne_1B
-FD: nm/f mc/_nm_ne/field_0_nmne_String
-FD: nn/h mc/_nn_ne/field_0_nnne_L
-FD: nn/i mc/_nn_ne/field_0_nnne_Z
-FD: nn/j mc/_nn_ne/field_0_nnne_Socket
-FD: nn/k mc/_nn_ne/field_0_nnne_1B
-FD: nn/l mc/_nn_ne/field_0_nnne_String
-FD: no/h mc/_no_ne/field_0_none_I
-FD: no/i mc/_no_ne/field_1_none_I
-FD: no/j mc/_no_ne/field_0_none_String
-FD: no/k mc/_no_ne/field_0_none_ServerSocket
-FD: no/l mc/_no_ne/field_1_none_String
-FD: no/m mc/_no_ne/field_0_none_Map
+FD: nh/a mc/QueryResponseBuilder/field_0_QueryResponseBuilder_ByteArrayOutputStream
+FD: nh/b mc/QueryResponseBuilder/field_0_QueryResponseBuilder_DataOutputStream
+FD: ni/a mc/QueryRconHelper1/field_0_QueryRconHelper1_1C
+FD: nj/a mc/RconCommandSender/field_0_RconCommandSender_L
+FD: nj/b mc/RconCommandSender/field_0_RconCommandSender_StringBuffer
+FD: nk/a mc/QueryRconListenerBase/field_0_QueryRconListenerBase_Z
+FD: nk/b mc/QueryRconListenerBase/field_0_QueryRconListenerBase_L
+FD: nk/c mc/QueryRconListenerBase/field_0_QueryRconListenerBase_String
+FD: nk/d mc/QueryRconListenerBase/field_0_QueryRconListenerBase_Thread
+FD: nk/e mc/QueryRconListenerBase/field_0_QueryRconListenerBase_I
+FD: nk/f mc/QueryRconListenerBase/field_0_QueryRconListenerBase_List
+FD: nk/g mc/QueryRconListenerBase/field_1_QueryRconListenerBase_List
+FD: nk/h mc/QueryRconListenerBase/field_0_QueryRconListenerBase_AtomicInteger
+FD: nl/h mc/QueryListener/field_0_QueryListener_J
+FD: nl/i mc/QueryListener/field_0_QueryListener_I
+FD: nl/j mc/QueryListener/field_1_QueryListener_I
+FD: nl/k mc/QueryListener/field_2_QueryListener_I
+FD: nl/l mc/QueryListener/field_0_QueryListener_String
+FD: nl/m mc/QueryListener/field_1_QueryListener_String
+FD: nl/n mc/QueryListener/field_0_QueryListener_DatagramSocket
+FD: nl/o mc/QueryListener/field_0_QueryListener_1B
+FD: nl/p mc/QueryListener/field_0_QueryListener_DatagramPacket
+FD: nl/q mc/QueryListener/field_0_QueryListener_Map
+FD: nl/r mc/QueryListener/field_2_QueryListener_String
+FD: nl/s mc/QueryListener/field_3_QueryListener_String
+FD: nl/t mc/QueryListener/field_1_QueryListener_Map
+FD: nl/u mc/QueryListener/field_1_QueryListener_J
+FD: nl/v mc/QueryListener/field_0_QueryListener_L
+FD: nl/w mc/QueryListener/field_2_QueryListener_J
+FD: nm/a mc/QueryConnectionState/field_0_QueryConnectionState_L
+FD: nm/b mc/QueryConnectionState/field_0_QueryConnectionState_J
+FD: nm/c mc/QueryConnectionState/field_0_QueryConnectionState_I
+FD: nm/d mc/QueryConnectionState/field_0_QueryConnectionState_1B
+FD: nm/e mc/QueryConnectionState/field_1_QueryConnectionState_1B
+FD: nm/f mc/QueryConnectionState/field_0_QueryConnectionState_String
+FD: nn/h mc/RconConnectionHandler/field_0_RconConnectionHandler_L
+FD: nn/i mc/RconConnectionHandler/field_0_RconConnectionHandler_Z
+FD: nn/j mc/RconConnectionHandler/field_0_RconConnectionHandler_Socket
+FD: nn/k mc/RconConnectionHandler/field_0_RconConnectionHandler_1B
+FD: nn/l mc/RconConnectionHandler/field_0_RconConnectionHandler_String
+FD: no/h mc/RconListener/field_0_RconListener_I
+FD: no/i mc/RconListener/field_1_RconListener_I
+FD: no/j mc/RconListener/field_0_RconListener_String
+FD: no/k mc/RconListener/field_0_RconListener_ServerSocket
+FD: no/l mc/RconListener/field_1_RconListener_String
+FD: no/m mc/RconListener/field_0_RconListener_Map
 FD: np/a mc/StatAchievement/field_0_StatAchievement_I
 FD: np/b mc/StatAchievement/field_1_StatAchievement_I
 FD: np/c mc/StatAchievement/field_0_StatAchievement_L
