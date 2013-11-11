@@ -4,12 +4,15 @@ import java.sql.BatchUpdateException;
 
 import com.google.common.eventbus.Subscribe;
 
+import wtfml.blocks.BlockExplodeEvent;
+import wtfml.blocks.BlockExplosionDropHandler;
 import wtfml.blocks.BlockIconHandler;
 import wtfml.blocks.BlockRandomTickEvent;
 import wtfml.blocks.BlockUpdateEvent;
 import wtfml.blocks.WTFBlockType;
 import mc.Block;
 import mc.Blocks;
+import mc.Explosion;
 import mc.IBlockAccess;
 import mc.Icon;
 import mc.IconRegister;
@@ -50,7 +53,19 @@ public class WTFBlockWrapperReverse {
 				// XXX doesn't pass the correct updating block
 				wraps.func_0_VWorldIIIBlock(evt.world, evt.x, evt.y, evt.z, Blocks.stone);
 			}
+			
+			@Subscribe
+			public void onExplosion(BlockExplodeEvent evt) {
+				wraps.func_0_VWorldIIIExplosion(evt.world, evt.x, evt.y, evt.z, evt.explosion);
+			}
 		});
+		
+		block.explosionDropHandler = new BlockExplosionDropHandler() {
+			@Override
+			public boolean shouldDropBlockOnExplosion(Explosion e) {
+				return wraps.func_0_ZExplosion(e);
+			}
+		};
 		
 		block.hardness = wraps.func_0_Block_FWorldIII(null, 0, 0, 0);
 		block.unlocalizedName = wraps.func_2_Block_String().substring(5);

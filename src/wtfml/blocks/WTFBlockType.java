@@ -13,6 +13,7 @@ public final class WTFBlockType {
 	public BlockIconHandler iconHandler = BlockIconHandler.defaultHandler;
 	public BlockRedstoneHandler redstoneHandler = BlockRedstoneHandler.defaultHandler;
 	public BlockTEHandler tileEntityHandler = BlockTEHandler.defaultHandler;
+	public BlockExplosionDropHandler explosionDropHandler = BlockExplosionDropHandler.defaultHandler;
 	
 	/** Only takes effect at block registration time. */
 	public float hardness = 0.2f;

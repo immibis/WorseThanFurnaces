@@ -4,11 +4,13 @@ import java.util.Random;
 
 import mc.Block;
 import mc.EntityLiving;
+import mc.Explosion;
 import mc.IBlockAccess;
 import mc.Icon;
 import mc.IconRegister;
 import mc.ItemStack;
 import mc.World;
+import wtfml.blocks.BlockExplodeEvent;
 import wtfml.blocks.BlockPlaceEvent;
 import wtfml.blocks.BlockRandomTickEvent;
 import wtfml.blocks.BlockUpdateEvent;
@@ -72,6 +74,16 @@ public class WTFBlockWrapper extends Block {
 	@Override
 	public boolean func_6_Block_Z() {
 		return wraps.hasRandomTicks;
+	}
+	
+	@Override
+	public boolean func_0_ZExplosion(Explosion par1afi) {
+		return wraps.explosionDropHandler.shouldDropBlockOnExplosion(par1afi);
+	}
+	
+	@Override
+	public void func_0_VWorldIIIExplosion(World par1afn, int par2Int, int par3Int, int par4Int, Explosion par5afi) {
+		wraps.eventBus.post(BlockExplodeEvent.get(par1afn, par2Int, par3Int, par4Int, par5afi));
 	}
 
 	public WTFBlockType getWrapped() {

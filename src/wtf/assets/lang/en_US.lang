@@ -1,3 +1,5 @@
 tile.blockhole.name=Block Hole
 tile.blocksensor.name=Block Sensor
 tile.blockgen.name=DEBUG Block Generator
+tile.shattered_ore.iron.name=Shattered Iron Ore
+tile.shattered_ore.gold.name=Shattered Gold Ore

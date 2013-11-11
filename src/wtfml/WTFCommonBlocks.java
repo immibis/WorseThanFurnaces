@@ -28,7 +28,7 @@ public final class WTFCommonBlocks {
 		}
 	});
 	private static boolean canFall(World w, int x, int y, int z) {
-		return y > 0 && BlockFalling.func_0_BlockFalling_ZWorldIII(w, x, y-1, z);
+		return !w.isRemote && y > 0 && BlockFalling.func_0_BlockFalling_ZWorldIII(w, x, y-1, z);
 	}
 	public static void initFallingBlock(WTFBlockType block) {
 		block.eventBus.register(new Object() {
