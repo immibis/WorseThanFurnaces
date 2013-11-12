@@ -879,7 +879,7 @@ CL: kn mc/DispenseActionSpawnEgg
 CL: ko mc/DispenseActionFirework
 CL: kp mc/DispenseActionFireCharge
 CL: kq mc/DispenseActionBoat
-CL: ku mc/_ku_ne
+CL: ku mc/DedicatedServerCommandQueueEntry
 CL: kw mc/LevelConvertProgressUpdater
 CL: kx mc/ThreadServerShutdown
 CL: ky mc/ThreadServer
@@ -904,7 +904,7 @@ CL: lp mc/DedicatedServerGUI_WindowListener
 CL: lq mc/DedicatedServerGUI_ActionListener1
 CL: lr mc/DedicatedServerGUI_FocusListener
 CL: ls mc/DedicatedServerGUI_LogHandlerThread
-CL: lt mc/DedicatedServerGUI_RunCommandThread
+CL: lt mc/DedicatedServerGUI_LogMessageRunnable
 CL: lu mc/DedicatedServerGUI_PlayerList
 CL: lv mc/DedicatedServerGUI_StatsPanel
 CL: lw mc/DedicatedServerGUI_ActionListener2
@@ -5993,7 +5993,7 @@ MD: ky/run ()V mc/ThreadServer/run ()V
 MD: lk/run ()V mc/ThreadServerSleep/run ()V
 MD: ll/run ()V mc/DedicatedServer_ConsoleInputThread/run ()V
 MD: ls/run ()V mc/DedicatedServerGUI_LogHandlerThread/run ()V
-MD: lt/run ()V mc/DedicatedServerGUI_RunCommandThread/run ()V
+MD: lt/run ()V mc/DedicatedServerGUI_LogMessageRunnable/run ()V
 MD: ne/run ()V mc/ThreadVerifyUsername/run ()V
 MD: net/minecraft/server/MinecraftServer/run ()V net/minecraft/server/MinecraftServer/run ()V
 MD: nl/run ()V mc/QueryListener/run ()V
@@ -7875,7 +7875,7 @@ MD: kn/<init> ()V mc/DispenseActionSpawnEgg/<init> ()V
 MD: ko/<init> ()V mc/DispenseActionFirework/<init> ()V
 MD: kp/<init> ()V mc/DispenseActionFireCharge/<init> ()V
 MD: kq/<init> ()V mc/DispenseActionBoat/<init> ()V
-MD: ku/<init> (Ljava/lang/String;Lac;)V mc/_ku_ne/<init> (Ljava/lang/String;Lmc/ICommandSender;)V
+MD: ku/<init> (Ljava/lang/String;Lac;)V mc/DedicatedServerCommandQueueEntry/<init> (Ljava/lang/String;Lmc/ICommandSender;)V
 MD: kw/<init> (Lnet/minecraft/server/MinecraftServer;)V mc/LevelConvertProgressUpdater/<init> (Lnet/minecraft/server/MinecraftServer;)V
 MD: kw/a (I)V mc/LevelConvertProgressUpdater/func_4_VI (I)V
 MD: ox/a (I)V mc/IGuiProgressIndicator/func_4_VI (I)V
@@ -8097,7 +8097,7 @@ MD: lw/actionPerformed (Ljava/awt/event/ActionEvent;)V mc/DedicatedServerGUI_Act
 MD: lr/<init> (Llo;)V mc/DedicatedServerGUI_FocusListener/<init> (Lmc/DedicatedServerGUI;)V
 MD: lr/focusGained (Ljava/awt/event/FocusEvent;)V mc/DedicatedServerGUI_FocusListener/focusGained (Ljava/awt/event/FocusEvent;)V
 MD: ls/<init> (Llo;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;)V mc/DedicatedServerGUI_LogHandlerThread/<init> (Lmc/DedicatedServerGUI;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;)V
-MD: lt/<init> (Llo;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V mc/DedicatedServerGUI_RunCommandThread/<init> (Lmc/DedicatedServerGUI;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V
+MD: lt/<init> (Llo;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V mc/DedicatedServerGUI_LogMessageRunnable/<init> (Lmc/DedicatedServerGUI;Ljavax/swing/JTextArea;Ljavax/swing/JScrollPane;Ljava/lang/String;)V
 MD: lu/<init> (Lnet/minecraft/server/MinecraftServer;)V mc/DedicatedServerGUI_PlayerList/<init> (Lnet/minecraft/server/MinecraftServer;)V
 MD: lv/<init> (Lnet/minecraft/server/MinecraftServer;)V mc/DedicatedServerGUI_StatsPanel/<init> (Lnet/minecraft/server/MinecraftServer;)V
 MD: lv/a ()V mc/DedicatedServerGUI_StatsPanel/func_0_DedicatedServerGUI_StatsPanel_V ()V
@@ -13595,8 +13595,8 @@ FD: kl/b mc/DispenseActionPotion/field_0_DispenseActionPotion_L
 FD: km/b mc/DispenseActionSplashPotion/field_0_DispenseActionSplashPotion_L
 FD: km/c mc/DispenseActionSplashPotion/field_1_DispenseActionSplashPotion_L
 FD: kq/b mc/DispenseActionBoat/field_0_DispenseActionBoat_L
-FD: ku/a mc/_ku_ne/field_0_kune_String
-FD: ku/b mc/_ku_ne/field_0_kune_L
+FD: ku/a mc/DedicatedServerCommandQueueEntry/field_0_DedicatedServerCommandQueueEntry_String
+FD: ku/b mc/DedicatedServerCommandQueueEntry/field_0_DedicatedServerCommandQueueEntry_L
 FD: kw/a mc/LevelConvertProgressUpdater/field_0_LevelConvertProgressUpdater_L
 FD: kw/b mc/LevelConvertProgressUpdater/field_0_LevelConvertProgressUpdater_J
 FD: kx/a mc/ThreadServerShutdown/field_0_ThreadServerShutdown_L
@@ -13654,10 +13654,10 @@ FD: lr/a mc/DedicatedServerGUI_FocusListener/field_0_DedicatedServerGUIFocusList
 FD: ls/a mc/DedicatedServerGUI_LogHandlerThread/field_0_DedicatedServerGUILogHandlerThread_L
 FD: ls/b mc/DedicatedServerGUI_LogHandlerThread/field_1_DedicatedServerGUILogHandlerThread_L
 FD: ls/c mc/DedicatedServerGUI_LogHandlerThread/field_2_DedicatedServerGUILogHandlerThread_L
-FD: lt/a mc/DedicatedServerGUI_RunCommandThread/field_0_DedicatedServerGUIRunCommandThread_L
-FD: lt/b mc/DedicatedServerGUI_RunCommandThread/field_1_DedicatedServerGUIRunCommandThread_L
-FD: lt/c mc/DedicatedServerGUI_RunCommandThread/field_0_DedicatedServerGUIRunCommandThread_String
-FD: lt/d mc/DedicatedServerGUI_RunCommandThread/field_2_DedicatedServerGUIRunCommandThread_L
+FD: lt/a mc/DedicatedServerGUI_LogMessageRunnable/field_0_DedicatedServerGUILogMessageRunnable_L
+FD: lt/b mc/DedicatedServerGUI_LogMessageRunnable/field_1_DedicatedServerGUILogMessageRunnable_L
+FD: lt/c mc/DedicatedServerGUI_LogMessageRunnable/field_0_DedicatedServerGUILogMessageRunnable_String
+FD: lt/d mc/DedicatedServerGUI_LogMessageRunnable/field_2_DedicatedServerGUILogMessageRunnable_L
 FD: lu/a mc/DedicatedServerGUI_PlayerList/field_0_DedicatedServerGUIPlayerList_L
 FD: lu/b mc/DedicatedServerGUI_PlayerList/field_0_DedicatedServerGUIPlayerList_I
 FD: lv/a mc/DedicatedServerGUI_StatsPanel/field_0_DedicatedServerGUIStatsPanel_DecimalFormat

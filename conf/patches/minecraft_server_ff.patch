@@ -424,7 +424,7 @@ diff -r -U 3 minecraft-old\mc\DedicatedServer.java minecraft\mc\DedicatedServer.
 +++ minecraft\mc\DedicatedServer.java	Mon Nov 04 22:49:28 2013
 @@ -217,1 +217,1 @@
 -   protected void func_33_V() {
-+   public void func_66_V() {
++   public void func_33_V() {
 diff -r -U 3 minecraft-old\mc\JsonSerializableSet.java minecraft\mc\JsonSerializableSet.java
 --- minecraft-old\mc\JsonSerializableSet.java	Mon Nov 04 22:42:27 2013
 +++ minecraft\mc\JsonSerializableSet.java	Mon Nov 04 22:46:56 2013
