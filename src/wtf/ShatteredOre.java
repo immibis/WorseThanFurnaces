@@ -2,7 +2,6 @@ package wtf;
 
 import mc.IBlockAccess;
 import mc.Icon;
-import mc.IconRegister;
 import wtfml.WTFCommonBlocks;
 import wtfml.blocks.BlockIconHandler;
 import wtfml.blocks.WTFBlockType;

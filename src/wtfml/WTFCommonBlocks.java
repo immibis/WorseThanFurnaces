@@ -23,7 +23,7 @@ public final class WTFCommonBlocks {
 		public void runBlockAction(World world, int x, int y, int z, int actionID, int parameter) {
 			if(canFall(world, x, y, z)) {
 				EntityFallingSand var9 = new EntityFallingSand(world, x+0.5, y+0.5, z+0.5, world.getBlockId(x, y, z), world.func_0_IIII(x, y, z));
-				world.func_1_ZEntity(var9);
+				world.spawnEntity(var9);
 			}
 		}
 	});

@@ -2568,7 +2568,7 @@ MD: afn/d (IIILahu;)V mc/World/notifyBlocksOfNeighborChange (IIILmc/Block;)V
 MD: afn/d (IIILahu;II)Z mc/World/func_0_World_ZIIIBlockII (IIILmc/Block;II)Z
 MD: afn/d (IIIZ)Z mc/World/func_2_World_ZIIIZ (IIIZ)Z
 MD: afn/d (Layf;)Z mc/World/func_2_World_ZAxisAlignedBB (Lmc/AxisAlignedBB;)Z
-MD: afn/d (Lqn;)Z mc/World/func_0_World_ZEntity (Lmc/Entity;)Z
+MD: afn/d (Lqn;)Z mc/World/spawnEntity (Lmc/Entity;)Z
 MD: afn/e (II)Laoj; mc/World/func_1_World_ChunkII (II)Lmc/Chunk;
 MD: afn/e (III)I mc/World/func_0_IIII (III)I
 MD: afx/e (III)I mc/IBlockAccess/func_0_IIII (III)I
@@ -11987,7 +11987,7 @@ FD: ahu/J mc/Block/field_1_Block_L
 FD: ahu/K mc/Block/field_1_Block_F
 FD: ahu/a mc/Block/field_2_Block_L
 FD: ahu/b mc/Block/field_0_Block_String
-FD: ahu/c mc/Block/field_3_Block_L
+FD: ahu/c mc/Block/registry
 FD: ahu/d mc/Block/field_1_Block_String
 FD: ahu/e mc/Block/field_4_Block_L
 FD: ahu/f mc/Block/field_5_Block_L

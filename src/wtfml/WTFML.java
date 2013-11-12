@@ -76,7 +76,7 @@ public class WTFML {
 	public static void addBlock(String name, Block block) {
 		int id = getID(name, false);
 		System.out.println("Adding block "+name+" with ID "+id);
-		Block.field_4_Block_L.func_0_VIStringObject(id, name, block);
+		Block.registry.func_0_VIStringObject(id, name, block);
 	}
 	
 	private static Map<WTFBlockType, Block> wrappedBlocks = new HashMap<WTFBlockType, Block>();
@@ -93,12 +93,12 @@ public class WTFML {
 	////// BLOCK WRAPPING/UNWRAPPING \\\\\\
 	
 	public static WTFBlockType getBlockType(String name) {
-		Block b = (Block)Block.field_4_Block_L.func_0_ObjectString(name);
+		Block b = (Block)Block.registry.func_0_ObjectString(name);
 		if(!(b instanceof WTFBlockWrapper)) {
 			System.out.println("Wrapping vanilla block "+name);
 			WTFBlockWrapper wrapper = new WTFBlockWrapper(WTFBlockWrapperReverse.wrap(b));
 			wrappedBlocks.put(wrapper.getWrapped(), wrapper);
-			Block.field_4_Block_L.func_0_VIStringObject(Block.func_0_Block_IBlock(b), name, wrapper);
+			Block.registry.func_0_VIStringObject(Block.func_0_Block_IBlock(b), name, wrapper);
 			b = wrapper;
 		}
 		
