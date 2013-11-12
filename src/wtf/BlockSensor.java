@@ -50,25 +50,30 @@ class BlockSensor {
 		});
 		
 		block.iconHandler = new BlockIconHandler() {
+			
+			Icon stone, redstone;
+			
 			@Override
 			public Icon getIcon(IBlockAccess w, int x, int y, int z, int side) {
 				int meta = w.func_0_IIII(x, y, z) & 7;
 				if(meta == side)
-					return Blocks.redstone_block.func_0_Block_IconI(0);
+					return redstone;
 				else
-					return Blocks.stone.func_0_Block_IconI(0);
+					return stone;
 			}
 			
 			@Override
 			public void registerIcons(IconRegister register) {
+				redstone = register.registerIcon("redstone_block");
+				stone = register.registerIcon("stone");
 			}
 
 			@Override
 			public Icon getItemIcon(int side, int meta) {
 				if(1 == side)
-					return Blocks.redstone_block.func_0_Block_IconI(0);
+					return redstone;
 				else
-					return Blocks.stone.func_0_Block_IconI(0);
+					return stone;
 			}
 		};
 		

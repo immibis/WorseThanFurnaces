@@ -35,4 +35,27 @@ public final class BlockIconHandlers {
 		};
 	}
 	
+	/**
+	 * Creates an icon handler which uses the icons from another icon handler.
+	 * @param from The icon handler to mimic.
+	 * @return The new icon handler.
+	 */
+	public static BlockIconHandler mimic(final BlockIconHandler from) {
+		return new BlockIconHandler() {
+			@Override
+			public void registerIcons(IconRegister register) {
+			}
+			
+			@Override
+			public Icon getItemIcon(int side, int damageValue) {
+				return from.getItemIcon(side, damageValue);
+			}
+			
+			@Override
+			public Icon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+				return from.getIcon(world, x, y, z, side);
+			}
+		};
+	}
+	
 }

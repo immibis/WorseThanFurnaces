@@ -9,29 +9,17 @@ import mc.Icon;
 import mc.IconRegister;
 import mc.Material;
 import mc.World;
+import wtfml.WTFML;
 import wtfml.blocks.BlockIconHandler;
 import wtfml.blocks.BlockUpdateEvent;
 import wtfml.blocks.WTFBlockType;
+import wtfml.blocks.util.BlockIconHandlers;
 
 class BlockGenerator {
 	static void init(WTFBlockType block) {
 		block.unlocalizedName="blockgen";
 		
-		block.iconHandler = new BlockIconHandler() {
-			@Override
-			public void registerIcons(IconRegister register) {
-			}
-			
-			@Override
-			public Icon getItemIcon(int side, int damageValue) {
-				return Blocks.obsidian.getIcon(0, 0);
-			}
-			
-			@Override
-			public Icon getIcon(IBlockAccess par1afx, int x, int y, int z, int side) {
-				return Blocks.obsidian.getIcon(0, 0);
-			}
-		};
+		block.iconHandler = BlockIconHandlers.mimic(WTFML.getBlockType("minecraft:obsidian").iconHandler);
 		
 		block.eventBus.register(new Object() {
 			@Subscribe

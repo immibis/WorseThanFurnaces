@@ -16,11 +16,11 @@ import wtfml.blocks.BlockRandomTickEvent;
 import wtfml.blocks.BlockUpdateEvent;
 import wtfml.blocks.WTFBlockType;
 
-public class WTFBlockWrapper extends Block {
+class WTFBlockWrapperSH extends Block {
 
-	private WTFBlockType wraps;
+	WTFBlockType wraps;
 	
-	public WTFBlockWrapper(WTFBlockType wraps) {
+	public WTFBlockWrapperSH(WTFBlockType wraps) {
 		super(wraps.material);
 		this.wraps = wraps;
 		func_0_Block_BlockCreativeTab(wraps.creativeTab);
@@ -28,26 +28,12 @@ public class WTFBlockWrapper extends Block {
 		func_1_Block_BlockString(wraps.unlocalizedName);
 	}
 	
-	@Override
-	public void registerIcons(IconRegister par1pt) {
-		wraps.iconHandler.registerIcons(par1pt);
-	}
-	
-	@Override
-	public Icon func_0_IconIBlockAccessIIII(IBlockAccess par1afx, int par2Int, int par3Int, int par4Int, int par5Int) {
-		return wraps.iconHandler.getIcon(par1afx, par2Int, par3Int, par4Int, par5Int);
-	}
-	
-	@Override
-	public Icon getIcon(int par1Int, int par2Int) {
-		return wraps.iconHandler.getItemIcon(par1Int, par2Int);
-	}
-	
 	public void func_0_VWorldIIIEntityLivingItemStack(World par1afn, int par2Int, int par3Int, int par4Int, EntityLiving par5rh, ItemStack par6abp) {
 		wraps.eventBus.post(BlockPlaceEvent.get(par1afn, par2Int, par3Int, par4Int, par5rh, par6abp));
 	}
 	
-	public boolean func_8_Z() {
+	@Override
+	public boolean canProvidePower() {
 		return wraps.causesRedstoneUpdates;
 	}
 	
@@ -72,7 +58,7 @@ public class WTFBlockWrapper extends Block {
 	}
 	
 	@Override
-	public boolean func_6_Block_Z() {
+	public boolean hasRandomTicks() {
 		return wraps.hasRandomTicks;
 	}
 	

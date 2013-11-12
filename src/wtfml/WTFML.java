@@ -13,12 +13,11 @@ import java.util.Set;
 
 import mc.Block;
 import mc.ItemBlock;
-import mc.Minecraft;
 import mc.RegistryNamespaced;
 import wtfml.blocks.WTFBlockType;
+import wtfml.internal.SideDependent;
 import wtfml.internal.WTFBlockWrapper;
 import wtfml.internal.WTFBlockWrapperReverse;
-import wtfml.internal.WTFResourcePack;
 
 import com.google.common.eventbus.EventBus;
 
@@ -40,7 +39,7 @@ public class WTFML {
 	}
 	
 	//// FILESYSTEM LAYOUT \\\\
-	private static File minecraftDir = Minecraft.getMinecraft().mcDir;
+	private static File minecraftDir = SideDependent.getMinecraftDir();
 	private static File configDir = new File(minecraftDir, "config");
 	private static File idMapFile = new File(configDir, "id-map.txt");
 	static {
@@ -136,6 +135,6 @@ public class WTFML {
 	}
 
 	public static void h_initResourcePacks(List list) {
-		list.add(new WTFResourcePack());
+		SideDependent.initResourcePacks(list);
 	}
 }

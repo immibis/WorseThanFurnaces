@@ -12,31 +12,17 @@ import wtfml.blocks.BlockUpdateEvent;
 import wtfml.blocks.WTFBlockType;
 import mc.Block;
 import mc.Blocks;
+import mc.CreativeTab;
 import mc.Explosion;
 import mc.IBlockAccess;
 import mc.Icon;
 import mc.IconRegister;
 
-public class WTFBlockWrapperReverse {
-	public static WTFBlockType wrap(final Block wraps) {
+class WTFBlockWrapperReverseSH {
+	static WTFBlockType wrap(final Block wraps) {
 		WTFBlockType block = new WTFBlockType();
 		
-		block.iconHandler = new BlockIconHandler() {
-			@Override
-			public void registerIcons(IconRegister register) {
-				wraps.registerIcons(register);
-			}
-			@Override
-			public Icon getItemIcon(int side, int damageValue) {
-				return wraps.getIcon(side, damageValue);
-			}
-			@Override
-			public Icon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-				return wraps.func_0_IconIBlockAccessIIII(world, x, y, z, side);
-			}
-		};
-		
-		if(wraps.func_6_Block_Z()) {
+		if(wraps.hasRandomTicks()) {
 			block.hasRandomTicks = true;
 		
 			block.eventBus.register(new Object() {
@@ -68,8 +54,7 @@ public class WTFBlockWrapperReverse {
 		};
 		
 		block.hardness = wraps.func_0_Block_FWorldIII(null, 0, 0, 0);
-		block.unlocalizedName = wraps.func_2_Block_String().substring(5);
-		block.creativeTab = wraps.func_0_Block_CreativeTab();
+		block.unlocalizedName = wraps.getUnlocalizedName().substring(5);
 		block.material = wraps.func_0_Block_Material();
 		
 		return block;
