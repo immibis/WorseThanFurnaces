@@ -5,6 +5,7 @@ import mc.Material;
 
 import com.google.common.eventbus.Subscribe;
 
+import wtf.electricity.Cable;
 import wtf.oreproc.OreProcessing;
 import wtfml.blocks.BlockExplodeEvent;
 import wtfml.blocks.BlockRandomTickEvent;
@@ -33,6 +34,8 @@ public class ModWTF extends Mod {
 		WTFML.addBlock("wtf:block-testing-generator", blockGen);
 		
 		OreProcessing.init();
+		
+		Cable.init();
 		
 		// stone explodes into cobblestone
 		WTFBlockType stone = WTFML.getBlockType("minecraft:stone");

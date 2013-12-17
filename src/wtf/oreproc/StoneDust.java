@@ -12,6 +12,7 @@ import wtfml.RunLater.ZeroGarbageBlockActionHandler;
 import wtfml.blocks.BlockPlaceEvent;
 import wtfml.blocks.BlockUpdateEvent;
 import wtfml.blocks.WTFBlockType;
+import wtfml.blocks.util.BlockIconHandlers;
 
 /**
  * Stone dust.
@@ -37,6 +38,10 @@ class StoneDust {
 	}
 	
 	public static void init(WTFBlockType block) {
+		block.unlocalizedName = "wtf.stone_dust";
+		
+		block.iconHandler = BlockIconHandlers.create("wtf:stone_dust");
+		
 		block.eventBus.register(new Object() {
 			@Subscribe
 			public void onPlaced(BlockPlaceEvent e) {

@@ -22,7 +22,7 @@ public class OreProcessing {
 		ShatteredOre.init(shatteredGoldOre, "gold");
 		WTFML.addBlock("wtf:shattered-gold-ore", shatteredGoldOre);
 		
-		
+		StoneDust.init(stoneDust);
 		WTFML.addBlock("wtf:stone-dust", stoneDust);
 		
 		initOreShatterOnExplosions(WTFML.getBlockType("minecraft:iron_ore"), shatteredIronOre);
