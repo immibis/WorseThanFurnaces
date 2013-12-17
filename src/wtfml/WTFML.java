@@ -113,11 +113,11 @@ public class WTFML {
 	
 	//// BASE EDIT HOOKS \\\\
 	public static void h_initBlocks(RegistryNamespaced registry) {
-		for(Mod m : mods) m.initBlocks();
+		for(Mod m : mods) m.init();
 	}
 
 	public static void h_initItems(RegistryNamespaced registry) {
-		for(Mod m : mods) m.initItems();
+		//for(Mod m : mods) m.init();
 		
 		try {
 			idProps.store(new FileWriter(idMapFile), "");

@@ -2,6 +2,6 @@ package wtfml;
 
 
 public class Mod {
-	public void initBlocks() {}
-	public void initItems() {}
+	/** Set up blocks and items here. */
+	public void init() {}
 }

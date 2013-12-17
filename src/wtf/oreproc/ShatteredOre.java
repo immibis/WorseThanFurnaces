@@ -1,4 +1,4 @@
-package wtf;
+package wtf.oreproc;
 
 import mc.IBlockAccess;
 import mc.Icon;
