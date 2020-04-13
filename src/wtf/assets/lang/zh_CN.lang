@@ -1,3 +1,6 @@
 tile.blockhole.name=方块洞穴
 tile.blocksensor.name=方块传感器
 tile.blockgen.name=调试方块制造器
+tile.shattered_ore.iron.name=粉碎铁矿石
+tile.shattered_ore.gold.name=粉碎金矿石
+tile.wtf.stone_dust.name=石粉
